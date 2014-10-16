@@ -1,0 +1,13 @@
+# for module compiling
+import os
+
+src = Glob('*.cpp')
+src += Glob('*.c')
+cwd  = os.getcwd()
+list = os.listdir(cwd)
+
+for item in list:
+    if os.path.isfile(os.path.join(cwd, item, 'SConscript')):
+        src = src + SConscript(os.path.join(item, 'SConscript'))
+
+Return('src')

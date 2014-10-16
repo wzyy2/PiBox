@@ -1,0 +1,77 @@
+import os
+
+BUILD = 'debug'
+PLATFORM = "local"
+
+global Env 
+Env = Environment()
+
+
+try:
+    TARGET = ARGUMENTS['target']
+    PLATFORM = "cross"  
+except:
+    PLATFORM = "local"    
+
+
+INC = ['inc/', 'inc/lib']
+#SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
+LIBS = ['jsonlib', 'pthread', 'dl']
+#LIBPATH = [ '/usr/lib', '/usr/local/lib' ]
+LIBPATH = []
+CCFLAGS = '-Wall' 
+ASFLAGS = ''
+LINKFLAGS = ''
+
+if BUILD == 'debug':
+    CCFLAGS += ' -g'
+
+
+
+if PLATFORM == 'local':
+
+    CC  = 'gcc'
+    CXX = 'g++'
+    Env['CC'] = CC
+    Env['CXX'] = CXX
+
+elif PLATFORM == 'cross':
+
+    PREFIX = 'arm-linux-gnueabi-'   
+    ARMCC = PREFIX + 'gcc'  
+    ARMCXX = PREFIX + 'g++'  
+    ARMAS = PREFIX + 'gcc'    
+    ARMAR = PREFIX + 'ar'    
+    ARMLINK = PREFIX + 'gcc'    
+    ARMSIZE = PREFIX + 'size'    
+    ARMOBJDUMP = PREFIX + 'objdump'    
+    ARMOBJCPY = PREFIX + 'objcpy'   
+
+    Env['AS'] = ARMAS
+    Env['CC'] = ARMCC
+    Env['CXX'] = ARMCXX
+    Env['AR'] = ARMAR
+    Env['LINK'] = ARMLINK
+
+    DEVICE = ' -Wall -march=armv7-a -mtune=cortex-a8'+\
+         ' -ftree-vectorize -ffast-math -mfpu=vfpv3-d16 -mfloat-abi=softfp'
+
+
+Env['CCFLAGS'] = CCFLAGS
+Env['ASFLAGS'] = ASFLAGS
+Env['LINKFLAGS'] = LINKFLAGS
+Env['LIBS'] = LIBS
+Env['LIBPATH'] = LIBPATH
+Env['CPPPATH'] = INC
+
+SUBSRC = SConscript(['./SConscript'])
+SRC = SUBSRC + Glob("*.cpp")
+
+
+Env.Program('pihome', SRC)
+Env.Decider('MD5')
+
+
+#      SConscript(['drivers/SConscript',
+#                   'parser/SConscript',
+#                   'utilities/SConscript'])
