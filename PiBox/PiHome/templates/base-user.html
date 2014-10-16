@@ -1,0 +1,92 @@
+{% extends "base-app.html" %}
+
+
+{% block user-panel%} 
+{% if request.user.is_authenticated %}
+<!-- Sidebar user panel -->
+<div class="user-panel">
+	<div class="pull-left image">
+		<img src="/static/img/login.png" class="img-circle" alt="User Image" />
+	</div>
+	<div class="pull-left info">
+		<p>Hello, {{ request.user.get_short_name }} </p>
+		<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+	</div>
+</div>
+{% else %}
+<!-- Sidebar user panel -->
+<div class="user-panel">
+	<div class="pull-left image">
+		<img src="/static/img/notlogin.png" class="img-circle" alt="User Image" />
+	</div>
+	<div class="pull-left info">
+		<a href="#"><i class="fa fa-circle text-success"></i> Offline</a>
+	</div>
+</div>
+{% endif %}
+{% endblock %}  
+
+{% block user-menu %}
+{% if request.user.is_authenticated %}
+<!-- User Account: style can be found in dropdown.less -->
+<li class="dropdown user user-menu">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		<i class="glyphicon glyphicon-user"></i>
+		<span>{{ request.user.get_full_name }}<i class="caret"></i></span>
+	</a>
+	<ul class="dropdown-menu">
+		<!-- User image -->
+		<li class="user-header bg-black">
+			<img src="/static/img/login.png" class="img-circle" alt="User Image" />
+			<p>
+				{{ request.user.get_full_name }}
+				<small>{{ request.user.date_joined  }}   Join</small>
+			</p>
+		</li>
+		<!-- Menu Body -->
+		<li class="user-body">
+			<div class="col-xs-4 text-center">
+				<a href="#">坑位</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="#">坑位</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="#">坑位</a>
+			</div>
+		</li>
+		<!-- Menu Footer-->
+		<li class="user-footer">
+			<div class="pull-left">
+				<a href="{% url 'PiApp.views.settings_account_view' %}"class="btn btn-default btn-flat">Profile</a>
+			</div>
+			<div class="pull-right">
+				<a href="{% url 'PiApp.views.logout_view' %}" class="btn btn-default btn-flat">Sign out</a>
+			</div>
+		</li>
+	</ul>
+</li>
+{% else %}
+<!-- User Account: style can be found in dropdown.less -->
+<div class="login">
+<!-- 	<div class="col-xs-0">
+	<form action="{% url 'PiApp.views.login_view'%}" method='post' class="pull-right">
+		{% csrf_token %}
+		<input name='username' class="input-small" type="text" placeholder="用户名">
+		<input name='password' class="input-small" type="password" placeholder="密码">
+		<button class="btn bg-olive login-btn" type="submit">login</button>
+		<a href="{% url 'PiApp.views.register_view'%}"><input type="button"  value="sign up"  class="btn  bg-orange login-btn"  ></input></a>
+	</form>
+	</div > -->
+	<a href="{% url 'PiApp.views.login_view'%}"><input type="button"  value="login"  class="btn  bg-olive login-btn"  ></input></a>
+	<a href="{% url 'PiApp.views.register_view'%}"><input type="button"  value="sign up"  class="btn  bg-olive login-btn"  ></input></a>
+</div>
+
+{% endif %}
+
+{% endblock %}  
+
+
+
+
+

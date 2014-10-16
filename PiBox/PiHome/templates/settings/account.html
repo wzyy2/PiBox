@@ -1,0 +1,63 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | Account {% endblock %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}    
+{% endblock %}
+
+
+{% block on_ready%} 
+<script>    
+$(function () {  
+
+
+                });  
+</script>  
+{% endblock %}
+
+{% block heading %}    
+<h1>
+	Settings
+	<small>Account </small>
+</h1>
+<ol class="breadcrumb">
+	        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li class="active">Account</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-settings %} active{% endblock %} 
+{% block sidebar-account %} active{% endblock %} 
+
+{% block content %} 
+
+<div class="row "><div class="col-md-6 col-md-offset-3">
+	<div class="box box-warning ">
+		<div class="box-header account-form">
+			<h3 class="box-title">Profile</h3>
+		</div><!-- /.box-header -->
+		<div class="box-body">
+			<form action="" method="POST" >
+				{% csrf_token %}
+				<!-- text input -->
+                {% for field in form %}
+                <div class="form-group django-form">
+                    <label > {{ field.label }} </label> 
+                    <!--                     <input type="{{field.widget}}" class="form-control" name="{{field.html_name}}" value="{{ field.value }}"/> -->
+                    {{ field }} 
+                    {{field.errors}}  
+                </div>
+                {% endfor %}
+                <div class="box-footer">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+
+           </form>
+       </div><!-- /.box-body -->
+   </div><!-- /.box -->
+
+</div>	</div>
+{% endblock %}

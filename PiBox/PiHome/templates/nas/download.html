@@ -1,0 +1,90 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | Download {% endblock %}
+
+{% block css%}    
+
+{% endblock %}
+
+{% block js%}  
+{% endblock %}
+
+{% block on_ready%}    
+<script>
+$(function() {
+
+                    //发出ajax请求  
+                    $("button").click( function(){  
+                        if($(this).attr('id') == 'open') {
+                            $.getJSON("/API/PiApp/nas/",  {cmd:'open'},
+                             function(data){
+                                     if(data.cmd_ret == 'fail')
+                                        alert('FAIL')
+                                     if(data.cmd_ret == 'ok') {
+                                        alert('OK');
+                                        window.location.reload();
+                                        }
+                                  })     
+                        }
+                        else if ($(this).attr('id') == 'time') {
+                             $.getJSON("/API/PiApp/nas/",  {cmd:'time'} ,function(data){           })         
+                        }          
+                       else if($(this).attr('id') == 'close') {
+                            $.getJSON("/API/PiApp/nas/",  {cmd:'close'},
+                             function(data){
+                                     if(data.cmd_ret == 'fail')
+                                        alert('FAIL')
+                                     if(data.cmd_ret == 'ok') {
+                                        alert('OK');
+                                        window.location.reload();
+                                        }
+                                  })     
+                        }           
+                    }); 
+    });
+</script>
+{% endblock %}
+
+{% block heading %}    
+<h1>
+	Nas
+	<small> Download </small>
+</h1>
+<ol class="breadcrumb">
+   <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+   <li><a href="#">Nas</a></li>
+   <li class="active">Download</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-nas %} active{% endblock %} 
+{% block sidebar-download %} active{% endblock %} 
+
+{% block content %} 
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 ">
+
+
+        <div class="box box-solid  box-primary box-frame">
+            <div class="box-header">
+                <i class="fa fa-th-large"></i>
+                <h3 class="box-title">aria2 | yaaw</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm"  id="open"><i class="fa fa-toggle-right">open_aria2</i></button>
+                     <button class="btn btn-default btn-sm"  id="close"><i class="fa fa-toggle-right">close_aria2</i></button>
+                    <button class="btn btn-default btn-sm"  id="time"><i class="fa fa-clock-o">time_paln</i></button>
+                </div>
+            </div>
+            <div class="box-body no-padding ">
+                <iframe src="/static/yaaw-master/index.html" frameBorder="0" width="100%" height="560px" ></iframe> 
+            </div><!-- /.box-body-->
+        </div><!-- /.box -->
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

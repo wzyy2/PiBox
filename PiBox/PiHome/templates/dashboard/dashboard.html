@@ -1,0 +1,133 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | Dashboard {% endblock %}
+
+{% block css%}    
+        <!-- Date Picker -->
+        <link href="/static/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block js%}    
+        <!-- datepicker -->
+        <script src="/static/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block on_ready%}    
+<script type="text/javascript">
+$(function() {
+	"use strict";
+    //SLIMSCROLL FOR CHAT WIDGET
+    $('#chat-box').slimScroll({
+    	height: '250px'
+    });
+        //The Calender
+        $("#calendar").datepicker();
+    });
+</script>
+{% endblock %}
+
+{% block heading %}    
+<h1>
+	Dashboard
+	<small>Home</small>
+</h1>
+<ol class="breadcrumb">
+	<li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> home</a></li>
+	<li class="active"> Dashboard</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-dashboard %} 
+active
+{% endblock %} 
+
+{% block content %} 
+<div style="margin-top:60px;">
+<!-- Small boxes (Stat box) -->
+<div class="row">
+
+	<div class="col-md-3  col-md-offset-3 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-maroon">
+			<div class="inner">
+				<h3>
+					{{connection}}
+				</h3>
+				<p>
+					Connection
+				</p>
+			</div>
+			<div class="icon">
+				<i class="fa fa-road"></i>
+			</div>
+			<a href="{% url 'PiApp.views.settings_general_view' %}" class="small-box-footer">
+				More info <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div><!-- ./col -->
+		<div class="col-md-3 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-purple">
+			<div class="inner">
+				<h3>
+					{{nas_enable}}
+				</h3>
+				<p>
+					NAS
+				</p>
+			</div>
+			<div class="icon">
+				<i class="fa fa-hdd-o"></i>
+			</div>
+			<a href="{% url 'PiApp.views.nas_file_view' %}" class="small-box-footer">
+				More info <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div><!-- ./col -->
+</div><!-- /.row -->
+<div class="row">
+	<div class="col-md-3 col-md-6 col-md-offset-3 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-aqua">
+			<div class="inner">
+				<h3>
+					{{app_num}}
+				</h3>
+				<p>
+					Application
+				</p>
+			</div>
+			<div class="icon">
+				<i class="fa fa-rocket"></i>
+			</div>
+			<a href="#" class="small-box-footer">
+				More info <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div><!-- ./col -->
+	<div class="col-md-3 col-xs-6">
+		<!-- small box -->
+		<div class="small-box bg-teal">
+			<div class="inner">
+				<h3>
+					{{ user_count }}
+				</h3>
+				<p>
+					User Registrations
+				</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-person-add"></i>
+			</div>
+			<a href="#" class="small-box-footer">
+				More info <i class="fa fa-arrow-circle-right"></i>
+			</a>
+		</div>
+	</div><!-- ./col -->
+</div><!-- /.row -->
+</div>
+<!-- main boxes (Stat box) -->
+
+<!-- /.row -->
+
+{% endblock %}

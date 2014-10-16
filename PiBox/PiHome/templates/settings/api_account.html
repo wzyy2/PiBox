@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    
+    <link href="/static/css/Pi.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap 3.0.2 -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="/static/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="/static/css/box.css" rel="stylesheet" type="text/css" />  
+
+
+</head>
+<body class="skin-black">
+<div class="row "><div class="col-md-6 col-md-offset-3">
+	<div class="box box-warning ">
+		<div class="box-header account-form">
+			<h3 class="box-title">Profile</h3>
+		</div><!-- /.box-header -->
+		<div class="box-body">
+			<form action="" method="POST" >
+				{% csrf_token %}
+				<!-- text input -->
+                {% for field in form %}
+                <div class="form-group django-form">
+                    <label > {{ field.label }} </label> 
+                    <!--                     <input type="{{field.widget}}" class="form-control" name="{{field.html_name}}" value="{{ field.value }}"/> -->
+                    {{ field }} 
+                    {{field.errors}}  
+                </div>
+                {% endfor %}
+                <div class="box-footer">
+                   <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+
+           </form>
+       </div><!-- /.box-body -->
+   </div><!-- /.box -->
+
+</div>	</div>
+</body>
+</html>

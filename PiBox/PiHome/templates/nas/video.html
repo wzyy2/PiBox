@@ -1,0 +1,60 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | Video {% endblock %}
+
+{% block css%}    
+{% endblock %}
+
+{% block js%}    
+{% endblock %}
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block heading %}    
+<h1>
+	Nas
+	<small>Video </small>
+</h1>
+<ol class="breadcrumb">
+	        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li class="active">Generl</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-nas %} active{% endblock %} 
+{% block sidebar-video %} active{% endblock %} 
+
+{% block content %} 
+
+
+<div class="row " >    <div class="col-md-10 col-md-offset-1 ">
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 ">
+
+
+        <div class="box box-solid  box-primary box-frame">
+            <div class="box-header">
+                <i class="fa fa-th-large"></i>
+                <h3 class="box-title">MiniDLNA</h3>
+            </div>
+            <div class="box-body no-padding ">
+                <iframe src="//{{minidlna_url}}" frameBorder="0" width="100%" height="560px" ></iframe> 
+            </div><!-- /.box-body-->
+        </div><!-- /.box -->
+
+    </div>
+</div>
+
+<div class="row " style="text-align: center;">
+                            <div class="error-content">
+                            <h3 ><i class="fa fa-cloud-download"></i> 
+                            <a href="https://www.google.com.hk/?gws_rd=ssl#newwindow=1&q=DLNA&safe=strict">Google for DLNA.</a></h3>
+                            <p>
+                                You can use dlna to watch video in your device.
+                            </p>
+                        </div><!-- /.error-content -->
+</div>
+{% endblock %}
