@@ -14,13 +14,13 @@ const std::string ApplicationService::ktitle_ = "application";
 
 ApplicationService::ApplicationService()
 {  
-
     //dlopen
     read_app_ini("./App");
 
     for (unsigned int i=0; i < app_list.size(); i++) {
         void *handle;
         APPFUN get_fun;
+        APPFUN_INIT get_fun_init,get_fun_exit;
 
         std::string file = std::string("./App/") + app_list[i] + std::string("/libapp.so");
 
@@ -33,7 +33,7 @@ ApplicationService::ApplicationService()
         }
         dlerror();
 
-        get_fun = (APPFUN) dlsym(handle,"main");
+        get_fun = (APPFUN) dlsym(handle, "main");
 
         if (dlerror() != NULL)
         {
@@ -43,6 +43,14 @@ ApplicationService::ApplicationService()
         dl_list.push_back(handle);
         application_map_.insert(make_pair(app_list[i], get_fun));
 
+        get_fun_init = (APPFUN_INIT) dlsym(handle, "app_init");
+
+        if (dlerror() == NULL) //清楚错误信息
+        {
+            //init the application
+            get_fun_init();  
+        }
+
     }
 
 }
@@ -51,6 +59,15 @@ ApplicationService::~ApplicationService()
 {
     //close share lib
     for (unsigned int i=0; i < dl_list.size(); i++) {
+
+        APPFUN_INIT get_fun_exit = (APPFUN_INIT) dlsym(dl_list[i], "app_exit");
+
+        if (dlerror() == NULL) //清楚错误信息
+        {
+            //exit the application
+            get_fun_exit();  
+        }
+
         dlclose(dl_list[i]);
     }
 }
@@ -69,7 +86,6 @@ void ApplicationService::Start(Json::Value *send_root)
         return;
 
     app_main(send_root, recv_root_);
-
 
 }
 

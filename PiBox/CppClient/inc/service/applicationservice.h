@@ -14,6 +14,7 @@
 #include "jsoncpp/json.h"
 
 typedef int (*APPFUN)(Json::Value *send_root, Json::Value *recv_root); 
+typedef int (*APPFUN_INIT)(); 
 
 class ApplicationService : public ServiceBase
 {

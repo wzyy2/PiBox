@@ -14,29 +14,13 @@ PiBox is an interesting Smart Home demo.
     pip install Django==1.6.6
 这是安装django用的，先确保你安装了pip和python哈。
 
-    mkdir /home/shares
-这个是建立shares文件夹，django内置的文件管理器目录和minidlna，smaba，aria2默认下载目录都用这个。
-然后就是安装一个ftp，samba或者minidlana目录设置为/home/shares了，其实我不建议用minidlna啦，难用的要死，直接ftp，samba就够看电影了。怎么安装这几个。。。你们谷歌吧。。
-解压github上下到的文件到你的目录~
-然后就是编译c++程序，在编译之前看看你有没有jsoncpp，没有的话
-
-    cd lib\jsoncpp-src-0.5.0
-然后谷歌linux jsoncpp看看如何安装。。。。
-
     apt-get install scons
 这个是项目的构建工具~
-然后进CppClient文件夹。
+然后执行安装脚本
 
-    scons
-来编译cpp程序。
-
+    sudo sh ./install_lib.sh
     sudo sh ./install.sh
- 这个是把要用到配置文件安装起来（目前只有aria2的配置文件）。   
-    
-    cd lib\django-filebrowser-no-grappelli-master
-    sudo python setup.py install
-这个是安装文件管理器。
-然后大概就可以
+如果有问题，可以自己打开脚本一条一条输，看返回信息
 
     sudo sh ./start.sh 
     sudo sh ./stop.sh
@@ -45,6 +29,7 @@ PiBox is an interesting Smart Home demo.
 
     http://192.168.10.105(换成你的ip):8000
 就OK啦~（大概。。。不行我人肉支持。。。）
+(注意文件管理器的默认目录是/home/shares）
 
 
 
