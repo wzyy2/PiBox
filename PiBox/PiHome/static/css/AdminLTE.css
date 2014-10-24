@@ -1865,6 +1865,22 @@ Component: timeline
 -------------------------
 */
 item
+.btn {
+  font-weight: 500;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  -webkit-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+  -moz-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+  box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.09);
+}
+.btn.btn-default {
+  background-color: #fafafa;
+  color: #666;
+  border-color: #ddd;
+  border-bottom-color: #ddd;
+}
 .btn.btn-default:hover,
 .btn.btn-default:active,
 .btn.btn-default.hover {

@@ -12,6 +12,7 @@ PiBox is an interesting Smart Home demo.
 ## Usage ##  
     sudo apt-get install python-pip python-dev build-essential 
     pip install Django==1.6.6
+    apt-get install python-setuptools
 这是安装django用的，先确保你安装了pip和python哈。
 
     apt-get install scons
