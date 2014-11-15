@@ -7,17 +7,20 @@ from django.conf import settings
 
 from filebrowser.sites import site
 import os
+import sys
 
-#/API/application
+
 
 urlpatterns = patterns('',)
 
-cwd  = os.getcwd() + '/PiHome/PiApp/application'
+
+cwd  = os.getcwd() + '/App'
 list = os.listdir(cwd)
+sys.path.append(cwd);
 
 for item in list:
     if os.path.isdir(os.path.join(cwd, item)):
             urlpatterns += patterns ('',
-                (r'^' + item + '/', include('PiApp.application.' + item + '.api_urls')),
+                (r'^' + item + '/', include(item + '.django.api_urls')),
                 )
 

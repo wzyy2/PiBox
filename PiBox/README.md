@@ -46,7 +46,6 @@ PiBox is an interesting Smart Home demo.
 
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
-当然，你们有商业化用途的准备的话或者准备用做自己的产品的话我也很高兴~不过希望能发邮件让我知道你们使用了这个方案或者里面的代码\(˙<>˙)/然后我换个许可证就可以啦~.
 
 ## PS ##
 如果你有什么问题的话，或者不爽我写的代码，或者有什么样的需求想我加上，或者想一起写~欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）

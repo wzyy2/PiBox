@@ -143,6 +143,7 @@ int ApplicationService::read_app_ini(const char* dirname)
             }
             else {
                 return -1;
+                perror("no ini,make sure this dir is app dir");
             }
         }
 

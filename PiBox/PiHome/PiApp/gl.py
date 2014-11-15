@@ -6,7 +6,7 @@ nas_enable="ENABLE"
 
 def app_num():
 
-    cwd  = os.getcwd() + '/PiHome/PiApp/application'
+    cwd  = os.getcwd() + '/App'
     list = os.listdir(cwd)
     sum = 0
 
