@@ -1,57 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Pibox : PiBox is an Smart Home demo in raspberry pi.">
+    <title>Pibox by wzyy2</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Pibox</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/wzyy2/PiBox">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/wzyy2/PiBox/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/wzyy2/PiBox/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/wzyy2/PiBox">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Pibox</h1>
-          <h2 id="project_tagline">PiBox is an Smart Home demo in raspberry pi.</h2>
+      <section>
+        <div id="title">
+          <h1>Pibox</h1>
+          <p>PiBox is an Smart Home demo in raspberry pi.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/wzyy2">wzyy2</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/wzyy2/PiBox/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/wzyy2/PiBox/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <h1>
-<a name="pibox" class="anchor" href="#pibox"><span class="octicon octicon-link"></span></a>PiBox</h1>
+<a id="pibox" class="anchor" href="#pibox" aria-hidden="true"><span class="octicon octicon-link"></span></a>PiBox</h1>
 
-<p>PiBox is an interesting Smart Home demo.</p>
-
-<h1>
-<a name="%E5%A6%88%E8%9B%8B%E8%8B%B1%E8%AF%AD%E5%A4%AA%E7%83%82%E4%B8%8B%E9%9D%A2%E5%85%88%E5%86%99%E4%B8%AD%E6%96%87%E4%BB%A5%E5%90%8E%E5%86%8D%E8%AF%B4" class="anchor" href="#%E5%A6%88%E8%9B%8B%E8%8B%B1%E8%AF%AD%E5%A4%AA%E7%83%82%E4%B8%8B%E9%9D%A2%E5%85%88%E5%86%99%E4%B8%AD%E6%96%87%E4%BB%A5%E5%90%8E%E5%86%8D%E8%AF%B4"><span class="octicon octicon-link"></span></a>妈蛋英语太烂，下面先写中文,以后再说</h1>
+<p>PiBox is an interesting Smart Home demo.
+<a href="http://wzyy2.github.io/PiBox">http://wzyy2.github.io/PiBox</a></p>
 
 <h1>
-<a name="%E4%BB%8B%E7%BB%8D" class="anchor" href="#%E4%BB%8B%E7%BB%8D"><span class="octicon octicon-link"></span></a>介绍</h1>
+<a id="妈蛋英语太烂下面先写中文以后再说" class="anchor" href="#%E5%A6%88%E8%9B%8B%E8%8B%B1%E8%AF%AD%E5%A4%AA%E7%83%82%E4%B8%8B%E9%9D%A2%E5%85%88%E5%86%99%E4%B8%AD%E6%96%87%E4%BB%A5%E5%90%8E%E5%86%8D%E8%AF%B4" aria-hidden="true"><span class="octicon octicon-link"></span></a>妈蛋英语太烂，下面先写中文,以后再说</h1>
+
+<h1>
+<a id="介绍" class="anchor" href="#%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>介绍</h1>
 
 <p>写这个PiBox的初衷是现在智能硬件的概念很火，作者是学习嵌入式的学生，就想搞一些来玩玩。
 偶然间接触到了树莓派，因为之前搞过一个openwrt的控制，就很想在树莓派上做一个类似小米路由器+boardlink这样一个东西。因为网上一些网页控制例子简直太弱了，就想搞个高大上一点的东西。</p>
 
 <h1>
-<a name="%E5%8A%9F%E8%83%BD" class="anchor" href="#%E5%8A%9F%E8%83%BD"><span class="octicon octicon-link"></span></a>功能</h1>
+<a id="功能" class="anchor" href="#%E5%8A%9F%E8%83%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>功能</h1>
 
 <p>没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。</p>
 
-<h2>
-<a name="usage-" class="anchor" href="#usage-"><span class="octicon octicon-link"></span></a>Usage ##</h2>
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
 
 <pre><code>sudo apt-get install python-pip python-dev build-essential 
 sudo pip install Django==1.6.6
@@ -87,27 +95,33 @@ sudo sh ./stop.sh
 (注意文件管理器的默认目录是/home/shares）</p>
 
 <h1>
-<a name="technical-details" class="anchor" href="#technical-details"><span class="octicon octicon-link"></span></a>Technical details</h1>
+<a id="technical-details" class="anchor" href="#technical-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technical details</h1>
 
 <p>他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
 如果要扩展应用，可以参考examples-app的写一个c++程序放到APP文件夹，python的代码放到PiHome\PiApp\application这里。</p>
 
 <h1>
-<a name="%E5%90%8E%E7%BB%AD" class="anchor" href="#%E5%90%8E%E7%BB%AD"><span class="octicon octicon-link"></span></a>后续</h1>
+<a id="后续" class="anchor" href="#%E5%90%8E%E7%BB%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>后续</h1>
 
 <p>现在还只是个简单的框架，首先我没有写文档，可能很多地方代码会看不懂，其次我也没有在上面做应用做示范，现在屁功能都没有，工程也没做改动，等以后有空吧。
 在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对智能硬件产品的Android客户端有兴趣的人很多的话，我再完善然后放出吧。</p>
 
 <p>还有使用说明很不完善，纯粹瞎写~~~。。。如果有疑问，提供人肉支持~。</p>
 
+<h1>
+<a id="问题" class="anchor" href="#%E9%97%AE%E9%A2%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>问题</h1>
+
+<p>最大的问题还是django的debug模式暴露了太多东西出来，用软连接组织app和django的联系也有很多麻烦呐，如果暴露出来安全性堪忧。。。。
+无视吧，无视吧。。。毕竟只是玩玩。。。</p>
+
 <h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
 当然，你们有商业化用途的准备的话或者准备用做自己的产品的话我也很高兴~不过希望能发邮件让我知道你们使用了这个方案或者里面的代码(˙&lt;&gt;˙)/然后我换个许可证就可以啦~.</p>
 
 <h2>
-<a name="ps" class="anchor" href="#ps"><span class="octicon octicon-link"></span></a>PS</h2>
+<a id="ps" class="anchor" href="#ps" aria-hidden="true"><span class="octicon octicon-link"></span></a>PS</h2>
 
 <p>如果你有什么问题的话，或者不爽我写的代码，或者有什么样的需求想我加上，或者想一起写~欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）
 提供人肉支持~</p>
@@ -117,17 +131,9 @@ sudo sh ./stop.sh
 <img src="http://www.iotwrt.com/jpg/pibox3.jpg" alt="image">
 <img src="http://www.iotwrt.com/jpg/pibox4.png" alt="image"></p>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Pibox maintained by <a href="https://github.com/wzyy2">wzyy2</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
