@@ -1,6 +1,6 @@
 # PiBox #
 PiBox is an interesting Smart Home demo.
-
+http://wzyy2.github.io/PiBox
 
 #妈蛋英语太烂，下面先写中文,以后再说#
 # 介绍 #
@@ -9,7 +9,7 @@ PiBox is an interesting Smart Home demo.
 
 # 功能 #
 没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。
-## Usage ##  
+# Usage #
     sudo apt-get install python-pip python-dev build-essential 
     sudo pip install Django==1.6.6
     sudo pip install PIL 
@@ -46,6 +46,7 @@ PiBox is an interesting Smart Home demo.
 
 # 问题 #
 最大的问题还是django的debug模式暴露了太多东西出来，用软连接组织app和django的联系也有很多麻烦呐，如果暴露出来安全性堪忧。。。。
+无视吧，无视吧。。。毕竟只是玩玩。。。
 
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
