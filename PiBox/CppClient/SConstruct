@@ -1,8 +1,18 @@
+import importlib
 import os
+import sys
+from Config import *
 
-BUILD = 'debug'
-PLATFORM = "local"
+basedir = os.getcwd()
+sys.path.append(basedir+"/tools")
 
+# -----------------------------------------------------------------------------------------
+
+#generate_header
+config = importlib.import_module('build_config')
+
+
+# -----------------------------------------------------------------------------------------
 global Env 
 Env = Environment()
 
@@ -14,7 +24,7 @@ except:
     PLATFORM = "local"    
 
 
-INC = ['inc/', 'inc/lib']
+INC = ['inc/', 'inc/lib', 'gen/']
 #SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
 LIBS = ['jsonlib', 'pthread', 'dl']
 #LIBPATH = [ '/usr/lib', '/usr/local/lib' ]
@@ -25,7 +35,6 @@ LINKFLAGS = ''
 
 if BUILD == 'debug':
     CCFLAGS += ' -g'
-
 
 
 if PLATFORM == 'local':

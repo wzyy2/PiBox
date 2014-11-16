@@ -1,3 +1,4 @@
+#include "pihome.h"
 #include "device/serial.h"
 #include "connect/threadserver.h"
 #include "service.h"
