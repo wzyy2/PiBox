@@ -2,7 +2,6 @@
 PiBox is an interesting Smart Home demo.
 http://wzyy2.github.io/PiBox
 
-#妈蛋英语太烂，下面先写中文,以后再说#
 # 介绍 #
 写这个PiBox的初衷是现在智能硬件的概念很火，作者是学习嵌入式的学生，就想搞一些来玩玩。
 偶然间接触到了树莓派，因为之前搞过一个openwrt的控制，就很想在树莓派上做一个类似小米路由器+boardlink这样一个东西。因为网上一些网页控制例子简直太弱了，就想搞个高大上一点的东西。
