@@ -9,7 +9,7 @@ Env = Environment()
 
 INC = ['cpp_source/inc/', 'cpp_source/inc/lib']
 #SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
-LIBS = ['jsonlib', 'pthread', 'wiringPi']
+LIBS = ['jsoncpp', 'pthread', 'wiringPi']
 LIBPATH = [ ]
 CCFLAGS = '-Wall -Wmain' 
 ASFLAGS = ''

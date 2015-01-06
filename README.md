@@ -10,7 +10,7 @@ http://wzyy2.github.io/PiBox
 没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。
 （yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）
 # Usage #
-    sudo apt-get install python-pip python-dev build-essential 
+    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
     sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
     sudo pip install PIL 

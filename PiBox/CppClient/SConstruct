@@ -26,7 +26,7 @@ except:
 
 INC = ['inc/', 'inc/lib', 'gen/']
 #SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
-LIBS = ['jsonlib', 'pthread', 'dl']
+LIBS = ['jsoncpp', 'pthread', 'dl']
 #LIBPATH = [ '/usr/lib', '/usr/local/lib' ]
 LIBPATH = []
 CCFLAGS = '-Wall' 
