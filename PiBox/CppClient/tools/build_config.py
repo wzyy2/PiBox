@@ -16,7 +16,7 @@ def writeheader(s): HeaderFile.write(s+"\n");
 
 writeheader("// auto-generated file")
 writeheader("#ifndef AUTOGEN_H \n")
-writeheader("define AUTOGEN_H \n")
+writeheader("#define AUTOGEN_H \n")
 
 if DEBUG_BUILD == 1:
     writeheader("#define DEBUG_BUILD 1 \n")
