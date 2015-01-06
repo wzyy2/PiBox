@@ -28,7 +28,7 @@ StatusService::~StatusService()
 }
 
 
-void StatusService::Start(Json::Value *send_root)
+void StatusService::Start(Json::Value *send_root, Json::Value *recv_root)
 {
     FILE *pf;
     char buffer[4096];
@@ -37,9 +37,9 @@ void StatusService::Start(Json::Value *send_root)
     struct SystemInfo sys_info;
 
 
-    if ((*recv_root_)["cmd"] == std::string("shutdown"))
+    if ((*recv_root)["cmd"] == std::string("shutdown"))
         system("sudo shutdown -h now");
-    else if ((*recv_root_)["cmd"] == std::string("reboot"))
+    else if ((*recv_root)["cmd"] == std::string("reboot"))
         system("sudo reboot");
 
     /* uname -a ,Linux ubuntu 3.13.0-24-generic*/

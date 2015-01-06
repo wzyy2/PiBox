@@ -7,23 +7,18 @@ global Env
 Env = Environment()
 
 
-
-
-INC = ['inc/', 'inc/lib']
+INC = ['cpp_source/inc/', 'cpp_source/inc/lib']
 #SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
 LIBS = ['jsonlib', 'pthread', 'wiringPi']
 LIBPATH = [ ]
-CCFLAGS = '-Wall' 
+CCFLAGS = '-Wall -Wmain' 
 ASFLAGS = ''
 LINKFLAGS = ''
 
 if BUILD == 'debug':
     CCFLAGS += ' -g'
 
-
-
 if PLATFORM == 'local':
-
     CC  = 'gcc'
     CXX = 'g++'
     Env['CC'] = CC
@@ -38,7 +33,7 @@ Env['LIBPATH'] = LIBPATH
 Env['CPPPATH'] = INC
 
 
-SRC = Glob("src/*.c") + Glob("src/*.cpp")
+SRC = Glob("cpp_source/src/*.c") + Glob("cpp_source/src/*.cpp")
 
 
 Env.SharedLibrary('app', SRC)

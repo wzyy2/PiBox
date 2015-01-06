@@ -14,18 +14,18 @@ NasService::~NasService()
     pthread_mutex_destroy(&mutex_);
 }
 
-void NasService::Start(Json::Value *send_root)
+void NasService::Start(Json::Value *send_root, Json::Value *recv_root)
 {        
     pthread_mutex_lock(&mutex_);
 
     {
         char ret;
 
-        if ((*recv_root_)["cmd"] == std::string("open"))
+        if ((*recv_root)["cmd"] == std::string("open"))
             ret = system("sh ./sh/aria2/start.sh") ;
-        else if ((*recv_root_)["cmd"] == std::string("close"))
+        else if ((*recv_root)["cmd"] == std::string("close"))
             ret = system("killall aria2c") ;
-        else if ((*recv_root_)["cmd"] == std::string("time"))
+        else if ((*recv_root)["cmd"] == std::string("time"))
             ;
 
         if(!ret)

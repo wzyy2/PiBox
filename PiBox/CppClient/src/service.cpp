@@ -24,8 +24,6 @@ Service::Service(char *gbuf)
     if ( target_service_ ==  NULL)
         throw std::string("unkown service");
     std::cout << "handle service:" << title << std::endl;
-    target_service_->set_data(root_);
-
 }
 
 Service::~Service()
@@ -38,7 +36,7 @@ Service::~Service()
 
 void Service::Start()
 {
-    target_service_->Start(send_root_);
+    target_service_->Start(send_root_, root_);
 }
 
 char *Service::ifsend(int *send_len)

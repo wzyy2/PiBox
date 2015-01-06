@@ -11,9 +11,9 @@ http://wzyy2.github.io/PiBox
 （yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）
 # Usage #
     sudo apt-get install python-pip python-dev build-essential 
-    sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
     sudo pip install PIL 
+    apt-get install python-setuptools
 这是安装django用的，先确保你安装了pip和python哈。
 
     apt-get install scons
@@ -37,7 +37,7 @@ http://wzyy2.github.io/PiBox
 
 # Technical details #
 他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
-如果要扩展应用，可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
+如果要扩展应用，可以参考examples-app的写一个c++程序放到APP文件夹，python的代码放到PiHome\PiApp\application这里。
 # 后续 #
 现在还只是个简单的框架，首先我没有写文档，可能很多地方代码会看不懂，其次我也没有在上面做应用做示范，现在屁功能都没有，工程也没做改动，等以后有空吧。
 在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对智能硬件产品的Android客户端有兴趣的人很多的话，我再完善然后放出吧。

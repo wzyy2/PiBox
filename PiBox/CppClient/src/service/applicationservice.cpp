@@ -14,6 +14,7 @@ const std::string ApplicationService::ktitle_ = "application";
 
 ApplicationService::ApplicationService()
 {  
+    char* error=0;
     //dlopen
     read_app_ini("./App");
 
@@ -22,21 +23,26 @@ ApplicationService::ApplicationService()
         APPFUN get_fun;
         APPFUN_INIT get_fun_init,get_fun_exit;
 
+        std::string ini_file = std::string("./App/") + app_list[i] + std::string("/app.ini");
+        if(!read_profile_int("Application", "HaveLib", 1,   ini_file.c_str())) {
+            //no libapp.so
+            continue;
+        }
+
         std::string file = std::string("./App/") + app_list[i] + std::string("/libapp.so");
 
         handle = dlopen(file.c_str(),RTLD_LAZY);
 
-        if (!handle)
-        {
+        if (!handle) {
             printf("%s \n",dlerror());
-            exit(1);
+            continue;
         }
-        dlerror();
 
-        get_fun = (APPFUN) dlsym(handle, "main");
+        get_fun = (APPFUN) dlsym(handle, "app_main");
 
-        if (dlerror() != NULL)
-        {
+        error=dlerror();
+        if(error) {
+            printf("%s \n",error);   
             exit(1);
         }
 
@@ -45,10 +51,13 @@ ApplicationService::ApplicationService()
 
         get_fun_init = (APPFUN_INIT) dlsym(handle, "app_init");
 
-        if (dlerror() == NULL) //清楚错误信息
-        {
+        error=dlerror();//清楚错误信息
+        if (!error)  {
             //init the application
             get_fun_init();  
+        }
+        else {
+            printf("%s \n",error);   
         }
 
     }
@@ -72,21 +81,22 @@ ApplicationService::~ApplicationService()
     }
 }
 
-void ApplicationService::Start(Json::Value *send_root)
+void ApplicationService::Start(Json::Value *send_root, Json::Value *recv_root)
 {        
     std::string title;
     APPFUN app_main;
 
-    title = (*recv_root_)["app_name"].asString();
+    title = (*recv_root)["app_name"].asString();
 
     app_main = application_map_[title];
+
+    std::cout << "start_application:" << title << std::endl;
 
     if ( app_main ==  NULL)
         //unkown app
         return;
 
-    app_main(send_root, recv_root_);
-
+    app_main(send_root, recv_root);
 }
 
 int ApplicationService::read_app_ini(const char* dirname)

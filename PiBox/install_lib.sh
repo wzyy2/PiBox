@@ -23,17 +23,7 @@ cd CppClient
 scons
 cd ../
 
-cd App/Camera
-scons
-cd ../
-cd ../
-
 cd App/GPIO
-scons
-cd ../
-cd ../
-
-cd App/Location
 scons
 cd ../
 cd ../

@@ -1,0 +1,164 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | GPIO {% endblock %}
+
+{% block css%}    
+
+{% endblock %}
+
+{% block js%}  
+{% endblock %}
+
+{% block on_ready%}    
+<script>
+function refresh_info() {
+    $.getJSON("/API/application/GPIO/GPIO_API/", {
+        action: 'read_info',  pin_num: '0'
+      },
+      function(data) {
+            var content;
+            content =  '<td>' + data.pwm_mode + '</td>'  + '<td>' + data.pwm_range + '</td>'  + '<td>' + data.pwm_clock + '</td>' ;
+            $('#pwm_info').html("111111111111");
+        });
+    
+};
+$(function() {
+    
+    refresh_info();
+    $("#set_pad").click( function(){  
+            $(".table").css('display','table');
+            $("#pic").css('display','none');
+    });
+    $("#set_pic").click( function(){  
+            $(".table").css('display','none');
+            $("#pic").css('display','block');
+    });
+
+});
+</script>
+{% endblock %}
+
+{% block heading %}    
+<h1>
+    App
+    <small> GPIO </small>
+</h1>
+<ol class="breadcrumb">
+ <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+ <li><a href="#">App</a></li>
+ <li class="active">GPIO</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-nas %} active{% endblock %} 
+{% block sidebar-download %} active{% endblock %} 
+
+{% block content %} 
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 ">
+
+    
+        <div class="box" style="margin-top : 20px; margin-bottom : 50px;">
+            <div class="box-header">
+                <h3 class="box-title">GPIO Control Pad</h3>
+                <div class="box-tools pull-right" data-toggle="tooltip" title="" data-original-title="header_pic">
+                                        <div class="btn-group" data-toggle="btn-toggle">
+                                            <button id="set_pad" type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
+                                            <button id="set_pic" type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                                        </div>
+                                    </div>
+
+            </div>
+            <div class="box-body table-responsive pad">
+                <img id="pic" src="/static/application/GPIO/django/static/img/pin_pic.png"  style="display: none; width : 100%;"></img>
+
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th>Name</th>
+                        <th>SetValue</th>
+                        <th>ReadValue</th>
+                        <th>Mode</th>
+                        <th>PwmValue</th>
+                        <th>PullMode</th>
+                    </tr>
+                  
+                                {% for value in pi_ret.message.pin_info %}
+                                        <tr >
+                                            <td>GPIO{{ value.name }}</td>
+                                            {% if value.value == -1 %}
+                                             <td> UNCERTAIN </td>
+                                             {% else %}
+                                            <td> {{ value.value }} </td>
+                                             {% endif %}
+
+                                             {% if value.read_value == -1 %}
+                                             <td> UNCERTAIN </td>
+                                             {% else %}
+                                            <td> {{ value.read_value }} </td>
+                                             {% endif %}
+
+                                            {% if value.mode == 0 %}
+                                                <td> INPUT </td>
+                                            {% else %}
+                                                 {% if value.mode == 1 %}
+                                                    <td> OUTPUT </td>
+                                                {% else %}
+                                                    {% if value.mode == 2 %}
+                                                        <td> PWM_OUTPUT </td>
+                                                    {% else %}
+                                                        {% if value.mode == 3 %}
+                                                            <td> GPIO_CLOCK </td>
+                                                        {% else %}
+                                                            <td> UNCERTAIN </td>
+                                                        {% endif %}                                                    
+                                                    {% endif %}                                                    
+                                                {% endif %}
+                                            {% endif %}
+
+                                            {% if value.pwm_value == -1 %}
+                                             <td> UNCERTAIN </td>
+                                             {% else %}
+                                            <td> {{ value.pwm_value }} </td>
+                                             {% endif %}
+
+                                            {% if value.pull_mode == 0 %}
+                                                <td> PUD_OFF </td>
+                                            {% else %}
+                                                 {% if value.pull_mode == 1 %}
+                                                    <td> PUD_DOWN </td>
+                                                {% else %}
+                                                    {% if value.pull_mode == 2 %}
+                                                        <td> PUD_UP </td>
+                                                    {% else %}
+                                                        <td> UNCERTAIN </td>                                               
+                                                    {% endif %}                                                    
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                {% endfor %}
+                                                </tbody>
+                </table>
+
+                     <table class="table table-bordered">
+                    <tbody>           
+                    <tr>
+                        <th>PwmMode</th>
+                        <th>PwmRange</th>
+                        <th>PwmClock</th>
+                    </tr>
+                    <tr id="pwm_info">
+
+                    </tr>
+                </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

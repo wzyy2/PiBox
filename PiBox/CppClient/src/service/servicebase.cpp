@@ -14,12 +14,7 @@ ServiceBase::~ServiceBase()
 
 }
 
-void ServiceBase::set_data(Json::Value *recv_root)
-{
-    recv_root_ = recv_root;
-}
-
-void ServiceBase::Start(Json::Value *send_root)
+void ServiceBase::Start(Json::Value *send_root, Json::Value *recv_root)
 {
     std::cout << "Service_base::Start" << std::endl;
 }

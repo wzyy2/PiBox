@@ -21,7 +21,7 @@ public:
 
     const static std::string ktitle_;
 
-    void Start(Json::Value *send_root);
+    void Start(Json::Value *send_root, Json::Value *recv_root);
 
     void HandleCmd();
 
