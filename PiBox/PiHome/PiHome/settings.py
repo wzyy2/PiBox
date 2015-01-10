@@ -97,6 +97,7 @@ TEMPLATE_DIRS = (os.path.join(  BASE_DIR, 'templates') ,)
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'PiApp.context_processors.app_info',
+    'PiApp.context_processors.version',
 )
 
 

@@ -2,7 +2,7 @@
 import re
 import sys
 import os
-
+import gl
 
 
 def app_info(request):
@@ -15,4 +15,9 @@ def app_info(request):
             info.append(item);
     return  {
         'APPINFO': info,
+    }
+
+def version(request):
+    return  {
+        'VERSION': gl.VERSION,
     }

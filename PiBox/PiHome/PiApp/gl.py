@@ -1,7 +1,8 @@
 #coding=utf-8
 import os
 
-
+VERSION = '0.2.1'
+    
 nas_enable="ENABLE"
 
 def app_num():

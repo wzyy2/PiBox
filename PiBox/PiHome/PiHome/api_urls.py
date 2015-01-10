@@ -23,8 +23,3 @@ urlpatterns = patterns('',
     (r'PiApp/settings/account', settings_account_api),    
     (r'PiApp/settings/general', settings_general_api),    
 )
-
-
-urlpatterns += patterns ('',
-    (r'^application/', include('PiApp.application.api_urls')),
-)
