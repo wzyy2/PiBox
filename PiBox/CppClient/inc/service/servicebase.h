@@ -14,10 +14,8 @@ public:
     ServiceBase();
     virtual ~ServiceBase();
 
-    void set_data(Json::Value *recv_root);
-    virtual void Start(Json::Value *send_root);
+    virtual void Start(Json::Value *send_root,  Json::Value *recv_root);
 
-    Json::Value *recv_root_;
     //used for service sync
     pthread_mutex_t mutex_;
 };
