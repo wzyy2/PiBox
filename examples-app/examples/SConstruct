@@ -1,0 +1,45 @@
+import os
+
+BUILD = 'debug'
+PLATFORM = "local"
+
+global Env 
+Env = Environment()
+
+
+INC = ['cpp_source/inc/', 'cpp_source/inc/lib']
+#SRC = Glob('*.cpp') + Glob('service' + '/*.cpp') + Glob('device' + '/*.cpp')
+LIBS = ['jsoncpp', 'pthread']
+LIBPATH = [ ]
+CCFLAGS = '-Wall -Wmain' 
+ASFLAGS = ''
+LINKFLAGS = ''
+
+if BUILD == 'debug':
+    CCFLAGS += ' -g'
+
+if PLATFORM == 'local':
+    CC  = 'gcc'
+    CXX = 'g++'
+    Env['CC'] = CC
+    Env['CXX'] = CXX
+
+
+Env['CCFLAGS'] = CCFLAGS
+Env['ASFLAGS'] = ASFLAGS
+Env['LINKFLAGS'] = LINKFLAGS
+Env['LIBS'] = LIBS
+Env['LIBPATH'] = LIBPATH
+Env['CPPPATH'] = INC
+
+
+SRC = Glob("cpp_source/src/*.c") + Glob("cpp_source/src/*.cpp")
+
+
+Env.SharedLibrary('app', SRC)
+Env.Decider('MD5')
+
+
+#      SConscript(['drivers/SConscript',
+#                   'parser/SConscript',
+#                   'utilities/SConscript'])
