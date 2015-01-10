@@ -1,5 +1,5 @@
 # PiBox #
-PiBox is an interesting Smart Home demo.
+PiBox is an interesting Smart Home demo.<br>
 http://wzyy2.github.io/PiBox
 
 # 介绍 #
@@ -20,7 +20,7 @@ http://wzyy2.github.io/PiBox
 这个是项目的构建工具~
 然后执行安装脚本
 
-    sudo sh ./install_lib.sh
+    sudo sh ./install_lib.sh （如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
     sudo sh ./install.sh
 如果有问题，可以自己打开脚本一条一条输，看返回信息
 

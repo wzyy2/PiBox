@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 dir=`dirname ${0}`
 dir2="${PWD}/${dir}"
 cd ${dir2}
@@ -9,13 +9,24 @@ cd ${dir2}
 #cd ../
 #cd ../
 
+if_gpio=1
+
+while getopts g: option
+do 
+    case "$option" in
+        g)
+            if_gpio=$OPTARG
+        # \?)
+        #     echo "Usage: args [-h n] [-m] [-s]"
+        #     echo "-h means hours"
+        #     echo "-m means minutes"
+        #     echo "-s means seconds"
+        #     exit 1;;
+    esac
+done
+
 cd lib/django-filebrowser-no-grappelli-master
 python setup.py install
-cd ../
-
-cd WiringPi-master
-chmod 0777 ./build
-./build
 cd ../
 cd ../
 
@@ -23,7 +34,17 @@ cd CppClient
 scons
 cd ../
 
-cd App/GPIO
-scons
-cd ../
-cd ../
+if [ "$if_gpio" = 1 ]; then
+    cd lib/WiringPi-master
+    chmod 0777 ./build
+    ./build
+    cd ../
+    cd ../
+
+    cd App/GPIO
+    scons
+    cd ../
+    cd ../
+else
+    rm -rf App/GPIO    
+fi
