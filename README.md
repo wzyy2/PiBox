@@ -8,7 +8,9 @@ http://wzyy2.github.io/PiBox
 
 # 功能 #
 没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。
-（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）
+（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）<br>
+默认自带的参考app只有gpio（仅限树莓派,其他平台需要加参数删除），更多的app可以在optional-app里选。
+
 # Usage #
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
     sudo apt-get install python-setuptools
@@ -16,7 +18,7 @@ http://wzyy2.github.io/PiBox
     sudo pip install PIL 
 这是安装django用的，先确保你安装了pip和python哈。
 
-    apt-get install scons
+    sudo apt-get install scons
 这个是项目的构建工具~
 然后执行安装脚本
 
@@ -39,14 +41,13 @@ http://wzyy2.github.io/PiBox
 他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
 如果要扩展应用，可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
 # 后续 #
-现在还只是个简单的框架，首先我没有写文档，可能很多地方代码会看不懂，其次我也没有在上面做应用做示范，现在屁功能都没有，工程也没做改动，等以后有空吧。
-在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对智能硬件产品的Android客户端有兴趣的人很多的话，我再完善然后放出吧。
+现在还只是个简单的框架，屁功能都没有，等以后有空。
+在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对Android客户端有兴趣的人很多的话，我再完善然后放出。
 
-还有使用说明很不完善，纯粹瞎写~~~。。。如果有疑问，提供人肉支持~。
+如果有疑问，提供人肉支持~。
 
 # 问题 #
-最大的问题还是django的debug模式暴露了太多东西出来，用软连接组织app和django的联系也有很多麻烦呐，如果暴露出来安全性堪忧。。。。
-无视吧，无视吧。。。毕竟只是玩玩。。。
+最大的问题觉得是安全性堪忧。。。。
 
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
