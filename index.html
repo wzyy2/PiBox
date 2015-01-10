@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <meta name="description" content="Pibox : PiBox is an Smart Home demo in raspberry pi.">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Pibox by wzyy2</title>
+    <title>Pibox</title>
   </head>
 
   <body>
-    <header>
-      <div class="inner">
-        <h1>Pibox</h1>
-        <h2>PiBox is an Smart Home demo in raspberry pi.</h2>
-        <a href="https://github.com/wzyy2/PiBox" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/wzyy2/PiBox">View on GitHub</a>
+
+          <h1 id="project_title">Pibox</h1>
+          <h2 id="project_tagline">PiBox is an Smart Home demo in raspberry pi.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/wzyy2/PiBox/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/wzyy2/PiBox/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
 <a id="pibox" class="anchor" href="#pibox" aria-hidden="true"><span class="octicon octicon-link"></span></a>PiBox</h1>
 
-<p>PiBox is an interesting Smart Home demo.
+<p>PiBox is an interesting Smart Home demo.<br>
 <a href="http://wzyy2.github.io/PiBox">http://wzyy2.github.io/PiBox</a></p>
 
 <h1>
@@ -44,26 +47,27 @@
 <a id="功能" class="anchor" href="#%E5%8A%9F%E8%83%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>功能</h1>
 
 <p>没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。
-（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）</p>
+（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）<br>
+默认自带的参考app只有gpio（仅限树莓派,其他平台需要加参数删除），更多的app可以在optional-app里选。</p>
 
 <h1>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
 
-<pre><code>sudo apt-get install python-pip python-dev build-essential 
+<pre><code>sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
+sudo apt-get install python-setuptools
 sudo pip install Django==1.6.6
 sudo pip install PIL 
-apt-get install python-setuptools
 </code></pre>
 
 <p>这是安装django用的，先确保你安装了pip和python哈。</p>
 
-<pre><code>apt-get install scons
+<pre><code>sudo apt-get install scons
 </code></pre>
 
 <p>这个是项目的构建工具~
 然后执行安装脚本</p>
 
-<pre><code>sudo sh ./install_lib.sh
+<pre><code>sudo sh ./install_lib.sh （如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
 sudo sh ./install.sh
 </code></pre>
 
@@ -86,21 +90,20 @@ sudo sh ./stop.sh
 <a id="technical-details" class="anchor" href="#technical-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technical details</h1>
 
 <p>他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
-如果要扩展应用，可以参考examples-app的写一个c++程序放到APP文件夹，python的代码放到PiHome\PiApp\application这里。</p>
+如果要扩展应用，可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.</p>
 
 <h1>
 <a id="后续" class="anchor" href="#%E5%90%8E%E7%BB%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>后续</h1>
 
-<p>现在还只是个简单的框架，首先我没有写文档，可能很多地方代码会看不懂，其次我也没有在上面做应用做示范，现在屁功能都没有，工程也没做改动，等以后有空吧。
-在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对智能硬件产品的Android客户端有兴趣的人很多的话，我再完善然后放出吧。</p>
+<p>现在还只是个简单的框架，屁功能都没有，等以后有空。
+在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对Android客户端有兴趣的人很多的话，我再完善然后放出。</p>
 
-<p>还有使用说明很不完善，纯粹瞎写~~~。。。如果有疑问，提供人肉支持~。</p>
+<p>如果有疑问，提供人肉支持~。</p>
 
 <h1>
 <a id="问题" class="anchor" href="#%E9%97%AE%E9%A2%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>问题</h1>
 
-<p>最大的问题还是django的debug模式暴露了太多东西出来，用软连接组织app和django的联系也有很多麻烦呐，如果暴露出来安全性堪忧。。。。
-无视吧，无视吧。。。毕竟只是玩玩。。。</p>
+<p>最大的问题觉得是安全性堪忧。。。。</p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
@@ -117,25 +120,18 @@ sudo sh ./stop.sh
 <img src="http://www.iotwrt.com/jpg/pibox2.jpg" alt="image">
 <img src="http://www.iotwrt.com/jpg/pibox3.jpg" alt="image">
 <img src="http://www.iotwrt.com/jpg/pibox4.png" alt="image"></p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/wzyy2/PiBox/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/wzyy2/PiBox/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/wzyy2/PiBox"></a> is maintained by <a href="https://github.com/wzyy2">wzyy2</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
     </div>
 
-  
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Pibox maintained by <a href="https://github.com/wzyy2">wzyy2</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
