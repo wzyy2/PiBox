@@ -7,5 +7,6 @@ from views import *
 #/PiApp/application
 
 urlpatterns = patterns('',
-    (r'^$', GPIO),
+    (r'^$', index),
+    (r'^temp.jpg', image),    
 )

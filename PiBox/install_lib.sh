@@ -27,24 +27,42 @@ done
 
 cd lib/django-filebrowser-no-grappelli-master
 python setup.py install
+if [ $? -ne 0 ];then
+    echo "error!"
+    exit
+fi
 cd ../
 cd ../
 
 cd CppClient
 scons
+if [ $? -ne 0 ];then
+    echo "error!"
+    exit
+fi
 cd ../
+
+
 
 if [ "$if_gpio" = 1 ]; then
     cd lib/WiringPi-master
     chmod 0777 ./build
     ./build
+    if [ $? -ne 0 ];then
+        echo "error!"
+        exit
+    fi
     cd ../
     cd ../
-
     cd App/GPIO
     scons
+    if [ $? -ne 0 ];then
+        echo "error!"
+        exit
+    fi
     cd ../
     cd ../
 else
     rm -rf App/GPIO    
 fi
+
