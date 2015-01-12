@@ -6,7 +6,7 @@ http://wzyy2.github.io/PiBox
 写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).
 
 # 功能 #
-内置了yaaw和系统信息显示,(yyaw需要配合aria2,所以输入sudo apt-get install aria2)<br>
+内置的功能有yaaw和系统信息显示(yyaw需要配合aria2,所以输入sudo apt-get install aria2),除此之外还有一些专门的app应用<br>
 默认自带的app只有gpio(由于手上的树梅派不见了,所以还未完成,建议也加参数删除).<br>
 更多的app可以在optional-app里选.<br>
 
