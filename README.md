@@ -24,7 +24,7 @@ http://wzyy2.github.io/PiBox
 
     sudo sh ./start.sh 
     sudo sh ./stop.sh
-开启，关闭程序的脚本.
+这是程序的启停脚本,注意sudo sh ./start.sh哦.
 最后进浏览器,输入
 
     http://192.168.10.105(换成你的ip):8000
