@@ -3,7 +3,7 @@ PiBox is an interesting Smart Home demo.<br>
 http://wzyy2.github.io/PiBox
 
 # 介绍 #
-写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用。
+写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).
 
 # 功能 #
 内置了yaaw和系统信息显示,(yyaw需要配合aria2,所以输入sudo apt-get install aria2)<br>
