@@ -48,6 +48,7 @@ $(function() {
                         }
                     });                   
                 }
+                $("#surface").attr('src', "temp.jpg?t=" + Math.random());
             });     
     });
     $("#refresh").click( function(){   
@@ -82,8 +83,9 @@ $(function() {
    </center>
 </div>
 <div class="row">
-    <center>
-        <img id="surface" src="temp.jpg" style="margin-top: 60px;"></img>
+    <center style="margin-top: 60px;">
+        <h1>snapshot<h1>
+        <img id="surface" src="temp.jpg" style="margin-top: 20px;"></img>
    </center>
 </div>
 
