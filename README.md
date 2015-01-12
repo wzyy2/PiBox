@@ -3,22 +3,20 @@ PiBox is an interesting Smart Home demo.<br>
 http://wzyy2.github.io/PiBox
 
 # 介绍 #
-写这个PiBox的初衷是现在智能硬件的概念很火,作者是学习嵌入式的学生,就想搞一些来玩玩。
-偶然间接触到了树莓派,因为之前搞过一个openwrt的控制,就很想在树莓派上做一个类似小米路由器+boardlink这样一个东西.因为网上一些网页控制例子简直太弱了,就想搞个高大上一点的东西.
+写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用。
 
 # 功能 #
-内置了yaaw和文件管理器和系统信息显示,可以当个nas界面和监视界面.(yyaw需要配合aria2,所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~)<br>
-默认自带的app只有gpio(由于手上的树梅派不见了,所以还未完成,建议也加参数删除),更多的app可以在optional-app里选.
+内置了yaaw和系统信息显示,(yyaw需要配合aria2,所以输入sudo apt-get install aria2)<br>
+默认自带的app只有gpio(由于手上的树梅派不见了,所以还未完成,建议也加参数删除).<br>
+更多的app可以在optional-app里选.<br>
 
 # Usage #
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
     sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
-这是安装django用的,先确保你安装了pip和python哈.
-
     sudo apt-get install scons
-这个是项目的构建工具~
-然后执行安装脚本.
+全部的依赖环境.
+下面是安装脚本.
 
     sudo sh ./install_source.sh (如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
     sudo sh ./install_env.sh
@@ -27,7 +25,7 @@ http://wzyy2.github.io/PiBox
     sudo sh ./start.sh 
     sudo sh ./stop.sh
 开启，关闭程序的脚本.
-进浏览器,输入
+最后进浏览器,输入
 
     http://192.168.10.105(换成你的ip):8000
 (注意文件管理器的默认目录是/home/shares）
