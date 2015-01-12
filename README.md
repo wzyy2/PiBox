@@ -31,7 +31,7 @@ http://wzyy2.github.io/PiBox
 (注意文件管理器的默认目录是/home/shares）
 
 # Technical details #
-他由两部分组成,分别是一个c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
+PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
 如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
 
 ## License ##
@@ -44,6 +44,9 @@ PiBox is free software;you can redistribute it and/or modify it under terms of t
 ## FAQ ##
 * [FAQ](https://github.com/wzyy2/PiBox/wiki)
 
+
+
+## Image ##
 ![image](http://www.iotwrt.com/jpg/pibox1.jpg)
 ![image](http://www.iotwrt.com/jpg/pibox2.jpg)
 ![image](http://www.iotwrt.com/jpg/pibox3.jpg)
