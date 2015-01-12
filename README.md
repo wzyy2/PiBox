@@ -7,23 +7,21 @@ http://wzyy2.github.io/PiBox
 偶然间接触到了树莓派，因为之前搞过一个openwrt的控制，就很想在树莓派上做一个类似小米路由器+boardlink这样一个东西。因为网上一些网页控制例子简直太弱了，就想搞个高大上一点的东西。
 
 # 功能 #
-没功能。。。嗯，现在就只是一个可以参考的框架而已，由于我没开发应用。唯一有用的就是内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。
-（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）<br>
-默认自带的参考app只有gpio（还不能用，也只能在树莓派编译，其他平台需要加参数删除），更多的app可以在optional-app里选。
+内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）<br>
+默认自带的app只有gpio（由于手上的树梅派不见了，所以还未完成，建议也加参数删除），更多的app可以在optional-app里选。
 
 # Usage #
-    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
+    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
     sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
-    sudo pip install PIL 
 这是安装django用的，先确保你安装了pip和python哈。
 
     sudo apt-get install scons
 这个是项目的构建工具~
 然后执行安装脚本
 
-    sudo sh ./install_lib.sh （如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
-    sudo sh ./install.sh
+    sudo sh ./install_source.sh （如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
+    sudo sh ./install_env.sh
 如果有问题，可以自己打开脚本一条一条输，看返回信息
 
     sudo sh ./start.sh 
@@ -45,9 +43,6 @@ http://wzyy2.github.io/PiBox
 在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对Android客户端有兴趣的人很多的话，我再完善然后放出。
 
 如果有疑问，提供人肉支持~。
-
-# 问题 #
-最大的问题觉得是安全性堪忧。。。。
 
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.

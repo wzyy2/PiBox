@@ -41,12 +41,12 @@ extern "C"
             pin_info[i].if_change = false;
         }
 
-        // 设置IO口全部为输出状态  
-        for( i = 0 ; i < 8 ; i++ ) {  
-            pinMode(i, OUTPUT);  
-            pin_info[i].mode = OUTPUT;
-            pin_info[i].read_value = digitalRead(i);
-        }
+        // // 设置IO口全部为输出状态  
+        // for( i = 0 ; i < 8 ; i++ ) {  
+        //     pinMode(i, OUTPUT);  
+        //     pin_info[i].mode = OUTPUT;
+        //     pin_info[i].read_value = digitalRead(i);
+        // }
 
         return 0;
     }

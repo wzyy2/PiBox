@@ -16,15 +16,12 @@ from app import *
 from utils import *
 import gl
 
-
-
 def requires_login(view):
     def new_view(request, *args, **kwargs):
         if not request.user.is_authenticated():                        #如果用户没有登录，跳转到登录界面
             return HttpResponseRedirect('/accounts/login/')
         return view(request, *args, **kwargs)                          #否则返回传进来的方法
     return new_view                                                    #返回new_view值：登录视图或者是传进来的视图
-
 
 def dashboard(request):
     try:

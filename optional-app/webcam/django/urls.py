@@ -8,5 +8,7 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$', index),
+    (r'^open/', open_camera),    
+    (r'^close/', close_camera),    
     (r'^temp.jpg', image),    
 )

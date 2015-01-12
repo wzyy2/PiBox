@@ -3,7 +3,9 @@
 {% block title %} PiHome | GPIO {% endblock %}
 
 {% block css%}    
+<style type="text/css">
 
+</style>
 {% endblock %}
 
 {% block js%}  
@@ -11,6 +13,46 @@
 
 {% block on_ready%}    
 <script>
+$(function() {
+    $("#open").click( function(){  
+        port = $('#camera_port').val();
+        $.getJSON("/PiApp/application/webcam/open",  {camera_port : port}, 
+            function(data){
+                if(data['msg'] != 'ok') {
+                    $("#dialog").html("Open failed");
+                    $("#dialog").dialog({
+                        modal: true,
+                        closeText: '<span class="glyphicon glyphicon-play"></span>',
+                        buttons: {
+                            Ok: function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                }
+            });
+    });
+    $("#close").click( function(){  
+        $.getJSON("/PiApp/application/webcam/close",           
+            function(data){
+                if(data['msg'] != 'ok') {
+                    $("#dialog").html("Close failed");
+
+                    $("#dialog").dialog({
+                        modal: false,
+                        buttons: {
+                            Ok: function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });                   
+                }
+            });     
+    });
+    $("#refresh").click( function(){   
+            $("#surface").attr('src',$("#surface").attr('src'));
+    });
+});
 </script>
 {% endblock %}
 
@@ -26,10 +68,22 @@
 {% endblock %}
 
 {% block content %} 
-
 <div class="row">
-  
-    <img src="temp.jpg"></img>
+    <div class="col-md-12" style="margin-bottom:20px;">
+        <span>Port:</span>
+        <input type="text" id="camera_port" style="margin-left:5px;" value="0">
+        <span style="margin-left:20px;">Control:</span>
+        <div class="btn-group" style="margin-left:5px;" >
+            <button class="btn btn-primary" id="open"><span class="glyphicon glyphicon-play"></span></button>
+            <button class="btn btn-primary" id="close"><span class="glyphicon glyphicon-pause"></span></button>
+            <button class="btn btn-primary" id="refresh"><span class="glyphicon glyphicon-refresh"></span></button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <center>
+        <img id="surface" src="temp.jpg"></img>
+   </center>
 </div>
 
 
