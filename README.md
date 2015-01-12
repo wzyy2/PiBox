@@ -32,23 +32,19 @@ http://wzyy2.github.io/PiBox
     http://192.168.10.105(换成你的ip):8000
 (注意文件管理器的默认目录是/home/shares）
 
-
-
 # Technical details #
-他由两部分组成,分别是一个c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.
+他由两部分组成,分别是一个c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
 如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
-# 后续 #
-在截图里你可能看到了安卓客户端,不过还不是很完善,如果对Android客户端有兴趣的人很多的话,我再完善然后放出。
-
-如果有疑问,提供人肉支持~.
 
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
+
 ## PS ##
 如果你有什么问题的话,欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）
 提供人肉支持~
 
-
+## FAQ ##
+* [FAQ](https://github.com/wzyy2/PiBox/wiki)
 
 ![image](http://www.iotwrt.com/jpg/pibox1.jpg)
 ![image](http://www.iotwrt.com/jpg/pibox2.jpg)
