@@ -25,14 +25,6 @@ do
     esac
 done
 
-cd lib/django-filebrowser-no-grappelli-master
-python setup.py install
-if [ $? -ne 0 ];then
-    echo "error!"
-    exit
-fi
-cd ../
-cd ../
 
 cd CppClient
 scons
