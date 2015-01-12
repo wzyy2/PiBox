@@ -11,12 +11,15 @@ http://wzyy2.github.io/PiBox
 更多的app可以在optional-app里选.<br>
 
 # Usage #
+
+首先安装全部的依赖环境.
+
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
     sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
     sudo apt-get install scons
-全部的依赖环境.
-下面是安装脚本.
+
+下面执行安装脚本(在PiBox文件夹下).
 
     sudo sh ./install_source.sh (如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
     sudo sh ./install_env.sh
