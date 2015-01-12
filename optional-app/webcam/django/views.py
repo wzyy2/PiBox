@@ -6,7 +6,8 @@ from django.utils import simplejson
 from PiApp.models import *
 
 from PIL import Image 
-import cv2
+import cv2,os
+import cv2.cv as cv
 
 try:
    pisettings_instance = PiSettings.objects.get(id =1)
@@ -15,6 +16,7 @@ except:
 
 html_source_header = "application/webcam/django/html/"
 static_source_header = "static/webcam/django/static/"
+cwd  = os.getcwd() + '/App/webcam/'
 camera = None
 
 def index(request):
@@ -23,14 +25,14 @@ def index(request):
     return HttpResponse(t.render(c))
 
 def image(request):
-    global camera
     http = HttpResponse(mimetype='image/jpeg')
     if camera != None:
-        retval, im = camera.read()      
-        img = Image.open('/home/ubuntu/PiBox/App/webcam/django/static/img/pi_logo.png')
-        img.save(http,'png')
+        retval, img = camera.read()      
+        cv2.imwrite(cwd + "django/tmp/tmp.jpg" , img)
+        ret_img = Image.open(cwd + "django/tmp/tmp.jpg")
+        # img.save(http,'png')
         # img = Image.frombytes("RGB", (size_x, size_y), im)
-        # img.save(http,'jpg')
+        ret_img.save(http,'JPEG')
     return http
 
 def open_camera(request):
@@ -38,12 +40,38 @@ def open_camera(request):
     try:
         if request.method == 'GET':  
             camera_port = int(request.GET['camera_port']) 
-            camera = cv2.VideoCapture(camera_port)
+            if camera == None:
+                camera = cv2.VideoCapture(camera_port)
+                camera.set(cv.CV_CAP_PROP_FRAME_WIDTH,320)
+                camera.set(cv.CV_CAP_PROP_FRAME_HEIGHT,240)
+                camera.set(cv.CV_CAP_PROP_FPS,1)
+                retval, img = camera.read()      #light led
             return HttpResponse(simplejson.dumps({'msg':'ok'}))   
     except: 
         return HttpResponse(simplejson.dumps({'msg':'fail'}))   
 
 def close_camera(request):
     global camera
-    # del(camera)
+    del(camera)
     return HttpResponse(simplejson.dumps({'msg':'ok'}))   
+
+
+# CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds.
+# CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.
+# CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file
+# CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.
+# CV_CAP_PROP_FRAME_HEIGHT Height of the frames in the video stream.
+# CV_CAP_PROP_FPS Frame rate.
+# CV_CAP_PROP_FOURCC 4-character code of codec.
+# CV_CAP_PROP_FRAME_COUNT Number of frames in the video file.
+# CV_CAP_PROP_FORMAT Format of the Mat objects returned by retrieve() .
+# CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.
+# CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).
+# CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).
+# CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).
+# CV_CAP_PROP_HUE Hue of the image (only for cameras).
+# CV_CAP_PROP_GAIN Gain of the image (only for cameras).
+# CV_CAP_PROP_EXPOSURE Exposure (only for cameras).
+# CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.
+# CV_CAP_PROP_WHITE_BALANCE Currently unsupported
+# CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)

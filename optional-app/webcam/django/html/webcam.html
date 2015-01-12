@@ -21,7 +21,7 @@ $(function() {
                 if(data['msg'] != 'ok') {
                     $("#dialog").html("Open failed");
                     $("#dialog").dialog({
-                        modal: true,
+                        modal: false,
                         closeText: '<span class="glyphicon glyphicon-play"></span>',
                         buttons: {
                             Ok: function() {
@@ -30,6 +30,7 @@ $(function() {
                         }
                     });
                 }
+                $("#surface").attr('src', "temp.jpg?t=" + Math.random());
             });
     });
     $("#close").click( function(){  
@@ -50,7 +51,7 @@ $(function() {
             });     
     });
     $("#refresh").click( function(){   
-            $("#surface").attr('src',$("#surface").attr('src'));
+            $("#surface").attr('src', "temp.jpg?t=" + Math.random() );
     });
 });
 </script>
@@ -69,7 +70,7 @@ $(function() {
 
 {% block content %} 
 <div class="row">
-    <div class="col-md-12" style="margin-bottom:20px;">
+    <center>
         <span>Port:</span>
         <input type="text" id="camera_port" style="margin-left:5px;" value="0">
         <span style="margin-left:20px;">Control:</span>
@@ -78,11 +79,11 @@ $(function() {
             <button class="btn btn-primary" id="close"><span class="glyphicon glyphicon-pause"></span></button>
             <button class="btn btn-primary" id="refresh"><span class="glyphicon glyphicon-refresh"></span></button>
         </div>
-    </div>
+   </center>
 </div>
 <div class="row">
     <center>
-        <img id="surface" src="temp.jpg"></img>
+        <img id="surface" src="temp.jpg" style="margin-top: 60px;"></img>
    </center>
 </div>
 
