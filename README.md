@@ -26,7 +26,7 @@ http://wzyy2.github.io/PiBox
 
     sudo sh ./start.sh 
     sudo sh ./stop.sh
-来运行开启，关闭程序了。
+开启，关闭程序的脚本。
 进浏览器，输入
 
     http://192.168.10.105(换成你的ip):8000
@@ -39,7 +39,6 @@ http://wzyy2.github.io/PiBox
 他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
 如果要扩展应用，可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
 # 后续 #
-现在还只是个简单的框架，屁功能都没有，等以后有空。
 在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对Android客户端有兴趣的人很多的话，我再完善然后放出。
 
 如果有疑问，提供人肉支持~。
