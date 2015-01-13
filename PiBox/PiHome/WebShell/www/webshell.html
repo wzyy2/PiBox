@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>WebShell 0.9.6</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="webshell.css"/>
+<script type="text/javascript" src="webshell.js"></script>
+<script type="text/javascript"><!--
+var t;
+var is_scroll=false;
+var curr_overlay=0;
+var sel_overlay=1;
+var cy=0;
+window.onload=function() {
+	t=webshell.Terminal("term",80,24,handler);
+	document.onkeypress=t.keypress;
+	document.onkeydown=t.keydown; 
+	setTimeout(function(){window.scrollTo(0, 1);}, 100);
+	startMsgAnim('Connecting',0,false);
+};
+window.onselectstart=function() {return false;};
+// Toggle scroll
+function ts() {
+	is_scroll=!is_scroll;
+	so(sel_overlay);
+}
+// Set overlay
+function so(value) {
+	curr_overlay=value;
+	if (value>0)
+		sel_overlay=value;
+	scroll(cy);
+	for(var i=0;i<10;i++)
+		document.getElementById("ol"+i).style.display=(value == i)?'block':'none';
+	var term=document.getElementById("term");
+	if(value<0) {
+		document.onkeypress=t.keypress;
+		document.onkeydown=t.keydown;
+		term.onclick=function(){so(sel_overlay);};
+		term.style.cursor="pointer";
+	} else {
+		document.onkeypress=null;
+		document.onkeydown=null;
+		term.onclick=null;
+		term.style.cursor=null;
+	}
+	if (value==1)
+		document.getElementById("t").focus();
+}
+// Send text
+function st() {
+	var textinput=document.getElementById("t").value;
+	document.getElementById("t").value='';
+	for(var i=0;i<textinput.length;i++)
+		t.sendkey(textinput.charCodeAt(i));
+	if(!textinput.length)
+		t.sendkey(13);
+	document.getElementById("t").focus();
+}
+// Send key
+function sk(value) {
+	var textinput=document.getElementById("t").value;
+	if(textinput.length)
+		st();
+	t.sendkey(value);
+}
+// Send text and go home
+function sh(value) {
+	sk(value);
+	so(-1);
+}
+// send combos (e.g. tmux screen change)
+function macro() {
+	var i = 0;
+	for (i = 0; i < arguments.length; ++i) {
+		sk(arguments[i]);
+	}
+}
+// set text field to password field
+function set_pw() {
+	var ti=document.getElementById("t");
+	var pw=document.getElementById("pw");
+	if (ti.type == "text") {
+		ti.type = "password";
+		pw.className = "k k3s";
+	} else {
+		ti.type = "text";
+		pw.className = "k k3";
+	}
+	so(1);
+}
+// Set scroll
+function scroll() {
+	var div=document.getElementById("term");
+	var sp=0;
+	if((curr_overlay>0) && (cy>4))
+		sp=((4-cy)*11)+"px";
+	if (!is_scroll)
+		sp=0;
+	div.style.top=sp;
+}
+// Handler
+function handler(msg,value) {
+	switch(msg) {
+	case 'conn':
+		startMsgAnim('Tap for keyboard',800,false);
+		break;
+	case 'disc':
+		startMsgAnim('Disconnected',0,true);
+		break;
+	case 'curs':
+		cy=value;
+		scroll(cy);
+		break;
+	}
+}
+// Animate box
+var msgAnim={timer:null,up:false,duration:300,start:null};
+function msgAnimTimer() {
+	var time=(new Date).getTime();
+	var fraction;
+	alpha=(time-msgAnim.start)/msgAnim.duration;
+	if(alpha<0.0)
+		alpha=0.0;
+	else if (alpha>1.0) {
+		alpha=1.0;
+		endMsgAnim();
+	}
+	if(!msgAnim.up)
+		alpha=1.0-alpha;
+    var sine=Math.sin((Math.PI/2.0)*alpha);
+	document.getElementById('ol0').style.opacity=sine*sine*0.66;
+}
+function startMsgAnim(msg,delay,up) {
+	if(msgAnim.timer!=null) {
+		clearInterval(msgAnim.timer);
+		msgAnim.timer=null;
+	}
+	document.getElementById('ol0').innerHTML=msg;
+	so(0);
+	msgAnim.up=up;
+	msgAnim.start=(new Date).getTime()+delay-60;
+	msgAnimTimer();
+	msgAnim.timer=setInterval('msgAnimTimer();',60);
+}
+function endMsgAnim () {
+	if(msgAnim.timer!=null) {
+		clearInterval(msgAnim.timer);
+		msgAnim.timer=null;
+	}
+	if(!msgAnim.up)
+		so(-1);
+}
+--></script>
+</head>
+<body>
+<div class="container">
+
+<pre id="term"></pre>
+
+<div id="ol0" class="olAlert"></div>
+
+<div id="ol1" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd"></div>
+<div class="kd"></div>
+<div class="kd">
+<form class="k k2" name="textform" onsubmit="st();return false;">
+<input type="text" id="t" class="t" name="textinput" />
+</form>
+<div class="k k3" id="pw" onclick="set_pw()">PW</div>
+<div class="k k3" onclick="sh(13)">Send</div>
+</div>
+<div class="kd">
+<div class="k k6s" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol2" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd"></div>
+<div class="kd">
+<div class="k k6" onclick="sk(27)">esc</div>
+<div class="k k6" onclick="sk(63273)">home</div>
+<div class="k k6" onclick="sk(63276)">pgup</div>
+<div class="k k6" onclick="sk(63232)">&#8673;</div>
+<div class="k k6" onclick="sk(63277)">pgdn</div>
+<div class="k k6" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="sk(9)">tab</div>
+<div class="k k6" onclick="sk(63275)">end</div>
+<div class="k k6" onclick="sk(63234)">&#8672;</div>
+<div class="k k6" onclick="sk(63233)">&#8675;</div>
+<div class="k k6" onclick="sk(63235)">&#8674;</div>
+<div class="k k6" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6s" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol3" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(113)">q</div>
+<div class="k k0" onclick="sk(119)">w</div>
+<div class="k k0" onclick="sk(101)">e</div>
+<div class="k k0" onclick="sk(114)">r</div>
+<div class="k k0" onclick="sk(116)">t</div>
+<div class="k k0" onclick="sk(121)">y</div>
+<div class="k k0" onclick="sk(117)">u</div>
+<div class="k k0" onclick="sk(105)">i</div>
+<div class="k k0" onclick="sk(111)">o</div>
+<div class="k k0" onclick="sk(112)">p</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(97)">a</div>
+<div class="k k0" onclick="sk(115)">s</div>
+<div class="k k0" onclick="sk(100)">d</div>
+<div class="k k0" onclick="sk(102)">f</div>
+<div class="k k0" onclick="sk(103)">g</div>
+<div class="k k0" onclick="sk(104)">h</div>
+<div class="k k0" onclick="sk(106)">j</div>
+<div class="k k0" onclick="sk(107)">k</div>
+<div class="k k0" onclick="sk(108)">l</div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="so(7)"><img src="shift.png" alt="sh"></div>
+<div class="k k0" onclick="sk(122)">z</div>
+<div class="k k0" onclick="sk(120)">x</div>
+<div class="k k0" onclick="sk(99)">c</div>
+<div class="k k0" onclick="sk(118)">v</div>
+<div class="k k0" onclick="sk(98)">b</div>
+<div class="k k0" onclick="sk(110)">n</div>
+<div class="k k0" onclick="sk(109)">m</div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6s" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol7" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(81)">Q</div>
+<div class="k k0" onclick="sk(87)">W</div>
+<div class="k k0" onclick="sk(69)">E</div>
+<div class="k k0" onclick="sk(82)">R</div>
+<div class="k k0" onclick="sk(84)">T</div>
+<div class="k k0" onclick="sk(89)">Y</div>
+<div class="k k0" onclick="sk(85)">U</div>
+<div class="k k0" onclick="sk(73)">I</div>
+<div class="k k0" onclick="sk(79)">O</div>
+<div class="k k0" onclick="sk(80)">P</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(65)">A</div>
+<div class="k k0" onclick="sk(83)">S</div>
+<div class="k k0" onclick="sk(68)">D</div>
+<div class="k k0" onclick="sk(70)">F</div>
+<div class="k k0" onclick="sk(71)">G</div>
+<div class="k k0" onclick="sk(72)">H</div>
+<div class="k k0" onclick="sk(74)">J</div>
+<div class="k k0" onclick="sk(75)">K</div>
+<div class="k k0" onclick="sk(76)">L</div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0s" onclick="so(3)"><img src="shift.png" alt="sh"></div>
+<div class="k k0" onclick="sk(90)">Z</div>
+<div class="k k0" onclick="sk(88)">X</div>
+<div class="k k0" onclick="sk(67)">C</div>
+<div class="k k0" onclick="sk(86)">V</div>
+<div class="k k0" onclick="sk(66)">B</div>
+<div class="k k0" onclick="sk(78)">N</div>
+<div class="k k0" onclick="sk(77)">M</div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6s" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol4" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(49)">1</div>
+<div class="k k0" onclick="sk(50)">2</div>
+<div class="k k0" onclick="sk(51)">3</div>
+<div class="k k0" onclick="sk(52)">4</div>
+<div class="k k0" onclick="sk(53)">5</div>
+<div class="k k0" onclick="sk(54)">6</div>
+<div class="k k0" onclick="sk(55)">7</div>
+<div class="k k0" onclick="sk(56)">8</div>
+<div class="k k0" onclick="sk(57)">9</div>
+<div class="k k0" onclick="sk(48)">0</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(45)">-</div>
+<div class="k k0" onclick="sk(47)">/</div>
+<div class="k k0" onclick="sk(58)">:</div>
+<div class="k k0" onclick="sk(59)">;</div>
+<div class="k k0" onclick="sk(40)">(</div>
+<div class="k k0" onclick="sk(41)">)</div>
+<div class="k k0" onclick="sk(36)">$</div>
+<div class="k k0" onclick="sk(38)">&amp;</div>
+<div class="k k0" onclick="sk(64)">@</div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="so(8)">#+=</div>
+<div class="k k0"></div>
+<div class="k k0" onclick="sk(46)">.</div>
+<div class="k k0" onclick="sk(44)">,</div>
+<div class="k k0" onclick="sk(63)">?</div>
+<div class="k k0" onclick="sk(33)">!</div>
+<div class="k k0" onclick="sk(39)">'</div>
+<div class="k k0" onclick="sk(34)">"</div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6s" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol8" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(91)">[</div>
+<div class="k k0" onclick="sk(93)">]</div>
+<div class="k k0" onclick="sk(123)">{</div>
+<div class="k k0" onclick="sk(125)">}</div>
+<div class="k k0" onclick="sk(35)">#</div>
+<div class="k k0" onclick="sk(37)">%</div>
+<div class="k k0" onclick="sk(94)">^</div>
+<div class="k k0" onclick="sk(42)">*</div>
+<div class="k k0" onclick="sk(43)">+</div>
+<div class="k k0" onclick="sk(61)">=</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(95)">_</div>
+<div class="k k0" onclick="sk(92)">\</div>
+<div class="k k0" onclick="sk(124)">|</div>
+<div class="k k0" onclick="sk(126)">~</div>
+<div class="k k0" onclick="sk(60)">&lt;</div>
+<div class="k k0" onclick="sk(62)">&gt;</div>
+<div class="k k0" onclick="sk(96)">`</div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0s" onclick="so(4)">123</div>
+<div class="k k0"></div>
+<div class="k k0" onclick="sk(46)">.</div>
+<div class="k k0" onclick="sk(44)">,</div>
+<div class="k k0" onclick="sk(63)">?</div>
+<div class="k k0" onclick="sk(33)">!</div>
+<div class="k k0" onclick="sk(39)">'</div>
+<div class="k k0" onclick="sk(34)">"</div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6s" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol5" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(17)">^Q</div>
+<div class="k k0" onclick="sk(23)">^W</div>
+<div class="k k0" onclick="sk(5)">^E</div>
+<div class="k k0" onclick="sk(18)">^R</div>
+<div class="k k0" onclick="sk(20)">^T</div>
+<div class="k k0" onclick="sk(25)">^Y</div>
+<div class="k k0" onclick="sk(21)">^U</div>
+<div class="k k0" onclick="sk(9)">^I</div>
+<div class="k k0" onclick="sk(15)">^O</div>
+<div class="k k0" onclick="sk(16)">^P</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(1)">^A</div>
+<div class="k k0" onclick="sk(19)">^S</div>
+<div class="k k0" onclick="sk(4)">^D</div>
+<div class="k k0" onclick="sk(6)">^F</div>
+<div class="k k0" onclick="sk(7)">^G</div>
+<div class="k k0" onclick="sk(8)">^H</div>
+<div class="k k0" onclick="sk(10)">^J</div>
+<div class="k k0" onclick="sk(11)">^K</div>
+<div class="k k0" onclick="sk(12)">^L</div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="so(9)"><img src="shift.png" alt="sh"></div>
+<div class="k k0" onclick="sk(26)">^Z</div>
+<div class="k k0" onclick="sk(24)">^X</div>
+<div class="k k0" onclick="sk(3)">^C</div>
+<div class="k k0" onclick="sk(22)">^V</div>
+<div class="k k0" onclick="sk(2)">^B</div>
+<div class="k k0" onclick="sk(14)">^N</div>
+<div class="k k0" onclick="sk(13)">^M</div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6s" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol9" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(0)">^@</div>
+<div class="k k0" onclick="sk(28)">^\</div>
+<div class="k k0" onclick="sk(29)">^]</div>
+<div class="k k0" onclick="sk(30)">^^</div>
+<div class="k k0" onclick="sk(31)">^_</div>
+<div class="k k0" onclick="sk(63236)">F1</div>
+<div class="k k0" onclick="sk(63237)">F2</div>
+<div class="k k0" onclick="sk(63238)">F3</div>
+<div class="k k0" onclick="sk(63239)">F4</div>
+<div class="k k0" onclick="sk(63240)">F5</div>
+</div>
+<div class="kd">
+<div class="k k0" onclick="sk(63241)">F6</div>
+<div class="k k0" onclick="sk(63242)">F7</div>
+<div class="k k0" onclick="sk(63243)">F8</div>
+<div class="k k0" onclick="sk(63244)">F9</div>
+<div class="k k0" onclick="sk(63245)">F10</div>
+<div class="k k0" onclick="sk(63246)">F11</div>
+<div class="k k0" onclick="sk(63247)">F12</div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0" onclick="sk(13)"><img src="enter.png" alt="en"></div>
+</div>
+<div class="kd">
+<div class="k k0s" onclick="so(5)"><img src="shift.png" alt="sh"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0"></div>
+<div class="k k0" onclick="sk(32)">sp</div>
+<div class="k k0" onclick="sk(127)"><img src="delete.png" alt="bs"></div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6s" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6s" onclick="so(5)">Ctrl</div>
+<div class="k k6" onclick="so(6)">Fn</div>
+</div>
+</div>
+
+<div id="ol6" class="olCtrl">
+<div class="hd">
+<div class="h hb" onclick="so(-1)">Back</div>
+<div class="hr">
+<div class="h hscroll" onclick="ts()">Scroll</div>
+</div>
+</div>
+<div class="kd"></div>
+<div class="kd">
+<div class="k k6" onclick="sk(4)">^d</div>
+<div class="k k6" onclick="macro(1, 100)">^A-d</div>
+<div class="k k6" onclick="macro(1, 97)">^A-a</div>
+<div class="k k6" onclick="macro(1, 99)">^A-c</div>
+<div class="k k6" onclick="macro(1, 32)">^A-sp</div>
+<div class="k k6" onclick="macro(1, 127)">^A-bsp</div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="sk(63242)">F5</div>
+<div class="k k6" onclick="sk(63243)">F6</div>
+<div class="k k6" onclick="sk(63244)">F9</div>
+<div class="k k6" onclick="sk(63245)">F10</div>
+<div class="k k6" onclick="sk(63246)">F11</div>
+<div class="k k6" onclick="sk(355)">^A-c</div>
+</div>
+<div class="kd">
+<div class="k k6" onclick="so(1)">Text</div>
+<div class="k k6" onclick="so(2)">Nav</div>
+<div class="k k6" onclick="so(3)">ABC</div>
+<div class="k k6" onclick="so(4)">.?123</div>
+<div class="k k6" onclick="so(5)">Ctrl</div>
+<div class="k k6s" onclick="so(6)">Fn</div>
+</div>
+</div>
+ 
+</div>
+</body>
+</html>

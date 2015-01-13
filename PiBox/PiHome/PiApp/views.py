@@ -187,3 +187,11 @@ def nas_minidlna_view(request):
     t = get_template('500.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
+
+def webssh_view(request):
+    ssh_url = request.get_host()
+    ssh_url = ssh_url[ :ssh_url.find(':')]+ ':8001'
+
+    t = get_template('webssh/webssh.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))

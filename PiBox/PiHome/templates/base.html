@@ -61,55 +61,59 @@
                 <ul class="sidebar-menu">
                     {% block user-panel%} 
                     {% endblock %}
-                    <li class=" {% block sidebar-dashboard%}{% endblock %}  ">
+                    <li>
                         <a href="{% url 'PiApp.views.dashboard' %}">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="treeview {% block sidebar-application%}{% endblock %}">
+                    <li  class="treeview">
                         <a href="#">
                             <i class="fa fa-folder"></i> <span>Application</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         {% block application-list%} 
                         {% endblock %}
-
                     </li>
 
-                    <li class="treeview {% block sidebar-nas%}{% endblock %}">
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-hdd-o"></i> <span>Nas</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{% block sidebar-file%}{% endblock %}"><a href="{% url 'PiApp.views.nas_file_view' %}"><i class="fa fa-angle-double-right"></i>File</a></li>
-                            <li class="{% block sidebar-video%}{% endblock %}"><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li>
-                             <li class="{% block sidebar-download%}{% endblock %}"><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
+                            <li ><a href="{% url 'PiApp.views.nas_file_view' %}"><i class="fa fa-angle-double-right"></i>File</a></li>
+                            <li ><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li>
+                             <li><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
                         </ul>
                     </li>
 
-
-                    <li class="treeview {% block sidebar-status%}{% endblock %}">
+                    <li>
+                        <a href="/PiApp/webssh/">
+                            <i class="fa fa-desktop"></i> <span>Webssh</span>
+                        </a>
+                    </li>
+                    
+                    <li class="treeview">
                         <a href="#">
                             <i class="fa fa-bar-chart-o"></i>
                             <span>Status</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{% block sidebar-piclient%}{% endblock %}"><a href="{% url 'PiApp.views.status_piclient_view' %}"><i class="fa fa-angle-double-right"></i> Raspberry Pi</a></li>
-                            <li class="{% block sidebar-server%}{% endblock %}"><a href="{% url 'PiApp.views.status_server_view' %}"><i class="fa fa-angle-double-right"></i> Server</a></li>
+                            <li ><a href="{% url 'PiApp.views.status_piclient_view' %}"><i class="fa fa-angle-double-right"></i> Raspberry Pi</a></li>
+                            <li><a href="{% url 'PiApp.views.status_server_view' %}"><i class="fa fa-angle-double-right"></i> Server</a></li>
                         </ul>
                     </li>
-                    <li class="treeview {% block sidebar-settings%}{% endblock %}">
+                    <li  class="treeview">
                         <a href="#">
                             <i class="fa fa-laptop"></i>
                             <span>Settings</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu ">
-                            <li class="{% block sidebar-general%}{% endblock %}"><a href="{% url 'PiApp.views.settings_general_view' %}"><i class="fa fa-angle-double-right"></i> General</a></li>
-                            <li  class="{% block sidebar-account%}{% endblock %}"><a href="{% url 'PiApp.views.settings_account_view' %}"><i class="fa fa-angle-double-right"></i> Account</a></li>
+                            <li><a href="{% url 'PiApp.views.settings_general_view' %}"><i class="fa fa-angle-double-right"></i> General</a></li>
+                            <li ><a href="{% url 'PiApp.views.settings_account_view' %}"><i class="fa fa-angle-double-right"></i> Account</a></li>
                         </ul>
                     </li>
 

@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'nas/video/$', nas_video_view),
     (r'nas/download/$', nas_download_view),
     (r'nas/minidlna/$', nas_minidlna_view),  
+    (r'webssh/$', requires_login(webssh_view)),  
 )
 
 urlpatterns += patterns ('',
