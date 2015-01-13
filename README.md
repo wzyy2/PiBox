@@ -26,15 +26,24 @@ After run the start script,open your browser and go to the URL:
     http://192.168.10.105(your board's ip):8000
 (File browser use /home/shares）
 
+uninstall and reinstall：
+    delete the all folder an do these steps again.
+
+## Feature
+
+* 集成了yyaw,需要配合aria2使用,做下载器.
+* 集成了web ssh.
+* 资源监视界面.
+* 文件管理器（未完成）
+* webcam
+* GPIO控制（未完成，且仅限树梅派）
+* [more here](https://github.com/wzyy2/PiBox/wiki/Feature)
+
 ## License ##
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
 
-# 介绍 #
+## 介绍 #
 写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).
-
-# 功能 #
-内置的功能有yaaw和系统信息显示(yyaw需要配合aria2,所以输入sudo apt-get install aria2),除此之外还有一些专门的app应用<br>
-可以在optional-app里选,目前有gpio控制和摄像头截图.<br>
 
 # Details #
 PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
@@ -45,7 +54,7 @@ PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通�
 提供人肉支持.
 
 ## FAQ ##
-* [FAQ](https://github.com/wzyy2/PiBox/wiki)
+* [FAQ](https://github.com/wzyy2/PiBox/wiki/FAQ)
 
 
 
