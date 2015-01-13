@@ -27,7 +27,7 @@ After run the start script,open your browser and go to the URL:
 (File browser use /home/shares）
 
 uninstall and reinstall：
-    delete the all folder an do these steps again.
+    delete the folder and do these steps again.
 
 ## Feature
 
