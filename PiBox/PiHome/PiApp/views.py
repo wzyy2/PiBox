@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.utils import simplejson  
 
+import os
+
 from forms import *
 from models import *
 from app import *
@@ -139,12 +141,12 @@ def settings_general_view(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
-def status_server_view(request):
-    t = get_template('status/server.html')
+def status_about_view(request):
+    t = get_template('status/about.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
-def  status_piclient_view(request):
+def  status_default_view(request):
     try:
        pisettings_instance = PiSettings.objects.get(id =1)
     except:
@@ -155,13 +157,13 @@ def  status_piclient_view(request):
 
     pi_ret = socketjson_send_recv(pisettings_instance.ip,  pisettings_instance.port, message)
 
-    t = get_template('status/client.html')
+    t = get_template('status/default.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
-
-def  nas_file_view(request):
-    t = get_template('nas/file.html')
+def  status_dmesg_view(request):
+    log = os.popen("dmesg").read()
+    t = get_template('status/dmesg.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
@@ -180,11 +182,6 @@ def  nas_video_view(request):
 
 def  nas_download_view(request):
     t = get_template('nas/download.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-def nas_minidlna_view(request):
-    t = get_template('500.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 

@@ -1,0 +1,42 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | Server {% endblock %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}    
+{% endblock %}
+
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block heading %}    
+<h1>
+	Status
+	<small>Dmesg </small>
+</h1>
+<ol class="breadcrumb">
+	        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#">Status</a></li>
+                        <li class="active">Dmesg</li>
+</ol>  
+{% endblock %}
+
+{% block content %} 
+
+<div class="pi-container  ">
+
+        <div class="box box-solid box-navy">
+            <div class="box-header">
+                <h3 class="box-title">Log</h3>
+            </div>
+            <div class="box-body">
+                <pre>
+                    {{ log }}
+                </pre>
+            </div><!-- /.box-body -->
+        </div>
+
+</div>
+{% endblock %}

@@ -9,7 +9,6 @@ First install the dependencies:
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
     sudo apt-get install python-setuptools
     sudo pip install Django==1.6.6
-    sudo pip install pyopenssl
     sudo apt-get install scons
 
 Then run building script:

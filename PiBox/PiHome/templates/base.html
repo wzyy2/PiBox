@@ -82,7 +82,7 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.nas_file_view' %}"><i class="fa fa-angle-double-right"></i>File</a></li>
+                            <li ><a href="/FileBrowser"><i class="fa fa-angle-double-right"></i>FileBrowser</a></li>
                             <li ><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li>
                              <li><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
                         </ul>
@@ -90,7 +90,7 @@
 
                     <li>
                         <a href="/PiApp/webssh/">
-                            <i class="fa fa-desktop"></i> <span>Webssh</span>
+                            <i class="fa fa-desktop"></i> <span>SSH</span>
                         </a>
                     </li>
                     
@@ -101,8 +101,9 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.status_piclient_view' %}"><i class="fa fa-angle-double-right"></i> Raspberry Pi</a></li>
-                            <li><a href="{% url 'PiApp.views.status_server_view' %}"><i class="fa fa-angle-double-right"></i> Server</a></li>
+                            <li ><a href="{% url 'PiApp.views.status_default_view' %}"><i class="fa fa-angle-double-right"></i> Normal</a></li>
+                            <li><a href="{% url 'PiApp.views.status_dmesg_view' %}"><i class="fa fa-angle-double-right"></i> Dmesg</a></li>
+                            <li><a href="{% url 'PiApp.views.status_about_view' %}"><i class="fa fa-angle-double-right"></i> About</a></li>
                         </ul>
                     </li>
                     <li  class="treeview">

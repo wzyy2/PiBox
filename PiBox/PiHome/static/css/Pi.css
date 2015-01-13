@@ -134,3 +134,9 @@
     background: #00a65a ;
     background-color: #00a65a ;
 }
+
+/*pibox*/
+.pi-container {
+    padding-left: 30px;
+    padding-right: 30px;
+}

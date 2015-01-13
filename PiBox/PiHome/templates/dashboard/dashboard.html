@@ -38,11 +38,9 @@ $(function() {
 {% endblock %}
 
 {% block content %} 
-<div style="margin-top:60px;">
 <!-- Small boxes (Stat box) -->
 <div class="row">
-
-	<div class="col-md-3  col-md-offset-3 col-xs-6">
+	<div class="col-md-3 col-xs-6">
 		<!-- small box -->
 		<div class="small-box bg-maroon">
 			<div class="inner">
@@ -75,14 +73,13 @@ $(function() {
 			<div class="icon">
 				<i class="fa fa-hdd-o"></i>
 			</div>
-			<a href="{% url 'PiApp.views.nas_file_view' %}" class="small-box-footer">
+			<a href="/FileBrowser" class="small-box-footer">
 				More info <i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>
 	</div><!-- ./col -->
-</div><!-- /.row -->
-<div class="row">
-	<div class="col-md-3 col-md-6 col-md-offset-3 col-xs-6">
+
+	<div class="col-md-3 col-xs-6">
 		<!-- small box -->
 		<div class="small-box bg-aqua">
 			<div class="inner">
@@ -121,9 +118,9 @@ $(function() {
 		</div>
 	</div><!-- ./col -->
 </div><!-- /.row -->
-</div>
-<!-- main boxes (Stat box) -->
+<div class="row">
+	
 
-<!-- /.row -->
+</div><!-- /.row -->
 
 {% endblock %}

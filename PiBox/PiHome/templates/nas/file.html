@@ -15,12 +15,12 @@
 {% block heading %}    
 <h1>
 	Nas
-	<small>File </small>
+	<small>FileBrowser </small>
 </h1>
 <ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+	        <li><a href="/FileBrowser"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li><a href="#">Nas</a></li>
-                        <li class="active">File</li>
+                        <li class="active">FileBrowser</li>
 </ol>  
 {% endblock %}
 
@@ -29,16 +29,6 @@
 <div class="row">
 
 
-
-
-
-        
-				<iframe src="/admin/filebrowser/browse/" frameBorder="0" width="100%" height="540px" ></iframe> 
-
 </div>
-
-
-
-
 
 {% endblock %}

@@ -1,7 +1,7 @@
 #coding=utf-8
 import os
 
-VERSION = '0.2.1'
+VERSION = '0.2.2'
     
 nas_enable="ENABLE"
 
