@@ -14,5 +14,4 @@ echo '+     +             Hello World'
 
 
 ./CppClient/pihome &  
-echo $! > /var/run/pihome.pid
 python ./PiHome/manage.py runserver 0.0.0.0:8000 & 

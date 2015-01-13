@@ -28,7 +28,9 @@ def image(request):
     global camera
     http = HttpResponse(mimetype='image/jpeg')
     if camera != None:
-        retval, img = camera.read()      
+        #skip cache
+        for i in range(5):
+            retval, img = camera.read()      
         cv2.imwrite(cwd + "django/tmp/tmp.jpg" , img)
         ret_img = Image.open(cwd + "django/tmp/tmp.jpg")
         ret_img.save(http,'JPEG')
@@ -46,7 +48,7 @@ def open_camera(request):
                 camera = cv2.VideoCapture(camera_port)
                 camera.set(cv.CV_CAP_PROP_FRAME_WIDTH,320)
                 camera.set(cv.CV_CAP_PROP_FRAME_HEIGHT,240)
-                camera.set(cv.CV_CAP_PROP_FPS,10)
+                camera.set(cv.CV_CAP_PROP_FPS,12)
                 retval, img = camera.read()      #light led
             return HttpResponse(simplejson.dumps({'msg':'ok'}))   
     except: 

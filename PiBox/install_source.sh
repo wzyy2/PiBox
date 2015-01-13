@@ -36,25 +36,25 @@ cd ../
 
 
 
-if [ "$if_gpio" = 1 ]; then
-    cd lib/WiringPi-master
-    chmod 0777 ./build
-    ./build
-    if [ $? -ne 0 ];then
-        echo "error!"
-        exit
-    fi
-    cd ../
-    cd ../
-    cd App/GPIO
-    scons
-    if [ $? -ne 0 ];then
-        echo "error!"
-        exit
-    fi
-    cd ../
-    cd ../
-else
-    rm -rf App/GPIO    
-fi
+# if [ "$if_gpio" = 1 ]; then
+#     cd lib/WiringPi-master
+#     chmod 0777 ./build
+#     ./build
+#     if [ $? -ne 0 ];then
+#         echo "error!"
+#         exit
+#     fi
+#     cd ../
+#     cd ../
+#     cd App/GPIO
+#     scons
+#     if [ $? -ne 0 ];then
+#         echo "error!"
+#         exit
+#     fi
+#     cd ../
+#     cd ../
+# else
+#     rm -rf App/GPIO    
+# fi
 
