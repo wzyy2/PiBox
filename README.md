@@ -1,5 +1,5 @@
 # PiBox #
-PiBox is an interesting Smart Home demo.<br>
+PiBox is a web control Interfac.<br>
 http://wzyy2.github.io/PiBox
 
 # Usage #
