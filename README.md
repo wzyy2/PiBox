@@ -4,7 +4,7 @@ http://wzyy2.github.io/PiBox
 
 # Usage #
 See these steps for a  build guide(cd Pibox).<br>
-Get source form .<br>
+Get source from.....<br>
 First install the dependencies:
 
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
