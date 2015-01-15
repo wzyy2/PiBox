@@ -9,11 +9,12 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required  
-import json as simplejson 
 
+from PiHome.settings import MEDIA_ROOT
+import json as simplejson 
+from filemanager import FileManager
 
 @login_required 
-def  index(request):
-    t = get_template('nas/file.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
+def index(request,path):
+  fm = FileManager(MEDIA_ROOT)
+  return HttpResponse(fm.render(request,path))

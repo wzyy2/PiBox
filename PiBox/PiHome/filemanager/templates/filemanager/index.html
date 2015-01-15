@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <script type="text/javascript" src="{{STATIC_URL}}filemanager/js/jquery/jquery.min.js"></script>
+ <script type="text/javascript" src="{{STATIC_URL}}filemanager/js/jquery/jquery-migrate.min.js"></script>
+ <script type="text/javascript" src="{{STATIC_URL}}filemanager/js/jquery/zclip/jquery.zclip.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}filemanager/css/style.css"/>
+ <!--[if IE]>
+   <script type="text/javascript" src="{{ STATIC_URL }}js/es5-shim.min.js"></script>
+ <![endif]-->
+ <script type="text/javascript">
+ var dir_structure = {{dir_structure|safe}};
+ var messages = {{messages|safe}};
+ var dir_id = {{current_id}};
+ var ckeditor_baseurl = '{{ ckeditor_baseurl }}';
+ var CKEditorFuncNum = {% if CKEditorFuncNum %}{{CKEditorFuncNum}}{% else %}null{%endif%};
+ var static_url = '{{STATIC_URL}}';
+ {% if public_url_base %}
+  var public_url_base = '{{public_url_base}}';
+ {% endif %}
+ var clipboard = { 'empty':true, 'path': 'full path will come here' ,
+     'mode': 'cut or copy', 'type': 'file or dir'}
+ var space_consumed = {{space_consumed}};
+ var max_space = {{max_space}}*1024;
+ </script>
+ <script type="text/javascript" src="{{STATIC_URL}}filemanager/js/script.js"></script>
+
+</head>
+<body oncontextmenu='return false;'>
+ <div id="main">
+  <div id="left">
+  </div>
+  <div id="right">
+   <div id="control">
+   <form method="POST" id="form" enctype="multipart/form-data" style="">{% csrf_token %}
+     <input type="file" id="ufile" name="ufile" style="position:fixed;top:-100px" multiple>
+     <input type="text" id="action" name="action" style="display:none;">
+     <input type="text" id="path" name="path" value="" style="display:none;">
+     <input type="text" id="name" name="name" value="" style="display:none;">
+     <input type="text" id="current_path" name="current_path" value="" style="display:none;">
+     <input type="text" id="file_or_dir" name="file_or_dir" value="" style="display:none;">
+     <input type="submit" id="submit" name="submit" value="Submit" style="display:none;">
+   <label class="control" id="upload-label" for="ufile">
+    <img src="{{STATIC_URL}}filemanager/images/upload.png" style="width:16px;height:16px" width="100%" height="100%"/>
+    <span>Upload Files</span>
+   </label>
+   </form>
+   <div id="message">
+   </div>
+   </div>
+   <div id="content">
+   </div>
+  </div>
+ </div>
+ <div id="dir-menu" class="menu" style="display:none">
+  <div id="add-dir" class="menu-option" onclick="do_action('add','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/add_folder.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Create Sub-Folder</span>
+  </div><hr>
+  <div id="cut-dir" class="menu-option" onclick="do_action('cut','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/cut.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Cut</span>
+  </div><hr>
+  <div id="copy-dir" class="menu-option" onclick="do_action('copy','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/copy.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Copy</span>
+  </div><hr>
+  <div id="paste-dir" class="menu-option" onclick="do_action('paste','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/paste.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Paste</span>
+  </div><hr>
+  <div id="rename-dir" class="menu-option" onclick="do_action('rename','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/rename.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Rename</span>
+  </div><hr>
+  <div id="download-dir" class="menu-option" onclick="do_action('download','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/download.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Download</span>
+  </div><hr>
+  <div id="delete-dir" class="menu-option" onclick="do_action('delete','dir')">
+   <img src="{{STATIC_URL}}filemanager/images/delete.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Delete</span>
+  </div>
+ </div>
+ <div id="file-menu" class="menu" style="display:none">
+  <div id="rename-file" class="menu-option" onclick="do_action('rename','file')">
+   <img src="{{STATIC_URL}}filemanager/images/rename.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Rename</span>
+  </div><hr>
+  <div id="cut-file" class="menu-option" onclick="do_action('cut','file')">
+   <img src="{{STATIC_URL}}filemanager/images/cut.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Cut</span>
+  </div><hr>
+  <div id="copy-file" class="menu-option" onclick="do_action('copy','file')">
+   <img src="{{STATIC_URL}}filemanager/images/copy.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Copy</span>
+  </div><hr>
+  <div id="download-file" class="menu-option" onclick="do_action('download','file')">
+   <img src="{{STATIC_URL}}filemanager/images/download.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Download</span>
+  </div><hr>
+  <div id="delete-file" class="menu-option" onclick="do_action('delete','file')">
+   <img src="{{STATIC_URL}}filemanager/images/delete.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Delete</span>
+  </div>
+  {% if public_url_base %}
+  <hr>
+  <div id="copy-public-link-file" class="menu-option">
+   <img src="{{STATIC_URL}}filemanager/images/copy_public_link.png" style="width:16px;height:16px" width="100%" height="100%"/><span>Copy public link</span>
+  </div>
+  {% endif %}
+ </div> <div id="popup">
+  <div class="div1"><img src='{{STATIC_URL}}filemanager/images/close.png' onclick="$('#popup').hide();"/>
+  <div id="heading"></div></div>
+  <div class="div2"><input id="input" type="text"></div>
+ </div>
+ <div id="status-bar">
+ {% if show_space %}
+    <div class="progress">
+         <div class="bar" id="space_quota">
+         </div>
+    </div>
+    <span id="space_quota_string">
+    </span>
+ {% endif %}
+     <span id="status">
+     </span>
+ </div>
+</body>
+</html>

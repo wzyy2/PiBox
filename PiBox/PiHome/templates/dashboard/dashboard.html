@@ -42,8 +42,8 @@ $(function() {
 	<small>Home</small>
 </h1>
 <ol class="breadcrumb">
-	<li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> home</a></li>
-	<li class="active"> Dashboard</li>
+	<li><a href="{% url 'PiApp.views.dashboard' %}">home</a></li>
+	<li class="active">Dashboard</li>
 </ol>  
 {% endblock %}
 
@@ -83,7 +83,7 @@ $(function() {
 			<div class="icon">
 				<i class="fa fa-hdd-o"></i>
 			</div>
-			<a href="/FileBrowser" class="small-box-footer">
+			<a href="{% url 'PiApp.views.nas_file_view' %}" class="small-box-footer">
 				More info <i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>

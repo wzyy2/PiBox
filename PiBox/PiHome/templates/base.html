@@ -28,7 +28,7 @@
 
 </head>
 
-<body class="skin-black">
+<body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="{% url 'PiApp.views.dashboard' %}"class="logo">
@@ -82,9 +82,9 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li ><a href="/FileBrowser"><i class="fa fa-angle-double-right"></i>FileBrowser</a></li>
-                            <li ><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li>
-                             <li><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
+                            <li ><a href="{% url 'PiApp.views.nas_file_view' %}"><i class="fa fa-angle-double-right"></i>FileBrowser</a></li>
+                            <!-- <li ><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li> -->
+                            <li><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
                         </ul>
                     </li>
 

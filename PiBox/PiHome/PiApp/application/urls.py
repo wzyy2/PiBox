@@ -6,12 +6,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings 
 
 from filebrowser.sites import site
+from common import globaldata
 import os
 import sys
 
 urlpatterns = patterns('',)
 
-cwd  = os.getcwd() + '/App'
+cwd  = globaldata.appcwd
 list = os.listdir(cwd)
 sys.path.append(cwd);
 

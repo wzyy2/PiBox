@@ -3,10 +3,25 @@
 {% block title %} PiHome | File {% endblock %}
 
 {% block css%}    
-
+<style type="text/css">
+.content {
+    padding: 0px 15px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    background: #f9f9f9;
+    overflow: auto;
+}
+</style>
 {% endblock %}
 
 {% block js%}  
+<script>
+$(function(){
+    all_height = $('.left-side').height();
+    header_height = $('.content-header').height();
+    $('iframe').height(all_height - header_height - 55);   
+})
+</script>
 {% endblock %}
 
 {% block on_ready%}    
@@ -14,11 +29,11 @@
 
 {% block heading %}    
 <h1>
-	Nas
-	<small>FileBrowser </small>
+    Nas
+    <small>FileBrowser </small>
 </h1>
 <ol class="breadcrumb">
-	        <li><a href="/FileBrowser"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{% url 'PiApp.views.nas_file_view' %}">Home</a></li>
                         <li><a href="#">Nas</a></li>
                         <li class="active">FileBrowser</li>
 </ol>  
@@ -27,8 +42,7 @@
 {% block content %} 
 
 <div class="row">
-
-
+    <iframe src="/filemanager/" frameBorder="0" width="100%" height="100"></iframe> 
 </div>
 
 {% endblock %}

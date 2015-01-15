@@ -33,7 +33,7 @@ uninstall and reinstall：
 * 集成了yyaw,需要配合aria2使用,做下载器.
 * 集成了web ssh.
 * 资源监视界面.
-* 文件管理器（未完成）
+* 文件管理器
 * webcam
 * GPIO控制（未完成，且仅限树梅派）
 * [more here](https://github.com/wzyy2/PiBox/wiki/Feature)

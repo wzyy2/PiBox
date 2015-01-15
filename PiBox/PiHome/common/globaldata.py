@@ -14,19 +14,15 @@ class Appstruct():
 AppList = list()
 
 #register app list
-cwd  = os.getcwd() + '/App'
-list = os.listdir(cwd)
+cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
+appcwd  = cwd + '/App'
+list = os.listdir(appcwd)
 info = []
 for item in list:
-    if os.path.isdir(os.path.join(cwd, item)):
+    if os.path.isdir(os.path.join(appcwd, item)):
         app = Appstruct()
         app.name = item
         AppList.append(app)
-
-try:
-   pisettings_instance = PiSettings.objects.get(id =1)
-except:
-   pisettings_instance = PiSettings.objects.create(id =1)
 
 
 def getclient():

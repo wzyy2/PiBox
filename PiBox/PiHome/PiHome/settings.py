@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'PiApp',
-    'FileBrowser',
+    'filemanager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,6 +97,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'PiApp.context_processors.app_info',
     'PiApp.context_processors.version',
+    'django.core.context_processors.static',
 )
 
 

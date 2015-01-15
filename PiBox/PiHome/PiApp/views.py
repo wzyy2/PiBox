@@ -39,10 +39,10 @@ def dashboard(request):
     app_num = len(globaldata.AppList)
 
     #logfile
-    pihome_log_file = open('log/pihome.log', 'r')
+    pihome_log_file = open(globaldata.cwd + '/log/pihome.log', 'r')
     pihome_log_lines = pihome_log_file.readlines()
     pihome_log = utils.lineslimit(pihome_log_lines, 300)
-    cpp_log_file = open('log/pihome.log', 'r')
+    cpp_log_file = open(globaldata.cwd + '/log/pihome.log', 'r')
     cpp_log_lines = cpp_log_file.readlines()
     cpp_log = utils.lineslimit(cpp_log_lines, 300)
 
@@ -184,10 +184,17 @@ def  nas_download_view(request):
     return HttpResponse(t.render(c))
 
 @login_required 
-def webssh_view(request):
+def  nas_file_view(request):
+    t = get_template('nas/file.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  webssh_view(request):
     ssh_url = request.get_host()
     ssh_url = ssh_url[ :ssh_url.find(':')]+ ':8001'
 
     t = get_template('webssh/webssh.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
+

@@ -9,14 +9,17 @@ from PIL import Image
 import cv2,os
 import cv2.cv as cv
 
-html_source_header = "application/webcam/django/html/"
-static_source_header = "static/webcam/django/static/"
-cwd  = os.getcwd() + '/App/webcam/'
+from common import globaldata
+
+html_source_url = "application/webcam/django/html/"
+static_source_url = "static/webcam/django/static/"
+cwd  = globaldata.cwd + '/App/webcam/'
+
 camera = None
 
 @login_required  
 def index(request):
-    t = get_template(html_source_header + 'webcam.html')
+    t = get_template(html_source_url + 'webcam.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 

@@ -21,7 +21,7 @@ urlpatterns += staticfiles_urlpatterns()
 urlpatterns += patterns ('',
     (r'^$', include('PiApp.urls')),
     (r'^PiApp/', include('PiApp.urls')),
-    (r'^FileBrowser/', include('FileBrowser.urls')),
+    (r'^filemanager/', include('filemanager.urls')),
     (r'^API/', include('PiHome.api_urls')),
 )
 
