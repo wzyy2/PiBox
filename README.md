@@ -1,5 +1,5 @@
 # PiBox #
-PiBox is a web control Interfac.<br>
+PiBox is a web control Interface.<br>
 http://wzyy2.github.io/PiBox
 
 # Usage #
