@@ -43,10 +43,7 @@ uninstall and reinstall：
 PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.
 
 ## PS ##
-If you want more background on how it works,create an issue or email me:-).
-
-## FAQ ##
-* [FAQ](https://github.com/wzyy2/PiBox/wiki/FAQ)
+If you want more background on how it works,create an issue or email me:-)
 
 
 # Chinese #
@@ -58,6 +55,8 @@ PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通�
 
 
 
+## FAQ ##
+* [FAQ](https://github.com/wzyy2/PiBox/wiki/FAQ)
 
 
 
