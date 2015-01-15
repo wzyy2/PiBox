@@ -1,5 +1,5 @@
 #coding=utf-8
-import os,sys
+import os,sys,logging
 from PiApp.forms import *
 from PiApp.models import *
 
@@ -32,3 +32,8 @@ def getclient():
         pisettings_instance = PiSettings.objects.create(id =1) 
 
     return pisettings_instance
+
+
+def getLogger():
+    logger = logging.getLogger('pihome')
+    return logger

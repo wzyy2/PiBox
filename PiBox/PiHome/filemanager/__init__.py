@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.core.servers.basehttp import FileWrapper
 from django import forms
 from PIL import Image
+from common import globaldata
 import settings
 import mimetypes
 import os
@@ -45,7 +46,12 @@ class FileManager(object):
     self.basepath = basepath
     self.ckeditor_baseurl = ckeditor_baseurl
     self.maxfolders = maxfolders
-    self.maxspace = maxspace
+
+    avail_lines = os.popen("df " + basepath + "|awk -F' ' '{print $4}'").readlines()   
+    avail = float(avail_lines[1])
+    self.maxspace = avail
+    globaldata.getLogger().debug("avail space" + str(avail));
+
     self.maxfilesize = maxfilesize
     self.extensions = extensions;
     self.public_url_base = public_url_base
@@ -302,4 +308,5 @@ class FileManager(object):
         'space_consumed':space_consumed,
         'max_space':self.maxspace,
         'show_space':settings.FILEMANAGER_SHOW_SPACE,
+        'mount_dir':self.basepath,
     })

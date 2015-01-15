@@ -17,4 +17,4 @@ from filemanager import FileManager
 @login_required 
 def index(request,path):
   fm = FileManager(MEDIA_ROOT)
-  return HttpResponse(fm.render(request,path))
+  return fm.render(request,path)

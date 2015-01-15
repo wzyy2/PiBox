@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import os,sys 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -103,3 +103,29 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 FILEBROWSER_DIRECTORY = ''
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'formatter': 'verbose',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        }
+    },
+    'loggers': {
+        'pihome': {
+            'handlers': ['console'],
+            'level':'DEBUG',
+        },
+    }
+}
