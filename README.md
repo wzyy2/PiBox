@@ -58,7 +58,8 @@ PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通�
 
 
 ## Image ##
-![image](http://www.iotwrt.com/jpg/pibox1.jpg)
-![image](http://www.iotwrt.com/jpg/pibox2.jpg)
-![image](http://www.iotwrt.com/jpg/pibox3.jpg)
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/index.jpg)
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/status.jpg)
+
+## Phone ##
 ![image](http://www.iotwrt.com/jpg/pibox4.png)

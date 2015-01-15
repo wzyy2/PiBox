@@ -12,36 +12,35 @@
 {% block on_ready%}    
 <script>
 $(function() {
-
-                    //发出ajax请求  
-                    $("button").click( function(){  
-                        if($(this).attr('id') == 'open') {
-                            $.getJSON("/API/PiApp/nas/",  {cmd:'open'},
-                             function(data){
-                                     if(data.cmd_ret == 'fail')
-                                        alert('FAIL')
-                                     if(data.cmd_ret == 'ok') {
-                                        alert('OK');
-                                        window.location.reload();
-                                        }
-                                  })     
-                        }
-                        else if ($(this).attr('id') == 'time') {
-                             $.getJSON("/API/PiApp/nas/",  {cmd:'time'} ,function(data){           })         
-                        }          
-                       else if($(this).attr('id') == 'close') {
-                            $.getJSON("/API/PiApp/nas/",  {cmd:'close'},
-                             function(data){
-                                     if(data.cmd_ret == 'fail')
-                                        alert('FAIL')
-                                     if(data.cmd_ret == 'ok') {
-                                        alert('OK');
-                                        window.location.reload();
-                                        }
-                                  })     
-                        }           
-                    }); 
-    });
+        //发出ajax请求  
+        $("button").click( function(){  
+            if($(this).attr('id') == 'open') {
+                $.getJSON("/API/PiApp/nas/",  {cmd:'open'},
+                 function(data){
+                         if(data.cmd_ret == 'fail')
+                            alert('FAIL')
+                         if(data.cmd_ret == 'ok') {
+                            alert('OK');
+                            window.location.reload();
+                            }
+                      })     
+            }
+            else if ($(this).attr('id') == 'time') {
+                 $.getJSON("/API/PiApp/nas/",  {cmd:'time'} ,function(data){           })         
+            }          
+           else if($(this).attr('id') == 'close') {
+                $.getJSON("/API/PiApp/nas/",  {cmd:'close'},
+                 function(data){
+                         if(data.cmd_ret == 'fail')
+                            alert('FAIL')
+                         if(data.cmd_ret == 'ok') {
+                            alert('OK');
+                            window.location.reload();
+                            }
+                      })     
+            }           
+        }); 
+});
 </script>
 {% endblock %}
 

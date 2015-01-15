@@ -28,6 +28,6 @@ if [ "$ret" ];then
    exit
 fi
 
-./CppClient/pihome &  
-python ./PiHome/WebShell/webshell.py --ssl-disable 0 & 
-python ./PiHome/manage.py runserver 0.0.0.0:8000 & 
+nohup ./CppClient/pihome > ./log/cpp.log 2>&1 &  
+nohup python ./PiHome/WebShell/webshell.py --ssl-disable 0 > ./log/pihome-webshell.log 2>&1 & 
+nohup python ./PiHome/manage.py runserver 0.0.0.0:8000 > ./log/pihome.log 2>&1 & 

@@ -2,23 +2,19 @@
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.template.loader import get_template
-from django.utils import simplejson  
-from PiApp.models import *
+from django.contrib.auth.decorators import login_required 
+import json as simplejson 
 
 from PIL import Image 
 import cv2,os
 import cv2.cv as cv
-
-try:
-   pisettings_instance = PiSettings.objects.get(id =1)
-except:
-   pisettings_instance = PiSettings.objects.create(id =1)
 
 html_source_header = "application/webcam/django/html/"
 static_source_header = "static/webcam/django/static/"
 cwd  = os.getcwd() + '/App/webcam/'
 camera = None
 
+@login_required  
 def index(request):
     t = get_template(html_source_header + 'webcam.html')
     c = RequestContext(request,locals())

@@ -12,7 +12,7 @@
 {% block on_ready%}    
 <script>
 function refresh_info() {
-    $.getJSON("/API/application/GPIO/GPIO_API/", {
+    $.getJSON("/PiApp/application/GPIO/GPIO_API/", {
         action: 'read_info',  pin_num: '0'
       },
       function(data) {

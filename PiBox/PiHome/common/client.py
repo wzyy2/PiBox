@@ -1,9 +1,10 @@
 #coding=utf-8
-import re
+import re,os
 import sys
 from socket import *
-from django.utils import simplejson  
+import json as simplejson
 
+#client
 class PiRturn():
     connect = False
     message = {}
@@ -72,3 +73,4 @@ def  socket_test(serverHost, serverPort):
 #        pi_ret.message = simplejson.dumps({'msg':'fail'}) 
 
     return pi_ret.connect
+

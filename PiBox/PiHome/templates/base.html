@@ -89,7 +89,7 @@
                     </li>
 
                     <li>
-                        <a href="/PiApp/webssh/">
+                        <a href="{% url 'PiApp.views.webssh_view' %}">
                             <i class="fa fa-desktop"></i> <span>SSH</span>
                         </a>
                     </li>
@@ -101,9 +101,9 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.status_default_view' %}"><i class="fa fa-angle-double-right"></i> Normal</a></li>
-                            <li><a href="{% url 'PiApp.views.status_dmesg_view' %}"><i class="fa fa-angle-double-right"></i> Dmesg</a></li>
-                            <li><a href="{% url 'PiApp.views.status_about_view' %}"><i class="fa fa-angle-double-right"></i> About</a></li>
+                            <li ><a href="{% url 'PiApp.views.status_default_view' %}"><i class="fa fa-angle-double-right"></i>Default</a></li>
+                            <li><a href="{% url 'PiApp.views.status_dmesg_view' %}"><i class="fa fa-angle-double-right"></i>Kernel log</a></li>
+                            <li><a href="{% url 'PiApp.views.status_about_view' %}"><i class="fa fa-angle-double-right"></i>About</a></li>
                         </ul>
                     </li>
                     <li  class="treeview">
@@ -113,8 +113,8 @@
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu ">
-                            <li><a href="{% url 'PiApp.views.settings_general_view' %}"><i class="fa fa-angle-double-right"></i> General</a></li>
-                            <li ><a href="{% url 'PiApp.views.settings_account_view' %}"><i class="fa fa-angle-double-right"></i> Account</a></li>
+                            <li><a href="{% url 'PiApp.views.settings_general_view' %}"><i class="fa fa-angle-double-right"></i>General</a></li>
+                            <li ><a href="{% url 'PiApp.views.settings_account_view' %}"><i class="fa fa-angle-double-right"></i>Account</a></li>
                         </ul>
                     </li>
 

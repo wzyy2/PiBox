@@ -1,26 +1,21 @@
 #coding=utf-8
 from django.shortcuts import render
-from django import forms
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.template.loader import get_template
-from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import User
-from django.utils import simplejson  
+from django.contrib.auth.decorators import login_required  
+import json as simplejson
 
 from PiApp.forms import *
 from PiApp.models import *
-from PiApp.app import *
-from PiApp.utils import *
-import PiApp.gl
 
-try:
-   pisettings_instance = PiSettings.objects.get(id =1)
-except:
-   pisettings_instance = PiSettings.objects.create(id =1)
+from common import client
+from common import globaldata
+from common import utils
 
+pisettings_instance = globaldata.getclient()
+
+@login_required  
 def GPIO(request):
     message = { "title" : "application", "app_name" : "GPIO", "action" : "read_info"}
     try:

@@ -10,3 +10,14 @@ def validateEmail(email):
             return 1
     return 0
 
+def lines2html(lines):
+    out = ''
+    for line in lines:
+        out += line
+    return out
+
+def lineslimit(lines, max):
+    count = len(lines)
+    if count > max:
+        lines = lines[count-max:count]
+    return lines2html(lines)

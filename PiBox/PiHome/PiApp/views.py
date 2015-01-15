@@ -8,38 +8,43 @@ from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
-from django.utils import simplejson  
+from django.contrib.auth.decorators import login_required  
 
 import os
+import json as simplejson    
 
 from forms import *
 from models import *
-from app import *
-from utils import *
-import gl
+from common import client
+from common import globaldata
+from common import utils
 
-def requires_login(view):
-    def new_view(request, *args, **kwargs):
-        if not request.user.is_authenticated():                        #如果用户没有登录，跳转到登录界面
-            return HttpResponseRedirect('/accounts/login/')
-        return view(request, *args, **kwargs)                          #否则返回传进来的方法
-    return new_view                                                    #返回new_view值：登录视图或者是传进来的视图
+# def requires_login(view):
+#     def new_view(request, *args, **kwargs):
+#         if not request.user.is_authenticated():               
+#             return HttpResponseRedirect('/accounts/login/')
+#         return view(request, *args, **kwargs)                       
+#     return new_view                                                    
+global AppList
 
+@login_required  
 def dashboard(request):
-    try:
-       pisettings_instance = PiSettings.objects.get(id =1)
-    except:
-       pisettings_instance = PiSettings.objects.create(id =1)
-
+    pisettings_instance = globaldata.getclient()
     user_count = PiUser.objects.count()   
-
-    if(socket_test(pisettings_instance.ip,  pisettings_instance.port)):
+    if(client.socket_test(pisettings_instance.ip,  pisettings_instance.port)):
         connection = "TRUE"
     else:
         connection = "FALSE"
+    nas_enable = globaldata.NasEnable
+    app_num = len(globaldata.AppList)
 
-    nas_enable = gl.nas_enable
-    app_num = gl.app_num()
+    #logfile
+    pihome_log_file = open('log/pihome.log', 'r')
+    pihome_log_lines = pihome_log_file.readlines()
+    pihome_log = utils.lineslimit(pihome_log_lines, 300)
+    cpp_log_file = open('log/pihome.log', 'r')
+    cpp_log_lines = cpp_log_file.readlines()
+    cpp_log = utils.lineslimit(cpp_log_lines, 300)
 
     t = get_template('dashboard/dashboard.html')
     c = RequestContext(request,locals())
@@ -48,28 +53,27 @@ def dashboard(request):
 def login_view(request): 
     if request.user.is_authenticated():
         return HttpResponseRedirect("/PiApp/dashboard/")             
-    if request.method != 'POST':  
+    if request.method != 'POST': 
+        try: 
+            next_url = request.GET['next']
+        except:
+            next_url = ''
         t = get_template('login.html')
         c = RequestContext(request,locals())   
         return HttpResponse(t.render(c))    
     user = authenticate(username=request.POST['username'], password=request.POST['password'])
     if user is not None:
         login(request, user)   
-        ret = 'Ok'
+        ret = {'msg':'ok'}
     else:
-        ret = 'Fail'
-    t = get_template('register_return.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))      
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))      
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/PiApp/dashboard/")  
 
 def register_view(request):  
-    ''''' 
-        功能：往数据库中添加一条用户注册信息 
-    '''  
     form = PiRegisterForm(request.POST or None)
     if form.is_valid():
         first_name=form.cleaned_data['first_name']
@@ -109,30 +113,26 @@ def fzz_view(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def settings_account_view(request):
-    if request.user.is_authenticated():
-        user = PiUser.objects.get(username = request.user.username)
-        form = PiAccountForm(request.POST or None, instance = user)
-        if form.is_valid():
-            user.first_name=form.cleaned_data['first_name']
-            user.last_name=form.cleaned_data['last_name']      
-            if(form.cleaned_data['password1']  !=  ""):   
-                password=form.cleaned_data['password1']
-                if password != None:
-                    user.set_password(password)
-            user.save()
-        t = get_template('settings/account.html')
-        c = RequestContext(request,locals())
-    else:
-        t = get_template('login.html')
-        c = RequestContext(request,locals())   
+    user = PiUser.objects.get(username = request.user.username)
+    form = PiAccountForm(request.POST or None, instance = user)
+    if form.is_valid():
+        user.first_name=form.cleaned_data['first_name']
+        user.last_name=form.cleaned_data['last_name']      
+        if(form.cleaned_data['password1']  !=  ""):   
+            password=form.cleaned_data['password1']
+            if password != None:
+                user.set_password(password)
+        user.save()
+    t = get_template('settings/account.html')
+    c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+
+@login_required 
 def settings_general_view(request):
-    try:
-       pisettings_instance = PiSettings.objects.get(id =1)
-    except:
-       pisettings_instance = PiSettings.objects.create(id =1)
+    pisettings_instance = globaldata.getclient()
     form = PiSettingsForm(request.POST or None, instance = pisettings_instance)
     if form.is_valid():
         form.save()
@@ -141,38 +141,35 @@ def settings_general_view(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def status_about_view(request):
     t = get_template('status/about.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def  status_default_view(request):
-    try:
-       pisettings_instance = PiSettings.objects.get(id =1)
-    except:
-       pisettings_instance = PiSettings.objects.create(id =1)
+    pisettings_instance = globaldata.getclient()
 
     message = { "title" : "status"}
     message['cmd'] = 'get';
 
-    pi_ret = socketjson_send_recv(pisettings_instance.ip,  pisettings_instance.port, message)
+    pi_ret = client.socketjson_send_recv(pisettings_instance.ip,  pisettings_instance.port, message)
 
     t = get_template('status/default.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def  status_dmesg_view(request):
-    log = os.popen("dmesg").read()
+    dmesg = os.popen("dmesg")
+    log = dmesg.read()   
     t = get_template('status/dmesg.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def  nas_video_view(request):
-    try:
-       pisettings_instance = PiSettings.objects.get(id =1)
-    except:
-       pisettings_instance = PiSettings.objects.create(id =1)
-
     minidlna_url = request.get_host()
     minidlna_url = minidlna_url[ :minidlna_url.find(':')]+ ':8200'
 
@@ -180,11 +177,13 @@ def  nas_video_view(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def  nas_download_view(request):
     t = get_template('nas/download.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
 def webssh_view(request):
     ssh_url = request.get_host()
     ssh_url = ssh_url[ :ssh_url.find(':')]+ ':8001'

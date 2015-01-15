@@ -2,22 +2,19 @@
 import re
 import sys
 import os
-import gl
+from common import globaldata
 
 
 def app_info(request):
 
-    cwd  = os.getcwd() + '/App'
-    list = os.listdir(cwd)
     info = []
-    for item in list:
-        if os.path.isdir(os.path.join(cwd, item)):
-            info.append(item);
+    for item in globaldata.AppList:
+        info.append(item.name);
     return  {
         'APPINFO': info,
     }
 
 def version(request):
     return  {
-        'VERSION': gl.VERSION,
+        'VERSION': globaldata.VERSION,
     }

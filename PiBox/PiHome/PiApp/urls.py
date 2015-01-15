@@ -1,7 +1,6 @@
 from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from views import *
-from api import *
 
 urlpatterns = patterns('',
     (r'^$', dashboard),
@@ -13,7 +12,7 @@ urlpatterns = patterns('',
     (r'status/dmesg/$', status_dmesg_view),
     (r'nas/video/$', nas_video_view),
     (r'nas/download/$', nas_download_view),
-    (r'webssh/$', requires_login(webssh_view)),  
+    (r'webssh/$', webssh_view),  
 )
 
 urlpatterns += patterns ('',

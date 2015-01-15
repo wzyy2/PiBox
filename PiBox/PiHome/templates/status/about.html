@@ -1,6 +1,6 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Server {% endblock %}
+{% block title %} PiHome | About {% endblock %}
 
 {% block css%}    
 {% endblock %}
@@ -14,12 +14,12 @@
 {% block heading %}    
 <h1>
 	Status
-	<small>Server </small>
+	<small>About </small>
 </h1>
 <ol class="breadcrumb">
 	        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li><a href="#">Status</a></li>
-                        <li class="active">Server</li>
+                        <li class="active">About</li>
 </ol>  
 {% endblock %}
 
