@@ -4,6 +4,7 @@ http://wzyy2.github.io/PiBox
 
 # Usage #
 See these steps for a  build guide(cd Pibox).<br>
+Get source form .<br>
 First install the dependencies:
 
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
@@ -30,12 +31,12 @@ uninstall and reinstall：
 
 ## Feature
 
-* 集成了yyaw,需要配合aria2使用,做下载器.
-* 集成了web ssh.
-* 资源监视界面.
-* 文件管理器
-* webcam
-* GPIO控制（未完成，且仅限树梅派）
+* File Browser.
+* Web ssh.
+* yyaw and aria2 control(need aria2 installed).
+* host status monitor.
+* webcam snapshot.
+* GPIO control（uncomplete，and only for raspberry pi).
 * [more here](https://github.com/wzyy2/PiBox/wiki/Feature)
 
 ## License ##
