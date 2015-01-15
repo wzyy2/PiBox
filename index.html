@@ -34,68 +34,56 @@
         <h1>
 <a id="pibox" class="anchor" href="#pibox" aria-hidden="true"><span class="octicon octicon-link"></span></a>PiBox</h1>
 
-<p>PiBox is an interesting Smart Home demo.<br>
+<p>PiBox is a web control Interface.<br>
 <a href="http://wzyy2.github.io/PiBox">http://wzyy2.github.io/PiBox</a></p>
-
-<h1>
-<a id="介绍" class="anchor" href="#%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>介绍</h1>
-
-<p>写这个PiBox的初衷是现在智能硬件的概念很火，作者是学习嵌入式的学生，就想搞一些来玩玩。
-偶然间接触到了树莓派，因为之前搞过一个openwrt的控制，就很想在树莓派上做一个类似小米路由器+boardlink这样一个东西。因为网上一些网页控制例子简直太弱了，就想搞个高大上一点的东西。</p>
-
-<h1>
-<a id="功能" class="anchor" href="#%E5%8A%9F%E8%83%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>功能</h1>
-
-<p>内置了yaaw和文件管理器和系统信息显示，可以当个nas界面和监视界面。（yyaw需要配合aria2，所以输入sudo apt-get install aria2,配合chrome上的百度网盘助手导出到树莓派使用更佳~）<br>
-默认自带的app只有gpio（由于手上的树梅派不见了，所以还未完成，建议也加参数删除），更多的app可以在optional-app里选。</p>
 
 <h1>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
 
+<p>See these steps for a  build guide(cd Pibox).<br>
+Get source from.....<br>
+First install the dependencies:</p>
+
 <pre><code>sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
 sudo apt-get install python-setuptools
 sudo pip install Django==1.6.6
+sudo apt-get install scons
 </code></pre>
 
-<p>这是安装django用的，先确保你安装了pip和python哈。</p>
+<p>Then run building script:</p>
 
-<pre><code>sudo apt-get install scons
-</code></pre>
-
-<p>这个是项目的构建工具~
-然后执行安装脚本</p>
-
-<pre><code>sudo sh ./install_source.sh （如果不是树梅派的话，请加-g 0,将不会安装gpio控制)
+<pre><code>sudo sh ./install_source.sh
 sudo sh ./install_env.sh
 </code></pre>
 
-<p>如果有问题，可以自己打开脚本一条一条输，看返回信息</p>
+<p>Start and stop scripts:</p>
 
 <pre><code>sudo sh ./start.sh 
 sudo sh ./stop.sh
 </code></pre>
 
-<p>开启，关闭程序的脚本。
-进浏览器，输入</p>
+<p>After run the start script,open your browser and go to the URL:</p>
 
-<pre><code>http://192.168.10.105(换成你的ip):8000
+<pre><code>http://192.168.10.105(your board's ip):8000
 </code></pre>
 
-<p>就OK啦~（大概。。。不行我人肉支持。。。）
-(注意文件管理器的默认目录是/home/shares）</p>
+<p>(File browser use /home/shares）</p>
 
-<h1>
-<a id="technical-details" class="anchor" href="#technical-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technical details</h1>
+<p>uninstall and reinstall：
+    delete the folder and do these steps again.</p>
 
-<p>他由两部分组成，分别是一个c++程序和django的web界面，两者之间通过socket通信，之所以这样做也是为了确保功能的灵活性，c++能实现更多的功能。（= =其实python换lua更好呢，不管啦）
-如果要扩展应用，可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.</p>
+<h2>
+<a id="feature" class="anchor" href="#feature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature</h2>
 
-<h1>
-<a id="后续" class="anchor" href="#%E5%90%8E%E7%BB%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>后续</h1>
-
-<p>在截图里你可能看到了安卓客户端，这个也是我写的，不过还不是很完善，如果对Android客户端有兴趣的人很多的话，我再完善然后放出。</p>
-
-<p>如果有疑问，提供人肉支持~。</p>
+<ul>
+<li>File Browser.</li>
+<li>Web ssh.</li>
+<li>yyaw and aria2 control(need aria2 installed).</li>
+<li>host status monitor.</li>
+<li>webcam snapshot.</li>
+<li>GPIO control（uncomplete，and only for raspberry pi).</li>
+<li><a href="https://github.com/wzyy2/PiBox/wiki/Feature">more here</a></li>
+</ul>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
@@ -103,15 +91,39 @@ sudo sh ./stop.sh
 <p>PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.</p>
 
 <h2>
+<a id="介绍" class="anchor" href="#%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>介绍</h2>
+
+<p>写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).</p>
+
+<h1>
+<a id="details" class="anchor" href="#details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Details</h1>
+
+<p>PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
+如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.</p>
+
+<h2>
 <a id="ps" class="anchor" href="#ps" aria-hidden="true"><span class="octicon octicon-link"></span></a>PS</h2>
 
-<p>如果你有什么问题的话，或者不爽我写的代码，或者有什么样的需求想我加上，或者想一起写~欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）
-提供人肉支持~</p>
+<p>如果你有什么问题的话,欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）
+提供人肉支持.</p>
 
-<p><img src="http://www.iotwrt.com/jpg/pibox1.jpg" alt="image">
-<img src="http://www.iotwrt.com/jpg/pibox2.jpg" alt="image">
-<img src="http://www.iotwrt.com/jpg/pibox3.jpg" alt="image">
-<img src="http://www.iotwrt.com/jpg/pibox4.png" alt="image"></p>
+<h2>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<ul>
+<li><a href="https://github.com/wzyy2/PiBox/wiki/FAQ">FAQ</a></li>
+</ul>
+
+<h2>
+<a id="image" class="anchor" href="#image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image</h2>
+
+<p><img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/index.jpg" alt="image">
+<img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/status.jpg" alt="image"></p>
+
+<h2>
+<a id="phone" class="anchor" href="#phone" aria-hidden="true"><span class="octicon octicon-link"></span></a>Phone</h2>
+
+<p><img src="http://www.iotwrt.com/jpg/pibox4.png" alt="image"></p>
       </section>
     </div>
 
