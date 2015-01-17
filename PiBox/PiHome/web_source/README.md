@@ -1,1 +1,0 @@
-This is used to sync data from installed app.

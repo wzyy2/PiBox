@@ -32,14 +32,14 @@ urlpatterns += patterns ('',
 
 app_urlpatterns = patterns('',)
 
-cwd  = globaldata.appcwd
+cwd  = globaldata.APP_DIR
 list = os.listdir(cwd)
 sys.path.append(cwd);
 
 for item in list:
     if os.path.isdir(os.path.join(cwd, item)):
         app_urlpatterns += patterns ('',
-            (r'^App/' + item + '/', include(item + '.web_source.urls')),
+            (r'^App/' + item + '/', include(item + '.urls')),
             )
 
 urlpatterns += app_urlpatterns

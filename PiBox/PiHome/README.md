@@ -1,1 +1,1 @@
-This is django server!
+This directory contains django server's files.

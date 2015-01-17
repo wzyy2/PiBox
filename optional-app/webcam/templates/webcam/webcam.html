@@ -16,7 +16,7 @@
 $(function() {
     $("#open").click( function(){  
         port = $('#camera_port').val();
-        $.getJSON("/PiApp/application/webcam/open",  {camera_port : port}, 
+        $.getJSON("/App/webcam/open",  {camera_port : port}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     $("#dialog").html("Open failed");
@@ -34,7 +34,7 @@ $(function() {
             });
     });
     $("#close").click( function(){  
-        $.getJSON("/PiApp/application/webcam/close",           
+        $.getJSON("/App/webcam/close",           
             function(data){
                 if(data['msg'] != 'ok') {
                     $("#dialog").html("Close failed");

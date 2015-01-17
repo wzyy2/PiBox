@@ -11,15 +11,13 @@ import cv2.cv as cv
 
 from common import globaldata
 
-html_source_url = "application/webcam/web_source/html/"
-static_source_url = "static/webcam/web_source/static/"
 cwd  = globaldata.cwd + '/App/webcam/'
 
 camera = None
 
 @login_required  
 def index(request):
-    t = get_template(html_source_url + 'webcam.html')
+    t = get_template('webcam/webcam.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
@@ -30,11 +28,11 @@ def image(request):
         #skip cache
         for i in range(5):
             retval, img = camera.read()      
-        cv2.imwrite(cwd + "web_source/tmp/tmp.jpg" , img)
-        ret_img = Image.open(cwd + "web_source/tmp/tmp.jpg")
+        cv2.imwrite(cwd + "tmp/tmp.jpg" , img)
+        ret_img = Image.open(cwd + "tmp/tmp.jpg")
         ret_img.save(http,'JPEG')
     else:
-        ret_img = Image.open(cwd + "web_source/tmp/cancel.png")
+        ret_img = Image.open(cwd + "tmp/cancel.png")
         ret_img.save(http,'png')       
     return http
 

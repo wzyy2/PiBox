@@ -3,8 +3,7 @@ import os,sys,logging
 from PiApp.forms import *
 from PiApp.models import *
 
-VERSION = '0.2.2'
-    
+VERSION = '0.2.5'
 NasEnable="ENABLE"
 
 #app info
@@ -15,11 +14,11 @@ AppList = list()
 
 #register app list
 cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
-appcwd  = cwd + '/App'
-list = os.listdir(appcwd)
+APP_DIR  = cwd + '/App'
+list = os.listdir(APP_DIR)
 info = []
 for item in list:
-    if os.path.isdir(os.path.join(appcwd, item)):
+    if os.path.isdir(os.path.join(APP_DIR, item)):
         app = Appstruct()
         app.name = item
         AppList.append(app)

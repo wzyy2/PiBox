@@ -9,9 +9,7 @@ from common import globaldata
 
 from models import *
 
-html_source_url = "application/SocialNetworks/web_source/html/"
-static_source_url = "static/SocialNetworks/web_source/static/"
-cwd  = globaldata.cwd + '/App/social-networks/'
+cwd  = globaldata.cwd + '/App/SocialNetworks/'
 
 try:
     pisettings_instance = sns_test.objects.get(id =1)
@@ -20,6 +18,6 @@ except:
 
 @login_required  
 def index(request):
-    t = get_template(html_source_url + 'index.html')
+    t = get_template('SocialNetworks/index.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))

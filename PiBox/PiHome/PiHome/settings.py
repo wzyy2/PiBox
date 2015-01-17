@@ -30,7 +30,7 @@ AUTH_USER_MODEL = "PiApp.PiUser"
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS1 = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,10 +39,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'PiApp',
     'filemanager',
-    'web_source.test',
 )
+APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + '/App'
+app_list = list()
+list = os.listdir(APP_DIR)
+for item in list:
+    if os.path.isdir(os.path.join(APP_DIR, item)):
+        app_list.append('App.' + item)
 
-APP_DIR = BASE_DIR + "/.." +"/App"
+INSTALLED_APPS2 = tuple(app_list)
+
+INSTALLED_APPS = INSTALLED_APPS1 + INSTALLED_APPS2
 
 
 MIDDLEWARE_CLASSES = (
