@@ -39,7 +39,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'PiApp',
     'filemanager',
+    'web_source.test',
 )
+
+APP_DIR = BASE_DIR + "/.." +"/App"
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -23,7 +23,7 @@ def GPIO(request):
     except: 
         return HttpResponse(simplejson.dumps({'msg':'fail'}))  
 
-    t = get_template('application/GPIO/django/html/gpio.html')
+    t = get_template('application/GPIO/web_source/html/gpio.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 

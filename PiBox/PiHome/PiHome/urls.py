@@ -5,6 +5,10 @@ from PiApp.api import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings 
 
+from common import globaldata
+import os
+import sys
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -24,6 +28,21 @@ urlpatterns += patterns ('',
     (r'^filemanager/', include('filemanager.urls')),
     (r'^API/', include('PiHome.api_urls')),
 )
+
+
+app_urlpatterns = patterns('',)
+
+cwd  = globaldata.appcwd
+list = os.listdir(cwd)
+sys.path.append(cwd);
+
+for item in list:
+    if os.path.isdir(os.path.join(cwd, item)):
+        app_urlpatterns += patterns ('',
+            (r'^App/' + item + '/', include(item + '.web_source.urls')),
+            )
+
+urlpatterns += app_urlpatterns
 
 if settings.DEBUG is False:
     urlpatterns += patterns('',

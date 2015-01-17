@@ -1,0 +1,57 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | networks {% endblock %}
+
+{% block css%}    
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block js%}  
+{% endblock %}
+
+{% block on_ready%}    
+<script>
+$(function() {
+ 
+});
+</script>
+{% endblock %}
+
+{% block heading %}    
+<h1>
+    social networks
+</h1>
+<ol class="breadcrumb">
+ <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
+ <li><a href="#">App</a></li>
+ <li class="active">social networks</li>
+</ol>  
+{% endblock %}
+
+{% block content %} 
+<div class="pi-container  ">
+    <div class="row">
+        <div class="box box-solid box-success ">
+            <div class="box-header">
+                <h3 class="box-title">Wechat</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body  ">
+            </div><!-- /.box-body -->             
+        </div>
+    </div>
+    <div class="row">
+        <div class="box box-solid box-warning ">
+            <div class="box-header">
+                <h3 class="box-title">Weibo</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body  ">
+            </div><!-- /.box-body -->             
+        </div>
+    </div>
+<div>
+
+
+
+{% endblock %}

@@ -18,6 +18,3 @@ urlpatterns = patterns('',
     (r'webssh/$', webssh_view),  
 )
 
-urlpatterns += patterns ('',
-    (r'^application/', include('PiApp.application.urls')),
-)
