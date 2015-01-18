@@ -3,7 +3,7 @@ import os,sys,logging
 from PiApp.forms import *
 from PiApp.models import *
 
-VERSION = '0.2.5'
+VERSION = '0.2.6'
 NasEnable="ENABLE"
 
 #app info

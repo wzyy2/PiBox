@@ -39,15 +39,14 @@ def image(request):
 def open_camera(request):
     global camera
     try:
-        if request.method == 'GET':  
-            camera_port = int(request.GET['camera_port']) 
-            if camera == None:
-                camera = cv2.VideoCapture(camera_port)
-                camera.set(cv.CV_CAP_PROP_FRAME_WIDTH,320)
-                camera.set(cv.CV_CAP_PROP_FRAME_HEIGHT,240)
-                camera.set(cv.CV_CAP_PROP_FPS,12)
-                retval, img = camera.read()      #light led
-            return HttpResponse(simplejson.dumps({'msg':'ok'}))   
+        camera_port = int(request.GET['camera_port']) 
+        if camera == None:
+            camera = cv2.VideoCapture(camera_port)
+            camera.set(cv.CV_CAP_PROP_FRAME_WIDTH,320)
+            camera.set(cv.CV_CAP_PROP_FRAME_HEIGHT,240)
+            camera.set(cv.CV_CAP_PROP_FPS,12)
+            retval, img = camera.read()      #light led
+        return HttpResponse(simplejson.dumps({'msg':'ok'}))   
     except: 
         return HttpResponse(simplejson.dumps({'msg':'fail'}))   
 

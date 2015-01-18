@@ -1,10 +1,10 @@
 # PiBox #
-PiBox is a web control Interface.<br>
+PiBox is a web control Interface for Embedded Board.<br>
 http://wzyy2.github.io/PiBox
 
 # Usage #
 See these steps for a  build guide(cd Pibox).<br>
-Get source from.....<br>
+<!-- Get source from.....<br> -->
 First install the dependencies:
 
     sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
@@ -36,7 +36,7 @@ uninstall and reinstall：
 * yyaw and aria2 control(need aria2 installed).
 * host status monitor.
 * webcam snapshot.
-* GPIO control（uncomplete，and only for raspberry pi).
+* GPIO control.
 * [more here](https://github.com/wzyy2/PiBox/wiki/Feature)
 
 ## License ##
@@ -62,8 +62,6 @@ PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通�
 
 
 ## Image ##
-![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/index.jpg)
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/index1.jpg)
 ![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/status.jpg)
-
-## Phone ##
-![image](http://www.iotwrt.com/jpg/pibox4.png)
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/phone.png)

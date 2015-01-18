@@ -1,0 +1,200 @@
+{% extends "base-user.html" %}
+
+{% block title %} PiHome | GPIO {% endblock %}
+
+{% block css%}    
+
+{% endblock %}
+
+{% block js%}  
+{% endblock %}
+
+{% block on_ready%}    
+<script>
+var gpio_header = '<tr><th width="25%">Pin</th><th width="25%">direction</th><th width="25%">value</th><th width="25%">Control</th></tr>'
+
+$(function() {
+    refresh_gpio();
+
+    $("#add-gpio").click( function(){  
+        var content = '<div><label>GPIO_NUM:</label><input id="gpio_num" name="num" type="text"><label></div>'
+        $("#dialog").html(content);
+
+        $("#dialog").dialog({
+            modal: false,
+            buttons: {
+                add: function() {
+                    $(this).dialog("close");
+
+                    $.getJSON("add",  {num : $('#gpio_num').val()}, 
+                        function(data){
+                            if(data['msg'] != 'ok') {
+                                alert('failed');
+                            } else {
+                                $.getJSON("read_direction",  {num : $('#gpio_num').val()}, 
+                                    function(data){
+                                        if(data['msg'] != 'ok') {
+                                            alert('failed');
+                                        } else {
+                                            var dir = data['direction'];
+                                            $.getJSON("read_value",  {num : $('#gpio_num').val()}, 
+                                                function(data){
+                                                    if(data['msg'] != 'ok') {
+                                                        alert('failed');
+                                                    } else {
+                                                        var val = data['value'];
+                                                        var content = get_content($('#gpio_num').val(), dir, val)
+                                                        $("#gpio_tbody").append(content);
+                                                    }     
+                                            });
+                                        }     
+                                });
+
+
+                            }
+  
+                    });
+
+                },
+                close: function() {
+                    $(this).dialog("close");
+                },              
+            }
+        });     
+        // $.getJSON("open",  {camera_port : port}, 
+        //     function(data){
+
+        //     });
+
+    });
+});
+function remove_gpio(NUM) {
+    $.getJSON("remove",  {num : NUM}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                $("#gpio" + NUM).remove();
+            }
+
+    });       
+}
+function refresh_gpio() {    
+    $.getJSON("exported_gpio",  {}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                $("#gpio_tbody").html(gpio_header);
+                for(var i = 0, l = data['exported_gpio'].length; i < l; i++) {
+                    var pin = data['exported_gpio'][i];
+                    var content = get_content(pin, 'in', 0);
+                    $("#gpio_tbody").append(content);
+                    refresh(pin);                            
+                }
+            }
+    });        
+}
+function refresh(pin) {
+    $.getJSON("read_direction",  {num : pin}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                var dir = data['direction'];
+                $.getJSON("read_value",  {num : pin}, 
+                    function(data){
+                        if(data['msg'] != 'ok') {
+                            alert('failed');
+                        } else {
+                            var val = data['value'];
+                            var content = get_content_html(pin, dir, val)
+                            $("#gpio" + pin).html(content);
+                        }     
+                });
+            }     
+        });               
+}
+function get_content(num, direction, value) {
+    var head = '<tr id=gpio' + num + '><td>' + num + '</td><td>' + direction + '</td><td>' + value + '</td><td><div class="btn-group">';
+    var btn_minus = '<button class="btn btn-default" onClick="remove_gpio(' + num + ')"><i class="fa fa-minus"></i></button>';
+    var btn_set_high = '<button class="btn btn-default" onClick="setvalue(' + num + ', 1)">High</button>';
+    var btn_set_low = '<button class="btn btn-default" onClick="setvalue(' + num + ', 0)">Low </button>';
+    var btn_set_in = '<button class="btn btn-default" onClick="setdirection(' + num + ',' + "'in'" + ')">In  </button>';
+    var btn_set_out ='<button class="btn btn-default" onClick="setdirection(' + num + ', ' + "'out'" + ')">Out </button>';
+    var end =  '</div></td></tr>';
+    var content = head + btn_set_out + btn_set_in + btn_set_high + btn_set_low  + btn_minus + end;
+    return content;    
+}
+function get_content_html(num, direction, value) {
+    var head = '<td>' + num + '</td><td>' + direction + '</td><td>' + value + '</td><td><div class="btn-group">';
+    var btn_minus = '<button class="btn btn-default" onClick="remove_gpio(' + num + ')"><i class="fa fa-minus"></i></button>';
+    var btn_set_high = '<button class="btn btn-default" onClick="setvalue(' + num + ', 1)">High</button>';
+    var btn_set_low = '<button class="btn btn-default" onClick="setvalue(' + num + ', 0)">Low </button>';
+    var btn_set_in = '<button class="btn btn-default" onClick="setdirection(' + num + ',' + "'in'" + ')">In  </button>';
+    var btn_set_out ='<button class="btn btn-default" onClick="setdirection(' + num + ', ' + "'out'" + ')">Out </button>';
+    var end =  '</div></td>';
+    var content = head + btn_set_out + btn_set_in + btn_set_high + btn_set_low  + btn_minus + end;
+    return content;    
+}
+function setvalue(pin, val) {
+    $.getJSON("write_value",  {num : pin, value : val}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                refresh(pin);
+            }  
+    });                
+}
+function setdirection(pin, dir) {
+    $.getJSON("write_direction",  {num : pin, direction : dir}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                refresh(pin);
+            }    
+    });                
+}
+</script>
+{% endblock %}
+
+{% block heading %}    
+<h1>
+    App
+    <small> GPIO </small>
+</h1>
+<ol class="breadcrumb">
+ <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+ <li><a href="#">App</a></li>
+ <li class="active">GPIO</li>
+</ol>  
+{% endblock %}
+
+{% block sidebar-nas %} active{% endblock %} 
+{% block sidebar-download %} active{% endblock %} 
+
+{% block content %} 
+<div class="pi-container  ">
+    <div class="row">
+        <div class="box box-solid box-danger ">
+            <div class="box-header">
+                <h3 class="box-title">Control Pad</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-danger" id="add-gpio"><i class="fa fa-plus"></i></button>
+                    <button class="btn btn-danger" onClick="refresh_gpio()"><i class="fa fa-refresh"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div  class="box-body">
+                <table class="table table-bordered">
+                    <tbody id="gpio_tbody">
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->             
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

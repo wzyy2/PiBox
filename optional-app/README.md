@@ -4,4 +4,9 @@ Remember to restart PiBox after Installation.<br>
 
 # webcam #
 
-![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/webcam1.png)
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/webcam.jpg)
+
+# GPIO #
+
+![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/gpio.jpg)
+

@@ -71,16 +71,22 @@ $(function() {
 
 {% block content %} 
 <div class="row">
-    <center>
-        <span>Port:</span>
-        <input type="text" id="camera_port" style="margin-left:5px;" value="0">
-        <span style="margin-left:20px;">Control:</span>
-        <div class="btn-group" style="margin-left:5px;" >
-            <button class="btn btn-primary" id="open"><span class="glyphicon glyphicon-play"></span></button>
-            <button class="btn btn-primary" id="close"><span class="glyphicon glyphicon-pause"></span></button>
-            <button class="btn btn-primary" id="refresh"><span class="glyphicon glyphicon-refresh"></span></button>
-        </div>
-   </center>
+    <div class="col-md-6">
+        <center style="padding-top:20px;">
+            <span>Port:</span>
+            <input type="text" id="camera_port" style="margin-left:5px;" value="0">
+        </center>
+    </div>
+    <div class="col-md-6">
+        <center style="padding-top:20px;">
+            <span>Control:</span>
+            <div class="btn-group" style="margin-left:5px;" >
+                <button class="btn btn-primary" id="open"><span class="glyphicon glyphicon-play"></span></button>
+                <button class="btn btn-primary" id="close"><span class="glyphicon glyphicon-pause"></span></button>
+                <button class="btn btn-primary" id="refresh"><span class="glyphicon glyphicon-refresh"></span></button>
+            </div>
+        </center>
+    </div>
 </div>
 <div class="row">
     <center style="margin-top: 60px;">
