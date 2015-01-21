@@ -1,0 +1,45 @@
+{% extends "base-user.html" %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}    
+{% endblock %}
+
+
+{% block on_ready%}    
+{% endblock %}
+
+
+{% block content %} 
+<div class="pi-container"> 
+    <div class="row">
+        <div class="box box-solid box-success ">
+            <div class="box-header">
+                <i class="fa fa-home"></i>
+                <h3 class="box-title">Overview</h3>
+                <div class="box-tools pull-right">
+                    <a class="btn btn-success" href="{% url 'PiApp.views.add_home_view' %}" style="color:#fff;")><i class="fa fa-edit"></i></a>
+                </div>                
+            </div><!-- /.box-header -->
+            <div class="box-body  ">
+                {% if home_exist %}
+                <h4 class="page-header header-bold">
+                    {{ home_instance.name }}                        
+                </h4>    
+                <img class="house-plan" src="{{ img_url }}"></img>
+                {% else %}
+                <div class="error-content">
+                    <h3 ><i class="fa fa-edit"></i> 
+                        <a href="{% url 'PiApp.views.add_home_view' %}">Fill up information.</a></h3>
+                        <p>
+                            No information is available for your home.
+                        </p>
+                </div><!-- /.error-content -->
+                {% endif %}
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+            </div>
+        </div>
+    </div>
+</div>	
+{% endblock %}

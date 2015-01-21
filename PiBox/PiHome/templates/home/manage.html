@@ -1,0 +1,113 @@
+{% extends "base-user.html" %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}  
+<script type="text/javascript">
+function edit_device(id){
+    window.location.href=("{% url 'PiApp.views.edit_device_view' %}?id=" + id);
+}
+function remove_device(get_id){
+    if(confirm('Sure?')) {
+        $.getJSON("{% url 'PiApp.api.remove_device_json' %}",  {id : get_id}, 
+            function(data){
+                if(data['msg'] != 'ok') {
+                    alert('failed');
+                } else {
+                    window.location.href=("");  
+                }                  
+        });
+    }
+}
+function get_data(get_id){
+    $.getJSON("{% url 'PiApp.api.device_json' %}",  {id : get_id}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+
+                var content = data['name'] + '<small>' + data['describe'] + '</small> ';
+                $('#device-name').html(content);
+                $('#device-name').attr("data-id", get_id);
+                content = 'X : ' + data['x'] + ' %';
+                $('#device-x').html(content);
+                content = 'Y : ' + data['y'] + ' %';
+                $('#device-y').html(content);
+                $('#device-body').css('display', 'block');
+
+                content = '<button class="btn btn-primary" onclick="edit_device('
+                content += get_id + ')"><i class="fa fa-edit"></i></button>'
+                content += '<button class="btn btn-primary" onclick="remove_device(' + get_id + ')"><i class="fa fa-minus"></i></button>'
+                    
+                $('#device-btn').html(content);
+
+
+            }                  
+    });
+}
+function add_sensor(){
+    id = $('#device-name').attr("data-id");
+    window.location.href=("{% url 'PiApp.views.add_sensor_view' %}?id=" + id);
+}
+</script>  
+{% endblock %}
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block content %} 
+<div class="pi-container"> 
+    <div class="row">
+        <div class="box box-solid box-success ">
+            <div class="box-header">
+                <i class="fa fa-wrench"></i>
+                <h3 class="box-title">Device</h3>
+                <div class="box-tools pull-right">
+                    {% for device in device_all %}    
+                        <button class="btn btn-success" onclick="get_data({{ device.id }})">{{ device.name }}</button>
+                    {% endfor %}
+                </div>                
+            </div><!-- /.box-header -->
+            
+            <div class="box-body" id="device-body" style="display:none;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 id="device-name"  data-id="1" class="page-header header-bold">                        
+                        </h4>                        
+                    </div>
+                    <div class="col-md-6">
+                        <div id='device-btn' class="btn-group" style="float:right;">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <span id="device-x"  class="badge bg-light-blue"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <span id="device-y"  class="badge bg-light-blue"></span>
+                    </div>
+                </div>
+                <div style="padding-top:15px;">
+                    <h4 class="page-header header-bold">
+                        Sensor          
+                        <small>Manage the device's sensor.</small>               
+                    </h4>                    
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="add_sensor()"><i class="fa fa-plus"></i> add a sensor</button>
+                </div>
+                <div class="alert alert-warning alert-dismissable" style="margin-top:32px;margin-left:10px;">
+                    <i class="fa fa-warning"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    No Sensor find！
+                </div>
+            </div>
+
+            <div class="box-footer">
+            </div>
+        </div>
+    </div>
+</div>  
+{% endblock %}

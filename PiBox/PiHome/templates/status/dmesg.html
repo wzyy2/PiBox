@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Kernel log {% endblock %}
-
 {% block css%}    
 {% endblock %}
 {% block js%}    
@@ -9,18 +7,6 @@
 
 
 {% block on_ready%}    
-{% endblock %}
-
-{% block heading %}    
-<h1>
-	Status
-	<small>Kernel log </small>
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
-                        <li><a href="#">Status</a></li>
-                        <li class="active">Kernel log</li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

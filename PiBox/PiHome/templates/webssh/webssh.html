@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | WebSSH {% endblock %}
-
 {% block css%}    
 <style type="text/css">
 .content {
@@ -24,16 +22,6 @@ $(function(){
 {% endblock %}
 
 {% block on_ready%}    
-{% endblock %}
-
-{% block heading %}    
-<h1>
-	SSH
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}"> Home</a></li>
-                        <li class="active"><a href="#">SSH</a></li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

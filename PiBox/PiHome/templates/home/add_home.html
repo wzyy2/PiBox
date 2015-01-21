@@ -1,0 +1,47 @@
+{% extends "base-user.html" %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}    
+{% endblock %}
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block content %} 
+<div class="pi-container"> 
+    <div class="row">
+        <div class="box box-solid box-success ">
+            <div class="box-header">
+                <i class="fa fa-home"></i>
+                <h3 class="box-title">Home</h3>  
+                <div class="box-tools pull-right">
+                    <a class="btn btn-success" href="{% url 'PiApp.views.home_view' %}" style="color:#fff;")><i class="fa fa-long-arrow-left"></i></a>
+                </div>              
+            </div><!-- /.box-header -->
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="box-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_name">Name</label>
+                        {{form.name}}
+                        {{form.name.errors}} 
+                    </div>
+                    <div class="form-group">
+                        <label for="id_img">House plan</label>
+                        <p class="help-block">Get a picture for your house(1000*1000 is better)</p>
+                        {{form.img}}
+                        {{form.img.errors}} 
+                    </div>
+                    <div>
+                        <img class="house-plan" src="{{ img_url }}"></img>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+{% endblock %}

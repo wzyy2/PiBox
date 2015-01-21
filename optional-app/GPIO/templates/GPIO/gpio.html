@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | GPIO {% endblock %}
-
 {% block css%}    
 
 {% endblock %}
@@ -158,18 +156,6 @@ function setdirection(pin, dir) {
     });                
 }
 </script>
-{% endblock %}
-
-{% block heading %}    
-<h1>
-    App
-    <small> GPIO </small>
-</h1>
-<ol class="breadcrumb">
- <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
- <li><a href="#">App</a></li>
- <li class="active">GPIO</li>
-</ol>  
 {% endblock %}
 
 {% block sidebar-nas %} active{% endblock %} 

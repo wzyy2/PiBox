@@ -44,3 +44,26 @@ class PiRegisterForm(forms.ModelForm):
                 msg = u"Password not Same"
                 self._errors["password2"] = self.error_class([msg])
         return cleaned_data
+
+
+class DeviceForm(forms.ModelForm):
+    class Meta:
+            model = Device
+            fields = ('name','describe','location','x','y')    
+
+    def __init__(self, *args, **kwargs):
+        super(DeviceForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['describe'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['location'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['x'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['y'].widget.attrs.update({'class' : 'form-control'})
+
+class HomeForm(forms.ModelForm):
+    class Meta:
+            model = Home
+            fields = ('name','img',)                
+
+    def __init__(self, *args, **kwargs):
+        super(HomeForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class' : 'form-control'})

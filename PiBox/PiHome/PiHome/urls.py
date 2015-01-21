@@ -4,6 +4,7 @@ from PiApp.views import *
 from PiApp.api import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings 
+from django.conf.urls.static import static
 
 from common import globaldata
 import os
@@ -29,7 +30,6 @@ urlpatterns += patterns ('',
     (r'^API/', include('PiHome.api_urls')),
 )
 
-
 app_urlpatterns = patterns('',)
 
 cwd  = globaldata.APP_DIR
@@ -49,6 +49,8 @@ if settings.DEBUG is False:
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.STATIC_ROOT,
         }),
    )
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'PiApp.views.fzf_view'
 handler500 = 'PiApp.views.fzz_view'

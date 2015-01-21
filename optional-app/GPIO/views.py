@@ -18,7 +18,7 @@ from common import linux_gpio
 gpio_dict = dict()
 
 @login_required  
-def GPIO(request):
+def GPIO(request, title='GPIO', belong={'app'}):
     t = get_template('GPIO/gpio.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))

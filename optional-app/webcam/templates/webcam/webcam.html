@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Webcam {% endblock %}
-
 {% block css%}    
 <style type="text/css">
 
@@ -19,16 +17,7 @@ $(function() {
         $.getJSON("/App/webcam/open",  {camera_port : port}, 
             function(data){
                 if(data['msg'] != 'ok') {
-                    $("#dialog").html("Open failed");
-                    $("#dialog").dialog({
-                        modal: false,
-                        closeText: '<span class="glyphicon glyphicon-play"></span>',
-                        buttons: {
-                            Ok: function() {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
+                    alert("Open failed");
                 }
                 $("#surface").attr('src', "temp.jpg?t=" + Math.random());
             });
@@ -37,16 +26,7 @@ $(function() {
         $.getJSON("/App/webcam/close",           
             function(data){
                 if(data['msg'] != 'ok') {
-                    $("#dialog").html("Close failed");
-
-                    $("#dialog").dialog({
-                        modal: false,
-                        buttons: {
-                            Ok: function() {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });                   
+                    alert("Close failed");                  
                 }
                 $("#surface").attr('src', "temp.jpg?t=" + Math.random());
             });     
@@ -56,17 +36,6 @@ $(function() {
     });
 });
 </script>
-{% endblock %}
-
-{% block heading %}    
-<h1>
-    webcam
-</h1>
-<ol class="breadcrumb">
- <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
- <li><a href="#">App</a></li>
- <li class="active">webcam</li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

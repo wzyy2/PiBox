@@ -16,7 +16,7 @@ cwd  = globaldata.cwd + '/App/webcam/'
 camera = None
 
 @login_required  
-def index(request):
+def index(request, title='webcam', belong={'app'}):
     t = get_template('webcam/webcam.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))

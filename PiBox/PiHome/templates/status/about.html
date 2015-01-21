@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | About {% endblock %}
-
 {% block css%}    
 {% endblock %}
 {% block js%}    
@@ -11,37 +9,117 @@
 {% block on_ready%}    
 {% endblock %}
 
-{% block heading %}    
-<h1>
-	Status
-	<small>About </small>
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
-                        <li><a href="#">Status</a></li>
-                        <li class="active">About</li>
-</ol>  
-{% endblock %}
-
 {% block content %} 
+<div class="row ">
+    <div class="col-md-8 col-md-offset-2">
 
-<div class="row "><div class="col-md-6 col-md-offset-3">
+        <div class="box box-solid box-primary ">
+            <div class="box-header">
+                <i class="fa fa-laptop"></i>
+                <h3 class="box-title">About</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body  ">
+                <dl class="dl-left">
+                    <dt  >Pihome Version</dt>
+                    <dd>V {{ VERSION }}</dd> 
+                </dl>
+            </div><!-- /.box-body -->
+            <div class="box-footer text-center">
+             <a href="https://github.com/wzyy2"> Check New</a>
+         </div>
+     </div><!-- /.box -->
 
-    <div class="box box-solid box-danger ">
-        <div class="box-header">
-            <i class="fa fa-laptop"></i>
-            <h3 class="box-title">About</h3>
-        </div><!-- /.box-header -->
-        <div class="box-body  ">
-            <dl class="dl-left">
-                <dt  >Pihome Version</dt>
-                <dd>V {{ VERSION }}</dd> 
-            </dl>
-        </div><!-- /.box-body -->
-        <div class="box-footer text-center">
-           <a href="https://github.com/wzyy2"> Check New</a>
-       </div>
-   </div><!-- /.box -->
+ </div>	
+</div>
+<div class="row ">
+    <div class="col-md-8 col-md-offset-2">
 
-</div>	</div>
+        <div class="box box-solid box-danger ">
+            <div class="box-header">
+                <i class="fa fa-check"></i>
+                <h3 class="box-title">README</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body  ">
+                <div class="md-section-divider"></div>
+
+                <div class="md-section-divider"></div>
+
+                <h1 id="pibox" data-anchor-id="ilyv">PiBox</h1>
+
+                <p data-anchor-id="b9z0">PiBox is a web control Interface for Embedded Board.<br>
+                    <a href="http://wzyy2.github.io/PiBox" target="_blank">http://wzyy2.github.io/PiBox</a></p>
+
+                    <div class="md-section-divider"></div>
+
+                    <h1 id="usage" data-anchor-id="2atq">Usage</h1>
+
+                    <p data-anchor-id="ppis">See these steps for a  build guide(cd Pibox).<br>
+                       First install the dependencies:</p>
+
+                       <pre data-anchor-id="jf37"><code>sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
+                        sudo apt-get install python-setuptools
+                        sudo pip install Django==1.6.6
+                        sudo apt-get install scons
+                    </code></pre>
+
+                    <p data-anchor-id="kbbq">Then run building script:</p>
+
+                    <pre data-anchor-id="mby1"><code>sudo sh ./install_source.sh
+                        sudo sh ./install_env.sh
+                    </code></pre>
+
+                    <p data-anchor-id="egsv">Start and stop scripts:</p>
+
+                    <pre data-anchor-id="4mow"><code>sudo sh ./start.sh 
+                        sudo sh ./stop.sh
+                    </code></pre>
+
+                    <p data-anchor-id="jkhm">After run the start script,open your browser and go to the URL:</p>
+
+                    <pre data-anchor-id="7ykk"><code>http://192.168.10.105(your board's ip):8000
+                    </code></pre>
+
+                    <p data-anchor-id="go4v">(File browser use /home/shares）</p>
+
+                    <p data-anchor-id="u2h4">uninstall and reinstall： <br>
+                        delete the folder and do these steps again.</p>
+
+                        <div class="md-section-divider"></div>
+
+                        <h2 id="feature" data-anchor-id="mnx3">Feature</h2>
+
+                        <ul data-anchor-id="d8ej">
+                            <li>File Browser.</li>
+                            <li>Web ssh.</li>
+                            <li>yyaw and aria2 control(need aria2 installed).</li>
+                            <li>host status monitor.</li>
+                            <li>webcam snapshot.</li>
+                            <li>GPIO control.</li>
+                            <li><a href="https://github.com/wzyy2/PiBox/wiki/Feature" target="_blank">more here</a></li>
+                        </ul>
+
+                        <div class="md-section-divider"></div>
+
+                        <h2 id="license" data-anchor-id="e7bn">License</h2>
+
+                        <p data-anchor-id="s53b">PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.</p>
+
+                        <div class="md-section-divider"></div>
+
+                        <h2 id="ps" data-anchor-id="stem">PS</h2>
+
+                        <p data-anchor-id="mzru">If you want more background on how it works,create an issue or email me:-).</p>
+
+                        <div class="md-section-divider"></div>
+
+                        <h2 id="faq" data-anchor-id="qez5">FAQ</h2>
+
+                        <ul data-anchor-id="coed">
+                            <li><a href="https://github.com/wzyy2/PiBox/wiki/FAQ" target="_blank">FAQ</a></li>
+                        </ul>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+
+            </div>   
+        </div>
 {% endblock %}

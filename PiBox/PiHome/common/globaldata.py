@@ -4,14 +4,14 @@ from PiApp.forms import *
 from PiApp.models import *
 
 VERSION = '0.2.6'
-NasEnable="ENABLE"
+NasEnable=True
 
+######################################################
 #app info
 class Appstruct():
     name = None
 
 AppList = list()
-
 #register app list
 cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
 APP_DIR  = cwd + '/App'
@@ -23,7 +23,7 @@ for item in list:
         app.name = item
         AppList.append(app)
 
-
+###################################################
 def getclient():
     try:
         pisettings_instance = PiSettings.objects.get(id =1)
@@ -36,3 +36,9 @@ def getclient():
 def getLogger():
     logger = logging.getLogger('pihome')
     return logger
+
+
+
+
+
+

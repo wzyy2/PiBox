@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} 500 ERROR{% endblock %}
-
 {% block content %} 
 <div class="error-page">
                         <h2 class="headline">500</h2>
@@ -13,15 +11,4 @@
                             </p>
                         </div>
                     </div><!-- /.error-page -->
-{% endblock %}
-
-{% block heading %}    
-                    <h1>
-                        500 Error Page
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="{% url 'PiApp.views.dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Error</a></li>
-                        <li class="active">500 </li>
-                    </ol>
 {% endblock %}

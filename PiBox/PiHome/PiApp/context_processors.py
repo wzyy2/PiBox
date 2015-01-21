@@ -6,7 +6,6 @@ from common import globaldata
 
 
 def app_info(request):
-
     info = []
     for item in globaldata.AppList:
         info.append(item.name);

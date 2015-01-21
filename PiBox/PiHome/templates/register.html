@@ -28,13 +28,13 @@
                     //发出ajax请求  
                     $("#id_email").blur( function(){  
                         if($(this).val()){
-                            $.getJSON("/API/accounts/check/username/",  {username:$(this).val()},  
+                            $.getJSON("{% url 'PiApp.api.check_username' %}",  {username:$(this).val()},  
                              function(data){
                               $("#r_tip0").html(data.msg);  
-                              if(data.msg == "用户名可以使用") 
-                                  $("button.btn-block").attr('disabled',false);   
+                              if(data.msg == "Username already exists") 
+                                  $("button.btn-block").attr('disabled',true);   
                               else
-                                  $("button.btn-block").attr('disabled',true);     
+                                  $("button.btn-block").attr('disabled',false);     
                           });                    
                         }     
                         else{

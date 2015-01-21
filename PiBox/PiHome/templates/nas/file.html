@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | File {% endblock %}
-
 {% block css%}    
 <style type="text/css">
 .content {
@@ -25,18 +23,6 @@ $(function(){
 {% endblock %}
 
 {% block on_ready%}    
-{% endblock %}
-
-{% block heading %}    
-<h1>
-    Nas
-    <small>FileBrowser </small>
-</h1>
-<ol class="breadcrumb">
-            <li><a href="{% url 'PiApp.views.nas_file_view' %}">Home</a></li>
-                        <li><a href="#">Nas</a></li>
-                        <li class="active">FileBrowser</li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

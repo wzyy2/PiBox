@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Dashboard {% endblock %}
-
 {% block css%}    
 
 {% endblock %}
@@ -34,17 +32,6 @@ $(function() {
 
 });
 </script>
-{% endblock %}
-
-{% block heading %}    
-<h1>
-	Dashboard
-	<small>Home</small>
-</h1>
-<ol class="breadcrumb">
-	<li><a href="{% url 'PiApp.views.dashboard' %}">home</a></li>
-	<li class="active">Dashboard</li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

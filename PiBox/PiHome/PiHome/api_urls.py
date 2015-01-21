@@ -5,6 +5,8 @@ from PiApp.api import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings 
 
+#API
+
 urlpatterns = patterns('',
     (r'accounts/check/username', check_username),
     (r'accounts/login', login_api),
@@ -19,5 +21,9 @@ urlpatterns = patterns('',
     (r'PiApp/server', server_api),    
 
     (r'PiApp/settings/account', settings_account_api),    
-    (r'PiApp/settings/general', settings_general_api),    
+    (r'PiApp/settings/general', settings_general_api),   
+
+
+    (r'home/device', device_json),     
+    (r'home/device/remove', remove_device_json),      
 )

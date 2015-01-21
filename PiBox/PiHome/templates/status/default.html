@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Default {% endblock %}
-
 {% block css%}   
 {% endblock %}
 
@@ -83,10 +81,10 @@
                     //发出ajax请求  
                     $("button").click( function(){  
                         if($(this).attr('id') == 'shutdown') {
-                            $.getJSON("/API/PiApp/status/client/",  {cmd:'shutdown'})     
+                            $.getJSON("{% url 'PiApp.api.piclient_api' %}",  {cmd:'shutdown'})     
                         }
                         else if ($(this).attr('id') == 'reboot') {
-                             $.getJSON("/API/PiApp/status/client/",  {cmd:'reboot'} )      
+                             $.getJSON("{% url 'PiApp.api.piclient_api' %}",  {cmd:'reboot'} )      
                         }                     
                     }); 
 
@@ -111,20 +109,7 @@
 
 {% endblock %}
 
-
 {% block on_ready%}    
-{% endblock %}
-
-{% block heading %}    
-<h1>
-	Status
-	<small>Default </small>
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
-                        <li><a href="#">Status</a></li>
-                        <li class="active">Default</li>
-</ol>  
 {% endblock %}
 
 {% block content %} 

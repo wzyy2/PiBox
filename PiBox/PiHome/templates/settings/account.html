@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | Account {% endblock %}
-
 {% block css%}    
 {% endblock %}
 {% block js%}    
@@ -17,18 +15,6 @@ $(function(){
 </script>  
 {% endblock %}
 
-{% block heading %}    
-<h1>
-	Settings
-	<small>Account </small>
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li class="active">Account</li>
-</ol>  
-{% endblock %}
-
 {% block content %} 
 
 <div class="row "><div class="col-md-6 col-md-offset-3">
@@ -37,7 +23,7 @@ $(function(){
 			<h3 class="box-title">Profile</h3>
 		</div><!-- /.box-header -->
 		<div class="box-body">
-			<form action="" method="POST" >
+			<form action="" method="POST">
 				{% csrf_token %}
 				<!-- text input -->
                 {% for field in form %}
@@ -52,7 +38,7 @@ $(function(){
                    <button type="submit" class="btn btn-primary">Submit</button>
                </div>
 
-           </form>
+          </form>
        </div><!-- /.box-body -->
    </div><!-- /.box -->
 

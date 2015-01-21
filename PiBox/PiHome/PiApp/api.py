@@ -167,3 +167,29 @@ def settings_general_api(request):
     t = get_template('settings/api_general.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
+
+
+@login_required 
+def  remove_device_json(request):
+    if request.method == 'GET':  
+        device_id = request.GET['id']
+        device_instance = Device.objects.get(id =device_id)    
+        device_instance.delete()
+        ret = {'msg':'ok'}
+    else:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))     
+
+@login_required 
+def  device_json(request):
+    if request.method == 'GET': 
+        try: 
+            device_id = request.GET['id']
+            device_instance = Device.objects.get(id =device_id)    
+            ret = {'msg':'ok', 'name':device_instance.name,'location':device_instance.describe,\
+                    'describe':device_instance.location,'x':device_instance.x,'y':device_instance.y,}
+        except:
+            ret = {'msg':'fail'}
+    else:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))  

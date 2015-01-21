@@ -19,23 +19,25 @@ from common import client
 from common import globaldata
 from common import utils
 
+
 # def requires_login(view):
 #     def new_view(request, *args, **kwargs):
-#         if not request.user.is_authenticated():               
-#             return HttpResponseRedirect('/accounts/login/')
 #         return view(request, *args, **kwargs)                       
-#     return new_view                                                    
+#     return new_view          
+# globaldata.getLogger().debug("avail space" + str(avail));                                             
 global AppList
 
 @login_required  
-def dashboard(request):
+def dashboard(request, title='dashboard', belong=None):
     pisettings_instance = globaldata.getclient()
     user_count = PiUser.objects.count()   
     if(client.socket_test(pisettings_instance.ip,  pisettings_instance.port)):
-        connection = "TRUE"
+        connection = "True"
+        connection = "False"
+    if globaldata.NasEnable:
+        nas_enable = 'Enable'
     else:
-        connection = "FALSE"
-    nas_enable = globaldata.NasEnable
+        nas_enable = 'Disable'
     app_num = len(globaldata.AppList)
 
     #logfile
@@ -50,6 +52,185 @@ def dashboard(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+def fzf_view(request, title='404', belong=None):
+    t = get_template('404.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+def fzz_view(request, title='500', belong=None):
+    t = get_template('500.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def settings_account_view(request, title='account', belong={'settings'}):
+    user = PiUser.objects.get(username = request.user.username)
+    form = PiAccountForm(request.POST or None, instance = user)
+    if form.is_valid():
+        user.first_name=form.cleaned_data['first_name']
+        user.last_name=form.cleaned_data['last_name']      
+        if(form.cleaned_data['password1']  !=  ""):   
+            password=form.cleaned_data['password1']
+            if password != None:
+                user.set_password(password)
+        user.save()
+    t = get_template('settings/account.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+
+@login_required 
+def settings_general_view(request, title='general', belong={'settings'}):
+    pisettings_instance = globaldata.getclient()
+    form = PiSettingsForm(request.POST or None, instance = pisettings_instance)
+    if form.is_valid():
+        form.save()
+        # form = PiSettingsForm(instance = pisettings_instance)
+    t = get_template('settings/general.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def status_about_view(request, title='about', belong={'status'}):
+    t = get_template('status/about.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  status_default_view(request, title='default', belong={'status'}):
+    pisettings_instance = globaldata.getclient()
+
+    message = { "title" : "status"}
+    message['cmd'] = 'get';
+
+    pi_ret = client.socketjson_send_recv(pisettings_instance.ip,  pisettings_instance.port, message)
+
+    t = get_template('status/default.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  status_dmesg_view(request, title='kernel log', belong={'status'}):
+    dmesg = os.popen("dmesg")
+    log = dmesg.read()   
+    t = get_template('status/dmesg.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  nas_video_view(request, title='video', belong={'nas'}):
+    minidlna_url = request.get_host()
+    minidlna_url = minidlna_url[ :minidlna_url.find(':')]+ ':8200'
+
+    t = get_template('nas/video.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  nas_download_view(request, title='download', belong={'nas'}):
+    t = get_template('nas/download.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  nas_file_view(request, title='filebrowser', belong={'nas'}):
+    t = get_template('nas/file.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  webssh_view(request, title='webssh', belong=None):
+    ssh_url = request.get_host()
+    ssh_url = ssh_url[ :ssh_url.find(':')]+ ':8001'
+
+    t = get_template('webssh/webssh.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  add_device_view(request, title='add device', belong={'home'}):
+    try:
+        home_instance = Home.objects.get(id =1)
+        img_url = '/media/' + str(home_instance.img)
+    except:
+        return HttpResponseRedirect('/PiApp/home/index/')
+    form = DeviceForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    t = get_template('home/add.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  manage_device_view(request, title='manage', belong={'home'}):
+    device_all = Device.objects.all()    
+    t = get_template('home/manage.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  add_home_view(request, title='add home', belong={'home'}):
+    try:
+        home_instance = Home.objects.get(id =1)
+        form = HomeForm(request.POST or None, request.FILES, instance = home_instance)    
+        home_exist = True       
+    except:
+        form = HomeForm(request.POST or None, request.FILES)
+        home_exist = False     
+    if request.method != 'POST' and home_exist == True:
+        form = HomeForm(None, instance = home_instance)
+    if form.is_valid():
+        home = form.save()  
+    if home_exist:
+        img_url = '/media/' + str(home_instance.img)
+    else:
+        img_url = '/static/img/house_plan.jpg'
+    HomeForm(instance = home_instance)
+    t = get_template('home/add_home.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  home_view(request, title='home', belong=None):
+    try:
+        home_instance = Home.objects.get(id =1)
+        img_url = '/media/' + str(home_instance.img)
+        home_exist = True
+    except:
+        home_exist = False
+    t = get_template('home/home.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  edit_device_view(request, title='edit device', belong={'home'}):
+    try:
+        home_instance = Home.objects.get(id =1)
+        img_url = '/media/' + str(home_instance.img)
+    except:
+        return HttpResponseRedirect('/PiApp/home/index/')
+
+    device_id = request.GET['id']
+    device_instance = Device.objects.get(id =device_id)
+    form = DeviceForm(request.POST or None, instance= device_instance)
+
+    if form.is_valid():
+        form.save()
+    t = get_template('home/add.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  add_sensor_view(request, title='add sensor', belong={'home'}):
+    device_id = request.GET['id']
+    t = get_template('home/add_sensor.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+
+#######################################
+##               user               ###
+#######################################
 def login_view(request): 
     if request.user.is_authenticated():
         return HttpResponseRedirect("/PiApp/dashboard/")             
@@ -102,99 +283,4 @@ def register_view(request):
         t = get_template('register.html')
         c = RequestContext(request,locals())
         return HttpResponse(t.render(c))  
-
-def fzf_view(request):
-    t = get_template('404.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-def fzz_view(request):
-    t = get_template('500.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def settings_account_view(request):
-    user = PiUser.objects.get(username = request.user.username)
-    form = PiAccountForm(request.POST or None, instance = user)
-    if form.is_valid():
-        user.first_name=form.cleaned_data['first_name']
-        user.last_name=form.cleaned_data['last_name']      
-        if(form.cleaned_data['password1']  !=  ""):   
-            password=form.cleaned_data['password1']
-            if password != None:
-                user.set_password(password)
-        user.save()
-    t = get_template('settings/account.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-
-@login_required 
-def settings_general_view(request):
-    pisettings_instance = globaldata.getclient()
-    form = PiSettingsForm(request.POST or None, instance = pisettings_instance)
-    if form.is_valid():
-        form.save()
-        form = PiSettingsForm(instance = pisettings_instance)
-    t = get_template('settings/general.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def status_about_view(request):
-    t = get_template('status/about.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  status_default_view(request):
-    pisettings_instance = globaldata.getclient()
-
-    message = { "title" : "status"}
-    message['cmd'] = 'get';
-
-    pi_ret = client.socketjson_send_recv(pisettings_instance.ip,  pisettings_instance.port, message)
-
-    t = get_template('status/default.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  status_dmesg_view(request):
-    dmesg = os.popen("dmesg")
-    log = dmesg.read()   
-    t = get_template('status/dmesg.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  nas_video_view(request):
-    minidlna_url = request.get_host()
-    minidlna_url = minidlna_url[ :minidlna_url.find(':')]+ ':8200'
-
-    t = get_template('nas/video.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  nas_download_view(request):
-    t = get_template('nas/download.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  nas_file_view(request):
-    t = get_template('nas/file.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  webssh_view(request):
-    ssh_url = request.get_host()
-    ssh_url = ssh_url[ :ssh_url.find(':')]+ ':8001'
-
-    t = get_template('webssh/webssh.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
 

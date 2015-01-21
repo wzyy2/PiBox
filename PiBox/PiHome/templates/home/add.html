@@ -1,0 +1,88 @@
+{% extends "base-user.html" %}
+
+{% block css%}    
+{% endblock %}
+{% block js%}  
+<script>
+$(function() {
+    $('#house-plan').click(function(e){
+        var offset = $(this).offset();
+        var relativeX = (e.pageX - offset.left)/$(this).width() * 100;
+        var relativeY = (e.pageY - offset.top)/$(this).height() * 100;
+        $('#id_x').val(Math.round(relativeX*1000)/1000);
+        $('#id_y').val(Math.round(relativeY*1000)/1000);
+        // alert('x' + e.screenX  + 'y' + e.screenY );
+    });
+})  
+</script>
+{% endblock %}
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block content %} 
+<div class="pi-container"> 
+    <div class="row">
+        <div class="box box-solid box-success ">
+            <div class="box-header">
+                <i class="fa fa-plus"></i>
+                <h3 class="box-title">Device</h3>
+            </div><!-- /.box-header -->
+            <form action="" method="POST">
+                <div class="box-body  ">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_name">Device Name</label>
+                        <p class="help-block">Get a name for your device,no more than 30 chars</p>
+                        {{form.name}} 
+                        {{form.name.errors}} 
+                    </div>
+                    <label for="id_describe">Describe</label>
+                    <div class="form-group django-form">
+                        
+                        {{form.describe}} 
+                        {{form.describe.errors}} 
+                    </div>
+                    <div class="form-group">
+                        <label for="id_location">Location</label>
+                        <p class="help-block">Like : Bathroom</p>
+                        {{form.location}} 
+                        {{form.location.errors}} 
+                    </div>
+                    <div class="form-group django-form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="id_x">X(%)</label>
+                                {{form.x}} 
+                                {{form.x.errors}} 
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="id_y">Y(%)</label>
+                                {{form.y}} 
+                                {{form.y.errors}} 
+                            </div>
+                        </div>                                
+                    </div>
+                    <div>
+                        <img id="house-plan" class="house-plan" src="{{ img_url }}"></img>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>Select Multiple</label>
+                        <select class="form-control">
+                            <option>option 1</option>
+                            <option>option 2</option>
+                            <option>option 3</option>
+                            <option>option 4</option>
+                            <option>option 5</option>
+                        </select>
+                    </div> -->
+
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div><!-- /.box -->
+    </div>
+</div>	
+{% endblock %}

@@ -1,7 +1,5 @@
 {% extends "base-user.html" %}
 
-{% block title %} PiHome | General {% endblock %}
-
 {% block css%}    
 <style>
 </style>
@@ -11,18 +9,6 @@
 
 
 {% block on_ready%}    
-{% endblock %}
-
-{% block heading %}    
-<h1>
-	Settings
-	<small>General </small>
-</h1>
-<ol class="breadcrumb">
-	        <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li class="active">General</li>
-</ol>  
 {% endblock %}
 
 {% block sidebar-settings %} active{% endblock %} 

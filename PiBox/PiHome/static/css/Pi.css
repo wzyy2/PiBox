@@ -43,6 +43,8 @@
 .btn-right {
     float: right;
 }
+
+/* box */
 .box.box-solid.box-navy > .box-header {
     color: #fff;
     background: #001f3f;
@@ -58,6 +60,17 @@
 }
 .box.box-solid.box-maroon > .box-header a {
     color: #444;
+}
+.box.box-solid.box-black > .box-header {
+    color: #fff;
+    background: #000;
+    background-color: #000;
+}
+.box.box-solid.box-black > .box-header a {
+    color: #444;
+}
+.header-bold {
+    font-weight:bold;
 }
 .err {
     padding-left: 0px;
@@ -139,4 +152,7 @@
 .pi-container {
     padding-left: 30px;
     padding-right: 30px;
+}
+.house-plan {
+    width: 100%;
 }
