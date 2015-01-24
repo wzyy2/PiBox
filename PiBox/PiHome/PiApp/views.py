@@ -100,12 +100,28 @@ def settings_general_view(request, title='general', belong={'settings'}):
 
 @login_required 
 def status_process_view(request, title='process', belong={'status'}):
+    info = os.popen('ps aux').readlines()
+    i = 0
+    process_info = list()
+    for line in info :
+        i += 1
+        if i > 1:
+            get = line.split()
+            a = dict()
+            a['pid'] = get[1]
+            a['owner'] = get[0]
+            a['command'] = get[10]
+            for item in get[11:]:
+                a['command'] += ' ' + item
+            a['cpu'] = get[2]
+            a['memory'] = get[3]  
+            process_info.append(a) 
     t = get_template('status/process.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
 @login_required 
-def status_about_view(request, title='about', belong={'status'}):
+def status_about_view(request, title='about', belong={'status'}):                                             
     t = get_template('status/about.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))

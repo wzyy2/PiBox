@@ -171,7 +171,17 @@ def settings_general_api(request):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+def kill_process_api(request):
+    try:
+        pid = request.REQUEST['pid']
+        os.system("kill -9 " + pid)  
+        ret = {'msg':'ok'}
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret)) 
 
+
+###################my home##################
 def remove_device_by_id_json(request):
     try:
         device_id = request.REQUEST['device_id']

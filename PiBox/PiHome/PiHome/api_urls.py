@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     (r'accounts/check/login/$', check_login),
     (r'PiApp/dashboard/$', dashboard_api),
     (r'PiApp/status/client/$', piclient_api),
+    (r'PiApp/status/process/kill/$', kill_process_api),
     (r'PiApp/nas/$', nas_api),
     (r'PiApp/server/$', server_api),    
 

@@ -4,8 +4,16 @@
 {% endblock %}
 {% block js%} 
 <script>
-$(function() {
-})  
+function kill(pid_){
+    if(confirm('Sure?')) {
+        $.getJSON("{% url 'PiApp.api.kill_process_api' %}",  {pid : pid_}, 
+            function(data){
+                if(data['msg'] != 'ok') {
+                    alert('failed');
+                }               
+        });
+    }  
+}
 </script>   
 {% endblock %}
 
@@ -24,44 +32,25 @@ $(function() {
             <div class="box-body  ">
               <table class="table table-hover">
                 <tbody><tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
+                  <th style="width:8%;">PID</th>
+                  <th style="width:15%;">Owner</th>
+                  <th style="width:41%;">Command</th>
+                  <th style="width:10%;">CPU usage (%)</th>
+                  <th style="width:10%;">Memory usage (%)</th>
+                  <th style="width:16%;">Kill</th>
                 </tr>
+                {% for item in process_info %}
                 <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                  <td>{{item.pid}}</td>
+                  <td>{{item.owner}}</td>
+                  <td>{{item.command}}</td>
+                  <td>{{item.cpu}}</td>
+                  <td>{{item.memory}}</td>
+                  <td><button type="button" class="btn btn-danger" onclick="kill({{item.pid}})">kill</button></td>
                 </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Jane Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                {% endfor %}
+
               </tbody></table>
-
-
-
 
 
             </div><!-- /.box-body -->
