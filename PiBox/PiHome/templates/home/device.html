@@ -1,0 +1,128 @@
+{% extends "base-no-sidebar.html" %}
+
+{% block css%}    
+{% endblock %}
+
+{% block js%} 
+<script src="/static/js/plugins/raphael-min.js"></script>
+<script src="/static/js/plugins/morris/morris.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+
+{% for sensor in sensors %}
+    {% if sensor.sensor_class == 's' %}
+        switch_refresh({{sensor.id}});
+    {% endif %}
+    {% if sensor.sensor_class == 'n' %}
+        curvet_refresh({{sensor.id}}, '{{sensor.sensor_class}}');
+    {% endif %}
+    {% if sensor.sensor_class == 'p' %}
+        img_refresh({{sensor.id}});
+    {% endif %}
+{% endfor %}
+
+})
+
+
+
+function switch_refresh(get_id){
+    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                if(data['status'] == true) {
+                    $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
+                    $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');  
+                } else {
+                    $("#btn-close" + get_id).attr('class', 'btn btn-primary btn-lg active');
+                    $("#btn-open" + get_id).attr('class', 'btn btn-default btn-lg');                                          
+                }
+                    
+            }               
+    });  
+}
+function switch_open(get_id){
+    $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
+    $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');    
+    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 1}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            }                
+    });
+}
+function switch_close(get_id){
+    $("#btn-close" + get_id).attr('class', 'btn btn-primary btn-lg active');
+    $("#btn-open" + get_id).attr('class', 'btn btn-default btn-lg'); 
+    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 0}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                alert('failed');
+            }                 
+    });  
+}
+function curvet_refresh(get_id, unit){
+    $.getJSON("{% url 'PiApp.api.history_datapoint_json' %}",  {sensor_id : get_id}, 
+        function(data2){
+            if(data2['msg'] != 'ok') {
+                alert('failed');
+            } else {
+                var area = new Morris.Area({
+                    element: "revenue-chart-" + get_id,
+                    resize: true,
+                    data: data2['datapoint'],
+                    xkey: 'key',
+                    ykeys: ['value'],
+                    labels: ['value'],
+                    // xLabels: [''],
+                    postUnits : unit,
+                    lineColors: ['#3c8dbc'],
+                    hideHover: 'auto'
+                });                              
+            }               
+    });                     
+}
+function img_refresh(get_id){
+    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id, key : 0}, 
+        function(data){
+            if(data['msg'] != 'ok') {
+                // alert('failed');
+            } else {
+                $('img[sensor_id=' + get_id + ']').attr("src", data['value']);                             
+            }               
+    });                     
+}
+</script>   
+{% endblock %}
+
+{% block on_ready%}    
+{% endblock %}
+
+{% block content %} 
+
+<p><b>Name:</b>{{device_instance.name}}</p>
+<p><b>Describe:</b>{{device_instance.describe}}</p>
+<p><b>Location:</b>{{device_instance.location}}</p>
+
+{% for sensor in sensors %}  
+<div class="callout callout-info">
+    <p><b>Name:</b>{{sensor.name}}</p>
+    {% if sensor.sensor_class == 's' %}
+    <div class="btn-group" data-toggle="btn-toggle">
+        <button id="btn-open{{sensor.id}}" style="height:100px;width:180px;" type="button" class="btn btn-default btn-lg" onclick="switch_open({{sensor.id}})"><span class="glyphicon glyphicon-play"></span></button>
+        <button id="btn-close{{sensor.id}}" style="height:100px;width:180px;" type="button" class="btn btn-primary btn-lg active" onclick="switch_close({{sensor.id}})"><span class="glyphicon glyphicon-pause"></span></button>
+    </div>
+    {% endif %}
+    {% if sensor.sensor_class == 'n' %}
+    <div class="chart-responsive" style="padding-bottom:30px;"><div class="chart" id="revenue-chart-{{sensor.id}}" style="height: 250px;"></div></div>
+    {% endif %}
+    {% if sensor.sensor_class == 'p' %}
+    <img sensor_id={{sensor.id}}></img>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}
+
+<!-- <div class="col-md-6 col-md-offset-3"></div>   -->

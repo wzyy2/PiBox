@@ -135,19 +135,21 @@
 }
 
 /* jquery ui */
-.ui-dialog-titlebar-close {
-    background-color: #00a65a;
-    border-color: #008d4c;
-    border: 0;
-    box-shadow: none;
-}
+
 .ui-dialog-titlebar {
     margin :0px;
     color: #fff ;
-    background: #00a65a ;
-    background-color: #00a65a ;
+    background: #001f3f ;
+    background-color: #001f3f ;
 }
-
+.ui-dialog .ui-dialog-titlebar-close {
+/*    background-color: #428bca ;
+    border-color: #357ebd ;  */
+    border: 0px;
+    background: #001f3f ;
+    background-color: #001f3f ;
+    display:none;
+}
 /*pibox*/
 .pi-container {
     padding-left: 30px;
@@ -155,4 +157,11 @@
 }
 .house-plan {
     width: 100%;
+}
+
+.align-right {
+float: right;
+}
+.align-left {
+float: left;
 }

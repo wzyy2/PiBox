@@ -3,6 +3,69 @@
 {% block css%}    
 {% endblock %}
 {% block js%}    
+<script type="text/javascript">
+{% if home_exist %}
+
+{% for device in device_all %}  
+    var device{{forloop.counter}} = new Array();
+    device{{forloop.counter}}['id']={{device.id}};
+    device{{forloop.counter}}['name']='{{device.name}}';
+    device{{forloop.counter}}['x']={{device.x}};
+    device{{forloop.counter}}['y']={{device.y}};
+{% endfor %}
+
+$(window).load(function(){
+    // $("#divId").offset(myOffset);
+    
+
+    {% for device in device_all %}  
+    {
+        var offset = $('.house-plan').offset();
+        var relativeX = offset.left + $('.house-plan').width() * device{{forloop.counter}}['x'] / 100;
+        var relativeY = offset.top + $('.house-plan').height() * device{{forloop.counter}}['y'] / 100;
+
+        var content = get_device_content(device{{forloop.counter}});
+        $(".pi-container").append(content);
+        $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').css("position", "absolute");
+        var div_offset = $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').offset();
+
+        div_offset.top = relativeY - $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').height();
+        div_offset.left = relativeX - $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').width();
+        $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').offset(div_offset);
+    }
+    {% endfor %}
+
+    $(".btn-device").click(function(){
+        var id = $(this).attr("sensor_id");
+
+        var content = '<iframe src="{% url "PiApp.views.device_view" %}?device_id=' + id + '" frameBorder="0" width="100%" height="400px" ></iframe>'
+        $("#dialog").html(content);
+        $("#dialog").attr("title", "Device");
+
+        $("#dialog").dialog({
+            modal: false,
+            width:800, 
+            buttons: {
+                close: function() {
+                    $(this).dialog("close");
+                }, 
+            },
+        });
+
+        $("#dialog").attr("width", "300px");
+    });
+
+})
+
+function get_device_content(device){
+    var content;
+    content='<div class="btn-device btn btn-primary" sensor_id=' + device['id'] + ' style="border-radius: 50%; padding: 6px 6px;" >' + device['name'] + '</div>';
+
+    return content;
+}
+
+{% endif %}  
+</script>
 {% endblock %}
 
 
@@ -13,19 +76,21 @@
 {% block content %} 
 <div class="pi-container"> 
     <div class="row">
-        <div class="box box-solid box-success ">
+        <div class="box box-solid box-navy ">
             <div class="box-header">
                 <i class="fa fa-home"></i>
                 <h3 class="box-title">Overview</h3>
                 <div class="box-tools pull-right">
-                    <a class="btn btn-success" href="{% url 'PiApp.views.add_home_view' %}" style="color:#fff;")><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-navy" href="{% url 'PiApp.views.add_home_view' %}" style="color:#fff;")><i class="fa fa-edit"></i></a>
                 </div>                
             </div><!-- /.box-header -->
             <div class="box-body  ">
                 {% if home_exist %}
-                <h4 class="page-header header-bold">
-                    {{ home_instance.name }}                        
-                </h4>    
+                <center>
+                    <h4 class="page-header header-bold">
+                        {{ home_instance.name }}                        
+                    </h4>    
+                </center>
                 <img class="house-plan" src="{{ img_url }}"></img>
                 {% else %}
                 <div class="error-content">

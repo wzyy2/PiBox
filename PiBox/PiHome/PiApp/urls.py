@@ -22,10 +22,13 @@ urlpatterns = patterns('',
     (r'webssh/$', webssh_view), 
 
     (r'home/index/$', home_view),   
+    (r'home/help/$', home_help_view),   
     (r'home/add_home/$', add_home_view),
+    (r'home/device/$', device_view), 
     (r'home/add_device/$', add_device_view),  
     (r'home/edit_device/$', edit_device_view),  
     (r'home/manage_device/$', manage_device_view),  
     (r'home/add_sensor/$', add_sensor_view),  
+    (r'home/edit_sensor/$', edit_sensor_view), 
 )
 

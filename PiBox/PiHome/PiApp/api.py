@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required  
+from django.db import models
 import json as simplejson   
 
 from models import *
@@ -17,7 +18,7 @@ from forms import *
 from common import client
 from common import globaldata
 from common import utils
-
+from common import callback
 
 def login_api(request):           
     if request.method == 'POST':  
@@ -54,6 +55,9 @@ def check_login(request):
 
 
 def register_api(request):    
+    pisettings_instance = globaldata.getclient()
+    if pisettings_instance.enable_register != True:
+        return HttpResponse("You are not be allowed to register") 
     form = PiRegisterForm(request.POST or None)
     if form.is_valid():
         first_name=form.cleaned_data['first_name']
@@ -70,7 +74,6 @@ def register_api(request):
         else:  
             return HttpResponse(simplejson.dumps({'msg':'fail'}))  
 
-@login_required
 def account_change_api(request):
     user = PiUser.objects.get(username = request.user.username)
     form = PiAccountForm(request.POST or None, instance = user)
@@ -84,7 +87,7 @@ def account_change_api(request):
         user.save()
         return HttpResponse(simplejson.dumps({'msg':'ok'}))  
 
-@login_required
+
 def account_info_api(request):
     user = PiUser.objects.get(username = request.user.username)
     ret = {'msg':'ok'}
@@ -92,8 +95,8 @@ def account_info_api(request):
     ret[lastname] = user.last_name
     return HttpResponse(simplejson.dumps({'msg':'ok'}))  
 
-@login_required
-def  piclient_api(request):
+
+def piclient_api(request):
     pisettings_instance = globaldata.getclient()
 
     message = { "title" : "status"}
@@ -107,8 +110,8 @@ def  piclient_api(request):
 
     return HttpResponse(simplejson.dumps(pi_ret.message))  
 
-@login_required
-def  nas_api(request):
+
+def nas_api(request):
     pisettings_instance = globaldata.getclient()
       
     message = { "title" : "nas"}
@@ -122,13 +125,13 @@ def  nas_api(request):
 
     return HttpResponse(simplejson.dumps(pi_ret.message))  
 
-@login_required
-def  server_api(request):
+
+def server_api(request):
     pi_ret = {'version': globaldata.VERSION}
     return HttpResponse(simplejson.dumps(pi_ret))
 
-@login_required
-def  dashboard_api(request):
+
+def dashboard_api(request):
     pisettings_instance = globaldata.getclient()
 
     pi_ret = {'nas': globaldata.NasEnable}
@@ -142,7 +145,7 @@ def  dashboard_api(request):
 
     return HttpResponse(simplejson.dumps(pi_ret))
 
-@login_required
+
 def settings_account_api(request):
     user = PiUser.objects.get(username = request.user.username)
     form = PiAccountForm(request.POST or None, instance = user)
@@ -157,7 +160,7 @@ def settings_account_api(request):
     t = get_template('settings/api_account.html')
     c = RequestContext(request,locals())
 
-@login_required
+
 def settings_general_api(request):
     pisettings_instance = globaldata.getclient()
     form = PiSettingsForm(request.POST or None, instance = pisettings_instance)
@@ -169,27 +172,321 @@ def settings_general_api(request):
     return HttpResponse(t.render(c))
 
 
-@login_required 
-def  remove_device_json(request):
-    if request.method == 'GET':  
-        device_id = request.GET['id']
+def remove_device_by_id_json(request):
+    try:
+        device_id = request.REQUEST['device_id']
         device_instance = Device.objects.get(id =device_id)    
         device_instance.delete()
         ret = {'msg':'ok'}
-    else:
+    except:
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))     
 
-@login_required 
-def  device_json(request):
-    if request.method == 'GET': 
-        try: 
-            device_id = request.GET['id']
-            device_instance = Device.objects.get(id =device_id)    
-            ret = {'msg':'ok', 'name':device_instance.name,'location':device_instance.describe,\
-                    'describe':device_instance.location,'x':device_instance.x,'y':device_instance.y,}
-        except:
-            ret = {'msg':'fail'}
-    else:
+def get_device_by_id_json(request):
+    try: 
+        device_id = request.REQUEST['device_id']
+        device_instance = Device.objects.get(id =device_id)    
+        ret = {'msg':'ok', 'title':device_instance.name,'location':device_instance.describe,\
+                'about':device_instance.location,'x':device_instance.x,'y':device_instance.y,}
+    except:
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))  
+
+def get_sensor_by_device_id_json(request):
+    try: 
+        device_id = request.REQUEST['device_id']
+        device_instance = Device.objects.get(id = device_id)    
+        sensors = device_instance.sensor.all()   
+        ret_sensor = list()
+        for sensor in sensors:
+            a = dict()
+            a['id'] = sensor.id
+            a['title'] = sensor.name
+            a['about'] = sensor.describe
+            a['type'] = sensor.sensor_class 
+            a['unit_symbol'] = sensor.unit   
+            
+
+            ret_sensor.append(a)
+        ret = {'msg':'ok'}     
+        ret['sensor'] = ret_sensor   
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret)) 
+
+def remove_sensor_by_id_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        sensor_instance.delete()
+        ret = {'msg':'ok'}
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))   
+
+def add_sensor_callback_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        callback = request.REQUEST['callback_file']
+        sensor_instance.callback_file = callback
+        try:
+            callback_value = float(request.REQUEST['callback_value'])
+            callback_condition = request.REQUEST['callback_condition'] 
+            sensor_instance.callback_value = callback_value
+            sensor_instance.callback_condition = callback_condition
+        except:
+            pass
+        sensor_instance.save()
+        ret = {'msg':'ok'}
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))  
+
+def get_sensor_callback_json(request):
+    try: 
+        ret = {'msg':'ok'}
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)          
+        ret['callback_file'] = sensor_instance.callback_file  
+        if sensor_instance.sensor_class == 'n':
+            ret['callback_value'] = sensor_instance.callback_value 
+            ret['callback_condition'] = sensor_instance.callback_condition 
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret)) 
+#######################################
+##           MYHOME_API             ###
+#######################################
+def new_datapoint_json(request):
+    # device_id = request.REQUEST['device_id']
+    # device_instance = Device.objects.get(id = device_id) 
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "s":
+            try:
+                datapoint_instance = SwitchDatapoint.objects.get(sensor = sensor_instance)  
+            except:
+                datapoint_instance = SwitchDatapoint.objects.create(sensor = sensor_instance)
+            if int(request.REQUEST['status']) == 1:
+                callback.switch_callback(sensor_instance, 1)
+                datapoint_instance.status = True
+            elif int(request.REQUEST['status']) == 0:
+                callback.switch_callback(sensor_instance, 0)
+                datapoint_instance.status = False
+            datapoint_instance.save()
+        elif sensor_instance.sensor_class == "n":
+            if request.method == 'POST':
+                req = simplejson.loads(request.body)
+                if isinstance(req, list):
+                    for item in req:
+                        NumDatapoint.objects.create(sensor = sensor_instance, key = item['key'], value = item['value'] ); 
+                        try:
+                            callback.num_callback(sensor_instance, item['value'], item['key'])  
+                        except:
+                            pass
+                else:
+                    NumDatapoint.objects.create(sensor = sensor_instance, key = req['key'], value = req['value'] );  
+                    try:  
+                        callback.num_callback(sensor_instance, req['value'], req['key'])  
+                    except:
+                            pass
+            else:
+                NumDatapoint.objects.create(sensor = sensor_instance, key = request.REQUEST['key'], value = request.REQUEST['value'] )
+                try:
+                    callback.num_callback(sensor_instance, request.REQUEST['value'], request.REQUEST['key'])  
+                except:
+                    pass
+        elif sensor_instance.sensor_class == "p":
+            PicDatapoint.objects.create(sensor = sensor_instance, key = request.REQUEST['key'], pic_file = request.FILES['value'] )     
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))   
+
+def get_datapoint_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)          
+        # sensors = device_instance.sensor.all()   
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "s":
+            try:
+                datapoint_instance = SwitchDatapoint.objects.get(sensor = sensor_instance)  
+            except:
+                datapoint_instance = SwitchDatapoint.objects.create(sensor = sensor_instance)
+            ret['status'] = datapoint_instance.status
+        elif sensor_instance.sensor_class == "n":
+            datapoint_instance = NumDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key'])
+            ret['value'] = datapoint_instance.value
+        elif sensor_instance.sensor_class == "p":
+            key = request.REQUEST['key']
+            if (key == 0) or (key == '0'):
+                datapoint_instance = PicDatapoint.objects.filter(sensor = sensor_instance).order_by("-key")[0]
+            else:
+                datapoint_instance = PicDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key']) 
+            ret['value'] = settings.MEDIA_URL + str(datapoint_instance.pic_file)   
+            ret['key'] =  str(datapoint_instance.key)  
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))   
+
+
+def edit_datapoint_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "n":
+            datapoint_instance = NumDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key'])
+            datapoint_instance.value = request.REQUEST['value']
+            datapoint_instance.save()
+            try:
+                callback.num_callback(sensor_instance, request.REQUEST['value'], request.REQUEST['key'])
+            except:
+                pass 
+        elif sensor_instance.sensor_class == "p":
+            datapoint_instance = PicDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key']) 
+            datapoint_instance.value = request.FILES['value']
+            datapoint_instance.save()
+        
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))   
+
+def remove_datapoint_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "n":
+            datapoint_instance = NumDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key'])
+            datapoint_instance.delete()
+        elif sensor_instance.sensor_class == "p":
+            datapoint_instance = PicDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key'])
+            datapoint_instance.delete()      
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))   
+
+def history_datapoint_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        try:   
+            start = request.REQUEST['start']
+            end = request.REQUEST['end']
+            interval = int(request.REQUEST['interval'])
+            exact = True
+        except:
+            exact = False
+
+        # sensors = device_instance.sensor.all()   
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "n":
+            if exact == False: #ret 20 datapoints
+                datapoints = NumDatapoint.objects.filter(sensor = sensor_instance).order_by("-key")[0:20]
+                ret_data = list()
+                for datapoint in datapoints:   
+                    a = dict()
+                    a['key'] = str(datapoint.key)
+                    a['value'] = datapoint.value 
+                    ret_data.append(a)
+                ret['datapoint'] = ret_data 
+            else:
+                datapoints = NumDatapoint.objects.filter(sensor = sensor_instance, key__gte = start, key__lte = end)
+                ret_data = list()
+
+                i = 0
+                last_in = 0
+                for datapoint in datapoints:
+                    if i > 0:
+                        timedelta = int((datapoints[i].key - last_in).seconds)  
+                        if timedelta >= interval :  
+                            last_in = datapoints[i].key
+                            a = dict()
+                            a['key'] = str(datapoint.key)
+                            a['value'] = datapoint.value 
+                            ret_data.append(a)
+                    else:
+                        last_in = datapoints[0].key
+                        a = dict()
+                        a['key'] = str(datapoint.key)
+                        a['value'] = datapoint.value 
+                        ret_data.append(a)
+                    i += 1   
+                ret['datapoint'] = ret_data     
+        elif sensor_instance.sensor_class == "p": 
+            if exact == False: #ret 20 datapoints
+                datapoints = PicDatapoint.objects.filter(sensor = sensor_instance).order_by("-key")[0:20]
+                ret_data = list()
+                for datapoint in datapoints:   
+                    a = dict()
+                    a['key'] = str(datapoint.key)
+                    a['value'] = settings.MEDIA_URL + str(datapoint.pic_file) 
+                    ret_data.append(a)
+                ret['datapoint'] = ret_data 
+            else:
+                datapoints = PicDatapoint.objects.filter(sensor = sensor_instance, key__gte = start, key__lte = end)
+                ret_data = list()
+
+                i = 0
+                last_in = 0
+                for datapoint in datapoints:
+                    if i > 0:
+                        timedelta = int((datapoints[i].key - last_in).seconds)  
+                        if timedelta >= interval :  
+                            last_in = datapoints[i].key
+                            a = dict()
+                            a['key'] = str(datapoint.key)
+                            a['value'] = settings.MEDIA_URL + str(datapoint.pic_file) 
+                            ret_data.append(a)
+                    else:
+                        last_in = datapoints[0].key
+                        a = dict()
+                        a['key'] = str(datapoint.key)
+                        a['value'] = settings.MEDIA_URL + str(datapoint.pic_file) 
+                        ret_data.append(a)
+                    i += 1   
+                ret['datapoint'] = ret_data     
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))      
+
+def key_range_datapoint_json(request):
+    try:
+        sensor_id = request.REQUEST['sensor_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)     
+
+        # sensors = device_instance.sensor.all()   
+        ret = dict()
+        ret['msg'] = 'ok'
+        if sensor_instance.sensor_class == "n":
+            datapoints = NumDatapoint.objects.filter(sensor = sensor_instance)
+            val = datapoints.aggregate(models.Max('key'))['key__max']
+            if val != None:
+                ret['max'] = str(val)
+                ret['max'] = ret['max'][ :ret['max'].find('+')]
+            val = datapoints.aggregate(models.Min('key'))['key__min']
+            if val != None:
+                ret['min'] = str(val)
+                ret['min'] = ret['min'][ :ret['min'].find('+')]
+        elif sensor_instance.sensor_class == "p":
+            datapoints = NumDatapoint.objects.filter(sensor = sensor_instance)
+            val = datapoints.aggregate(models.Max('key'))['key__max']
+            if val != None:
+                ret['max'] = str(val)
+                ret['max'] = ret['max'][ :ret['max'].find('+')]
+            val = datapoints.aggregate(models.Min('key'))['key__min']
+            if val != None:
+                ret['min'] = str(val)
+                ret['min'] = ret['min'][ :ret['min'].find('+')]
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret))      

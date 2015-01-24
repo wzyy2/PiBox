@@ -8,6 +8,12 @@ from models import *
 class PiSettingsForm(forms.ModelForm):  
     class Meta:  
         model = PiSettings  
+        fields = ('ip','port', 'enable_register')
+    def __init__(self, *args, **kwargs):
+        super(PiSettingsForm, self).__init__(*args, **kwargs)
+        self.fields['ip'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['port'].widget.attrs.update({'class' : 'form-control'})
+        self.fields['enable_register'].widget.attrs.update({'class' : 'form-control'})
 
 class PiAccountForm(forms.ModelForm):
     class Meta:
@@ -67,3 +73,16 @@ class HomeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(HomeForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'class' : 'form-control'})
+
+
+class SensorForm(forms.ModelForm):
+    class Meta:
+            model = Sensor
+            fields = ('name','describe','sensor_class','unit')             
+
+    def __init__(self, *args, **kwargs):
+        super(SensorForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class' : 'form-control'})  
+        self.fields['describe'].widget.attrs.update({'class' : 'form-control'})  
+        self.fields['sensor_class'].widget.attrs.update({'class' : 'form-control'})   
+        self.fields['unit'].widget.attrs.update({'class' : 'form-control'})        

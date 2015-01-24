@@ -18,7 +18,7 @@ from models import *
 from common import client
 from common import globaldata
 from common import utils
-
+from PiHome import settings
 
 # def requires_login(view):
 #     def new_view(request, *args, **kwargs):
@@ -31,14 +31,23 @@ global AppList
 def dashboard(request, title='dashboard', belong=None):
     pisettings_instance = globaldata.getclient()
     user_count = PiUser.objects.count()   
+    device_count = Device.objects.count()   
     if(client.socket_test(pisettings_instance.ip,  pisettings_instance.port)):
         connection = "True"
+    else:
         connection = "False"
     if globaldata.NasEnable:
         nas_enable = 'Enable'
     else:
         nas_enable = 'Disable'
     app_num = len(globaldata.AppList)
+    media_root = settings.MEDIA_ROOT
+    DEVICE = Device.objects.all()
+    try:
+        home_instance = Home.objects.get(id =1)
+        home_exist = True
+    except:
+        home_exist = False
 
     #logfile
     pihome_log_file = open(globaldata.cwd + '/log/pihome.log', 'r')
@@ -148,6 +157,62 @@ def  webssh_view(request, title='webssh', belong=None):
     return HttpResponse(t.render(c))
 
 @login_required 
+def  add_home_view(request, title='add home', belong={'home'}):
+    try:
+        home_instance = Home.objects.get(id =1)
+        form = HomeForm(request.POST or None, request.FILES, instance = home_instance)    
+        home_exist = True       
+    except:
+        form = HomeForm(request.POST or None, request.FILES)
+        home_exist = False   
+
+    if request.method != 'POST' and home_exist == True:
+        form = HomeForm(None, instance = home_instance)
+    elif request.method != 'POST' and home_exist == False:
+        form = HomeForm(None)
+
+    if form.is_valid():
+        home = form.save()  
+
+    if home_exist:
+        img_url = '/media/' + str(home_instance.img)
+    else:
+        img_url = '/static/img/house_plan.jpg'
+   
+    t = get_template('home/add_home.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  home_view(request, title='home', belong=None):
+    try:
+        home_instance = Home.objects.get(id = 1)
+        img_url = '/media/' + str(home_instance.img)
+        home_exist = True
+        device_all = Device.objects.all()  
+    except:
+        home_exist = False
+    t = get_template('home/home.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  home_help_view(request, title='help', belong={'home'}):
+    t = get_template('home/help.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  device_view(request):
+    device_id = request.GET['device_id']
+    device_instance = Device.objects.get(id = device_id)
+    sensors = device_instance.sensor.all()   
+
+    t = get_template('home/device.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
 def  add_device_view(request, title='add device', belong={'home'}):
     try:
         home_instance = Home.objects.get(id =1)
@@ -157,6 +222,7 @@ def  add_device_view(request, title='add device', belong={'home'}):
     form = DeviceForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return HttpResponseRedirect('/PiApp/home/manage_device/')
     t = get_template('home/add.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
@@ -164,68 +230,62 @@ def  add_device_view(request, title='add device', belong={'home'}):
 @login_required 
 def  manage_device_view(request, title='manage', belong={'home'}):
     device_all = Device.objects.all()    
+    count = Device.objects.count()   
     t = get_template('home/manage.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  add_home_view(request, title='add home', belong={'home'}):
-    try:
-        home_instance = Home.objects.get(id =1)
-        form = HomeForm(request.POST or None, request.FILES, instance = home_instance)    
-        home_exist = True       
-    except:
-        form = HomeForm(request.POST or None, request.FILES)
-        home_exist = False     
-    if request.method != 'POST' and home_exist == True:
-        form = HomeForm(None, instance = home_instance)
-    if form.is_valid():
-        home = form.save()  
-    if home_exist:
-        img_url = '/media/' + str(home_instance.img)
-    else:
-        img_url = '/static/img/house_plan.jpg'
-    HomeForm(instance = home_instance)
-    t = get_template('home/add_home.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  home_view(request, title='home', belong=None):
-    try:
-        home_instance = Home.objects.get(id =1)
-        img_url = '/media/' + str(home_instance.img)
-        home_exist = True
-    except:
-        home_exist = False
-    t = get_template('home/home.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
 @login_required 
 def  edit_device_view(request, title='edit device', belong={'home'}):
     try:
-        home_instance = Home.objects.get(id =1)
+        home_instance = Home.objects.get(id = 1)
         img_url = '/media/' + str(home_instance.img)
     except:
         return HttpResponseRedirect('/PiApp/home/index/')
 
-    device_id = request.GET['id']
-    device_instance = Device.objects.get(id =device_id)
-    form = DeviceForm(request.POST or None, instance= device_instance)
+    device_id = request.GET['device_id']
+    device_instance = Device.objects.get(id = device_id)
+    form = DeviceForm(request.POST or None, instance = device_instance)
 
     if form.is_valid():
         form.save()
+        return HttpResponseRedirect('/PiApp/home/manage_device/')
+
     t = get_template('home/add.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
 @login_required 
 def  add_sensor_view(request, title='add sensor', belong={'home'}):
-    device_id = request.GET['id']
+    device_id = request.GET['device_id']
+    get_device = Device.objects.get(id = device_id)
+    form = SensorForm(request.POST or None)
+    # Sensor.objects.create(name="11",describe="111", sensor_class="s", device = get_device)
+    if form.is_valid():
+        sensor = form.save(commit=False)
+        sensor.device = get_device
+        sensor.save()
+        return HttpResponseRedirect('/PiApp/home/manage_device/')
+
     t = get_template('home/add_sensor.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
+
+@login_required 
+def  edit_sensor_view(request, title='edit sensor', belong={'home'}):
+    sensor_id = request.GET['sensor_id']
+    get_sensor = Sensor.objects.get(id = sensor_id)
+    form = SensorForm(request.POST or None, instance = get_sensor)
+    # Sensor.objects.create(name="11",describe="111", sensor_class="s", device = get_device)
+    if form.is_valid():
+        sensor = form.save(commit=False)
+        sensor.save()
+        return HttpResponseRedirect('/PiApp/home/manage_device/')
+
+    t = get_template('home/edit_sensor.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
 
 
 #######################################
@@ -255,6 +315,9 @@ def logout_view(request):
     return HttpResponseRedirect("/PiApp/dashboard/")  
 
 def register_view(request):  
+    pisettings_instance = globaldata.getclient()
+    if pisettings_instance.enable_register != True:
+        return HttpResponse("You are not be allowed to register") 
     form = PiRegisterForm(request.POST or None)
     if form.is_valid():
         first_name=form.cleaned_data['first_name']

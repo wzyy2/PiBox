@@ -19,14 +19,14 @@
 <div class="row "><div class="col-md-6 col-md-offset-3">
 	<div class="box box-danger ">
 		<div class="box-header account-form">
-			<h3 class="box-title">Cpp</h3>
+			<h3 class="box-title">Settings</h3>
 		</div><!-- /.box-header -->
 		<div class="box-body">
 			<form action="" method="POST" >
 				{% csrf_token %}
 				<!-- text input -->
                 {% for field in form %}
-                <div class="form-group django-form">
+                <div class="form-group">
                     <label > {{ field.label }} </label> 
                     <!--                     <input type="{{field.widget}}" class="form-control" name="{{field.html_name}}" value="{{ field.value }}"/> -->
                     {{ field }} 
