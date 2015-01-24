@@ -7,7 +7,7 @@ See these steps for a  build guide(cd Pibox).<br>
 <!-- Get source from.....<br> -->
 First install the dependencies:
 
-    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
+    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev libjpeg-dev zlib1g-dev
     sudo apt-get install python-setuptools
     sudo pip install pillow
     sudo pip install Django==1.6.6
