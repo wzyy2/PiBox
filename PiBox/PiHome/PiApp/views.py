@@ -218,7 +218,7 @@ def  home_view(request, title='home', belong=None):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  home_help_view(request, title='help', belong={'home'}):
+def  home_help_view(request, title='document', belong={'home'}):
     t = get_template('home/help.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))

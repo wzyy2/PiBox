@@ -1,6 +1,7 @@
 {% extends "base-user.html" %}
 
-{% block css%}    
+{% block css%}
+<link href="/static/css/morris/morris.css" rel="stylesheet" type="text/css" />    
 {% endblock %}
 {% block js%}  
 <script src="/static/js/plugins/raphael-min.js"></script>
@@ -113,7 +114,7 @@ function get_sensor_content(sensor){
         content += '</div></center></div></div>'
     } else if(sensor['type'] == 'n') {
         content += '<div class="box-header"><h3 class="box-title">Data curvet</h3></div>'
-        content += '<div class="box-body chart-responsive"><div class="chart" id="revenue-chart-'+ sensor['id'] + '" style="height: 250px;"></div></div></div>'
+        content += '<div class="box-body chart-responsive""><div class="chart" id="revenue-chart-'+ sensor['id'] + '" style="height: 250px;"></div></div></div>'
     } else if(sensor['type'] == 'p') {
         content += '<div class="box-header"><h3 class="box-title"><img sensor_id=' + sensor['id'] + '></img></h3></div>'
         content += '<div class="box-body"></div></div>'         

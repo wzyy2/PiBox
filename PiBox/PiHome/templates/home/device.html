@@ -1,6 +1,7 @@
 {% extends "base-no-sidebar.html" %}
 
 {% block css%}    
+<link href="/static/css/morris/morris.css" rel="stylesheet" type="text/css" />    
 {% endblock %}
 
 {% block js%} 
@@ -14,7 +15,7 @@ $(function() {
         switch_refresh({{sensor.id}});
     {% endif %}
     {% if sensor.sensor_class == 'n' %}
-        curvet_refresh({{sensor.id}}, '{{sensor.sensor_class}}');
+        curvet_refresh({{sensor.id}}, '{{sensor.unit}}');
     {% endif %}
     {% if sensor.sensor_class == 'p' %}
         img_refresh({{sensor.id}});
@@ -115,7 +116,7 @@ function img_refresh(get_id){
     </div>
     {% endif %}
     {% if sensor.sensor_class == 'n' %}
-    <div class="chart-responsive" style="padding-bottom:30px;"><div class="chart" id="revenue-chart-{{sensor.id}}" style="height: 250px;"></div></div>
+    <div class="chart-responsive" style=""><div class="chart" id="revenue-chart-{{sensor.id}}" style="height: 250px;"></div></div>
     {% endif %}
     {% if sensor.sensor_class == 'p' %}
     <img sensor_id={{sensor.id}}></img>
