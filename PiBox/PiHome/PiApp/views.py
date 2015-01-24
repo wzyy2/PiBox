@@ -25,7 +25,7 @@ from PiHome import settings
 #         return view(request, *args, **kwargs)                       
 #     return new_view          
 # globaldata.getLogger().debug("avail space" + str(avail));                                             
-global AppList
+
 
 @login_required  
 def dashboard(request, title='dashboard', belong=None):
@@ -87,7 +87,6 @@ def settings_account_view(request, title='account', belong={'settings'}):
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
-
 @login_required 
 def settings_general_view(request, title='general', belong={'settings'}):
     pisettings_instance = globaldata.getclient()
@@ -96,6 +95,12 @@ def settings_general_view(request, title='general', belong={'settings'}):
         form.save()
         # form = PiSettingsForm(instance = pisettings_instance)
     t = get_template('settings/general.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def status_process_view(request, title='process', belong={'status'}):
+    t = get_template('status/process.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 

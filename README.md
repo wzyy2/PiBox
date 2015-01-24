@@ -7,8 +7,9 @@ See these steps for a  build guide(cd Pibox).<br>
 <!-- Get source from.....<br> -->
 First install the dependencies:
 
-    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
+    sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev
     sudo apt-get install python-setuptools
+    sudo pip install pillow
     sudo pip install Django==1.6.6
     sudo apt-get install scons
 
@@ -52,8 +53,7 @@ If you want more background on how it works,create an issue or email me:-).
 # Chinese #
 ## 介绍 #
 写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).
-# Details #
-PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
+# App #
 如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
 
 

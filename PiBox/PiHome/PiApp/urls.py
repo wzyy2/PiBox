@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'status/default/$', status_default_view),
     (r'status/about/$', status_about_view),
     (r'status/dmesg/$', status_dmesg_view),
+    (r'status/process/$', status_process_view),
 
     (r'nas/file/$', nas_file_view),
     (r'nas/video/$', nas_video_view),
