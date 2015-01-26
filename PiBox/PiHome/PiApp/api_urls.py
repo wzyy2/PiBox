@@ -5,8 +5,9 @@ from PiApp.api import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings 
 
-#API
-
+'''
+    api url
+'''
 urlpatterns = patterns('',
     (r'^accounts/check/username/$', check_username),
     (r'^accounts/login/$', login_api),

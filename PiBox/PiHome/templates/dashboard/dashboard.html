@@ -174,8 +174,8 @@ $(function() {
 	            	<tr>
 	            		<td>App Installed</td>
 	            		<td>
-	            			{% for item in APPINFO %}
-							    {{ item }}&nbsp
+	            			{% for item in applist %}
+							    {{ item.title }}&nbsp
 							{% endfor %}
 						</td>
 	            	</tr>   

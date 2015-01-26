@@ -61,77 +61,30 @@
                 <ul class="sidebar-menu">
                     {% block user-panel%} 
                     {% endblock %}
-                    <li>
-                        <a href="{% url 'PiApp.views.dashboard' %}">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        </a>
-                    </li>
 
-                    <li  class="treeview">
-                        <a href="#">
-                            <i class="fa fa-folder"></i> <span>Application</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        {% block application-list%} 
-                        {% endblock %}
-                    </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-home"></i>
-                            <span>My Home</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.home_view' %}"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                            <li ><a href="{% url 'PiApp.views.add_device_view' %}"><i class="fa fa-angle-double-right"></i>Add Device</a></li>
-                            <li><a href="{% url 'PiApp.views.manage_device_view' %}"><i class="fa fa-angle-double-right"></i>Manage Device</a></li>
-                            <li><a href="{% url 'PiApp.views.home_help_view' %}"><i class="fa fa-angle-double-right"></i>Document</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-hdd-o"></i> <span>Nas</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.nas_file_view' %}"><i class="fa fa-angle-double-right"></i>FileBrowser</a></li>
-                            <!-- <li ><a href="{% url 'PiApp.views.nas_video_view' %}"><i class="fa fa-angle-double-right"></i>Video</a></li> -->
-                            <li><a href="{% url 'PiApp.views.nas_download_view' %}"><i class="fa fa-angle-double-right"></i>Download</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="{% url 'PiApp.views.webssh_view' %}">
-                            <i class="fa fa-laptop"></i> <span>SSH</span>
-                        </a>
-                    </li>
-
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Status</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li ><a href="{% url 'PiApp.views.status_default_view' %}"><i class="fa fa-angle-double-right"></i>Default</a></li>
-                            <li><a href="{% url 'PiApp.views.status_dmesg_view' %}"><i class="fa fa-angle-double-right"></i>Kernel log</a></li>
-                            <li><a href="{% url 'PiApp.views.status_process_view' %}"><i class="fa fa-angle-double-right"></i>Process</a></li>
-                            <li><a href="{% url 'PiApp.views.status_about_view' %}"><i class="fa fa-angle-double-right"></i>About</a></li>
-                        </ul>
-                    </li>
-                    <li  class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cog"></i>
-                            <span>Settings</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li><a href="{% url 'PiApp.views.settings_general_view' %}"><i class="fa fa-angle-double-right"></i>General</a></li>
-                            <li ><a href="{% url 'PiApp.views.settings_account_view' %}"><i class="fa fa-angle-double-right"></i>Account</a></li>
-                        </ul>
-                    </li>
+                    {% for item in PCILIST %}
+                        {% if item.child %}
+                        <li  class="treeview">
+                            <a href="#">
+                                <i class="fa {{item.font}}"></i> <span>{{item.title | capfirst}}</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">                            
+                                {% for item2 in item.child %}
+                                <li> 
+                                    <a href="{{item2.url}}"><i class="fa fa-angle-double-right"></i>{{ item2.title }} </a>
+                                </li>                      
+                                {% endfor %}
+                            </ul>
+                        </li>   
+                        {%else%}
+                        <li>
+                            <a href="{{item.url}}">
+                                <i class="fa {{item.font}}"></i> <span>{{item.title | capfirst}}</span>
+                            </a>
+                        </li>
+                        {% endif %}                     
+                    {% endfor %}
 
                 </ul>
             </section>
@@ -157,7 +110,7 @@
             <!-- Main content -->
             <section class="content" id="content" >
                 {% block content %} 
-                内容
+                
                 {% endblock %}
             </section><!-- /.content -->
         </aside><!-- /.right-side -->

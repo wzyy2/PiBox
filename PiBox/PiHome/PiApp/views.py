@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required  
@@ -20,12 +20,6 @@ from common import globaldata
 from common import utils
 from PiHome import settings
 
-# def requires_login(view):
-#     def new_view(request, *args, **kwargs):
-#         return view(request, *args, **kwargs)                       
-#     return new_view          
-# globaldata.getLogger().debug("avail space" + str(avail));                                             
-
 
 @login_required  
 def dashboard(request, title='dashboard', belong=None):
@@ -36,11 +30,9 @@ def dashboard(request, title='dashboard', belong=None):
         connection = "True"
     else:
         connection = "False"
-    if globaldata.NasEnable:
-        nas_enable = 'Enable'
-    else:
-        nas_enable = 'Disable'
-    app_num = len(globaldata.AppList)
+
+    applist = globaldata.pci_list.applist()
+    app_num = len(applist)
     media_root = settings.MEDIA_ROOT
     DEVICE = Device.objects.all()
     try:
@@ -50,10 +42,10 @@ def dashboard(request, title='dashboard', belong=None):
         home_exist = False
 
     #logfile
-    pihome_log_file = open(globaldata.cwd + '/log/pihome.log', 'r')
+    pihome_log_file = open(globaldata.BASE_DIR + '/log/pihome.log', 'r')
     pihome_log_lines = pihome_log_file.readlines()
     pihome_log = utils.lineslimit(pihome_log_lines, 300)
-    cpp_log_file = open(globaldata.cwd + '/log/pihome.log', 'r')
+    cpp_log_file = open(globaldata.BASE_DIR + '/log/pihome.log', 'r')
     cpp_log_lines = cpp_log_file.readlines()
     cpp_log = utils.lineslimit(cpp_log_lines, 300)
 
@@ -308,10 +300,9 @@ def  edit_sensor_view(request, title='edit sensor', belong={'home'}):
     return HttpResponse(t.render(c))
 
 
-
-#######################################
-##               user               ###
-#######################################
+'''
+ user admin
+'''
 def login_view(request): 
     if request.user.is_authenticated():
         return HttpResponseRedirect("/PiApp/dashboard/")             
@@ -368,3 +359,9 @@ def register_view(request):
         c = RequestContext(request,locals())
         return HttpResponse(t.render(c))  
 
+        
+# def requires_login(view):
+#     def new_view(request, *args, **kwargs):
+#         return view(request, *args, **kwargs)                       
+#     return new_view          
+# globaldata.getLogger().debug("avail space" + str(avail));                                             

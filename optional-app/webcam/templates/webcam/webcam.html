@@ -14,7 +14,7 @@
 $(function() {
     $("#open").click( function(){  
         port = $('#camera_port').val();
-        $.getJSON("/App/webcam/open",  {camera_port : port}, 
+        $.getJSON("open",  {camera_port : port}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert("Open failed");
@@ -23,7 +23,7 @@ $(function() {
             });
     });
     $("#close").click( function(){  
-        $.getJSON("/App/webcam/close",           
+        $.getJSON("close",           
             function(data){
                 if(data['msg'] != 'ok') {
                     alert("Close failed");                  

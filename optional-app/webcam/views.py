@@ -11,7 +11,7 @@ import cv2.cv as cv
 
 from common import globaldata
 
-cwd  = globaldata.cwd + '/App/webcam/'
+cwd  = globaldata.BASE_DIR + '/App/webcam/'
 
 camera = None
 
