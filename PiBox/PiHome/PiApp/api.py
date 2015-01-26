@@ -296,10 +296,10 @@ def new_datapoint_json(request, sensor_id):
                 datapoint_instance = SwitchDatapoint.objects.get(sensor = sensor_instance)  
             except:
                 datapoint_instance = SwitchDatapoint.objects.create(sensor = sensor_instance)
-            if int(request.REQUEST['status']) == 1:
+            if int(request.REQUEST['value']) == 1:
                 callback.switch_callback(sensor_instance, 1)
-                datapoint_instance.status = True
-            elif int(request.REQUEST['status']) == 0:
+                datapoint_instance.value = True
+            elif int(request.REQUEST['value']) == 0:
                 callback.switch_callback(sensor_instance, 0)
                 datapoint_instance.status = False
             datapoint_instance.save()
@@ -343,7 +343,10 @@ def get_datapoint_json(request, sensor_id):
                 datapoint_instance = SwitchDatapoint.objects.get(sensor = sensor_instance)  
             except:
                 datapoint_instance = SwitchDatapoint.objects.create(sensor = sensor_instance)
-            ret['status'] = datapoint_instance.status
+            if datapoint_instance.status:
+                ret['value'] = 1
+            else:
+                ret['value'] = 0
         elif sensor_instance.sensor_class == "n":
             datapoint_instance = NumDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key'])
             ret['value'] = datapoint_instance.value
@@ -383,9 +386,9 @@ def edit_datapoint_json(request, sensor_id):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))   
 
-def remove_datapoint_json(request):
+def remove_datapoint_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         ret = dict()
         ret['msg'] = 'ok'

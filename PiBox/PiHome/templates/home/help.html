@@ -55,7 +55,7 @@
  <td style="text-align:right;">查询</td>
  <td style="text-align:center;">GET</td>
  <td style="text-align:center;"></td>
- <td style="text-align:center;">json = {'msg', 'value}</td>
+ <td style="text-align:center;">json = {'msg', 'value'}</td>
 </tr>
 </tbody></table>
 
@@ -121,34 +121,42 @@
 
 <p data-anchor-id="i89e">json data could be like this：</p>
 
-<pre data-anchor-id="ylq8"><code>{
-  "key":"2012-03-15T16:13:14",
-  "value":294.34
-}
-</code></pre>
+<div class="md-section-divider"></div>
 
-<p data-anchor-id="6qel">or</p>
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="it3n" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">      </span><span class="str">"key"</span><span class="pun">:</span><span class="str">"2012-03-15T16:13:14"</span><span class="pun">,</span></code></li><li class="L2"><code><span class="pln">      </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">294.34</span></code></li><li class="L3"><code><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
 
-<pre data-anchor-id="godo"><code>[
-  {"key": "2012-06-15T14:00:00", "value":315.01},
-  {"key": "2012-06-15T14:00:10", "value":316.23},
-  {"key": "2012-06-15T14:00:20", "value":317.26},
-  {"key": "2012-06-15T14:00:30", "value":318},
-  {"key": "2012-06-15T14:00:40", "value":317}
-]
-</code></pre>
+<p data-anchor-id="uufi">or</p>
+
+<div class="md-section-divider"></div>
+
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="3w5d" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    </span><span class="pun">[</span></code></li><li class="L1"><code><span class="pln">      </span><span class="pun">{</span><span class="str">"key"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2012-06-15T14:00:00"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">315.01</span><span class="pun">},</span></code></li><li class="L2"><code><span class="pln">      </span><span class="pun">{</span><span class="str">"key"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2012-06-15T14:00:10"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">316.23</span><span class="pun">},</span></code></li><li class="L3"><code><span class="pln">      </span><span class="pun">{</span><span class="str">"key"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2012-06-15T14:00:20"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">317.26</span><span class="pun">},</span></code></li><li class="L4"><code><span class="pln">      </span><span class="pun">{</span><span class="str">"key"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2012-06-15T14:00:30"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">318</span><span class="pun">},</span></code></li><li class="L5"><code><span class="pln">      </span><span class="pun">{</span><span class="str">"key"</span><span class="pun">:</span><span class="pln"> </span><span class="str">"2012-06-15T14:00:40"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"value"</span><span class="pun">:</span><span class="lit">317</span><span class="pun">}</span></code></li><li class="L6"><code><span class="pln">    </span><span class="pun">]</span></code></li></ol></pre>
 
 <div class="md-section-divider"></div>
 
 <h2 id="图像传感器" data-anchor-id="b2eo">图像传感器</h2>
 
-<p data-anchor-id="d9a2">懒的写了。。。自己看PiApp.api.py里的从new_datapoint_json起往下,和数值差不多，不过不支持批量，get的value全换成post上传文件。。。</p>
+<p data-anchor-id="7g8l">暂未测试</p>
 
 <div class="md-section-divider"></div>
 
 <h2 id="example" data-anchor-id="3z2x">Example</h2>
 
-<p data-anchor-id="ggjz">暂无</p>
+<p data-anchor-id="6ojs">在sh/datapoint_tools下有数据的测试脚本，可以用来增删数据，也可以用来做例子。 <br>
+<a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/switch.py" target="_blank">开关传感的读写脚本</a></p>
+
+<div class="md-section-divider"></div>
+
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="7q0x" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    python </span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">py</span></code></li></ol></pre>
+
+<p data-anchor-id="dsvj"><a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/num.py" target="_blank">数据传感的CURD脚本</a></p>
+
+<div class="md-section-divider"></div>
+
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="7z2p" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    python num</span><span class="pun">.</span><span class="pln">py</span></code></li></ol></pre>
+
+<p data-anchor-id="tzn4">只要对这些脚本稍加修改，另外加上一些python代码就可以通过以下思路，实现自己的本地智能家居： <br>
+* 通过串口等通讯模块，关联单片机，然后关联上native yeelink。 <br>
+* 通过驱动读取树莓派所接模块的数据，然后上传数据到native yeelink。</p>
 
 <div class="md-section-divider"></div>
 
@@ -201,7 +209,8 @@ gpio.write_gpio_direction('out')
 gpio.write_gpio_value(sys.argv[2])
 </code></pre>
 
-<p data-anchor-id="5rdx">在需要的开关传感器下填入gpio.py,将文件的GPIO_NUM改成所需的gpio编号，每次开关状态改变，就会带动gpio改变。</p>
+<p data-anchor-id="5rdx">在需要的开关传感器下填入gpio.py,将文件的GPIO_NUM改成所需的gpio编号，每次开关状态改变，就会带动gpio改变。 <br>
+直接使用这个脚本就可以通过web来控制简单电器</p>
 
 <div class="md-section-divider"></div>
 
@@ -214,14 +223,8 @@ print 'Value:', str(sys.argv[2])
 print 'key:', str(sys.argv[3])
 </code></pre>
 
-<p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。</p>
-
-
-
-
-
-
-
+<p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。 <br>
+如果在下面按网上教程加入发邮件或者发微博代码，就可以实现监控报警的效果。</p>
 
 
 

@@ -177,7 +177,7 @@ function edit_sensor(get_id){
 function switch_open(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
     $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');    
-    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 1}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {value : 1}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -187,7 +187,7 @@ function switch_open(get_id){
 function switch_close(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-primary btn-lg active');
     $("#btn-open" + get_id).attr('class', 'btn btn-default btn-lg'); 
-    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {value : 0}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -200,7 +200,7 @@ function switch_refresh(get_id){
             if(data['msg'] != 'ok') {
                 alert('failed');
             } else {
-                if(data['status'] == true) {
+                if(data['value'] == 1) {
                     $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
                     $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');  
                 } else {
