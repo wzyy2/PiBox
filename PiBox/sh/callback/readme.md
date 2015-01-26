@@ -1,6 +1,6 @@
 上传数据
 ============================
-**Datetime** is ISO 8601, such as 2012-03-15T16:13:14 或者
+**Datetime** is ISO 8601, such as 2012-03-15T16:13:14 or
 2012-03-15 16:13:14。
 
 开关传感器
@@ -16,7 +16,7 @@
 | ------- | :-----:  | :----:  | :------:  |  :----:  |
 | /API/sensor/{sensor_id}/datapoint/|新增|GET | key`datetime`，value`float`|  {'msg'} |
 | /API/sensor/{sensor_id}/datapoint/|新增|POST| [{'key' : `datetime`, 'value' : `float`}] |  {'msg'} |
-| /API/sensor/{sensor_id}/datapoint/get/|查询|GET|key`datetime`| {'msg', 'value}|
+| /API/sensor/{sensor_id}/datapoint/get/|查询|GET|key`datetime`| {'msg', 'value'}|
 | /API/sensor/{sensor_id}/datapoint/edit/|修改|GET|key`datetime`，value`float`| {'msg'} |
 | /API/sensor/{sensor_id}/datapoint/remove/|删除|GET|key`datetime`|  {'msg'} |
 | /API/sensor/{sensor_id}/datapoint/history/|历史（时间段）|GET|start`datetime`, end`datetime`, interval`int(seconds）`| {'msg'， 'datapoint'=[{'value','key'}] |
@@ -87,7 +87,7 @@ Example
     from common import linux_gpio
     
     print 'Sensor:', str(sys.argv[1])
-    print 'Status:', str(sys.argv[2])
+    print 'Value:', str(sys.argv[2])
     
     GPIO_NUM = 23
     

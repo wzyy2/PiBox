@@ -7,7 +7,7 @@ sys.path.append(os.path.join(cwd, 'PiHome'))
 from common import linux_gpio
 
 print 'Sensor:', str(sys.argv[1])
-print 'Status:', str(sys.argv[2])
+print 'Value:', str(sys.argv[2])
 
 GPIO_NUM = 23
 

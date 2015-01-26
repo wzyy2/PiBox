@@ -54,7 +54,8 @@ If you want more background on how it works,create an issue or email me:-).
 ## 介绍 #
 写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).
 # App #
-如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.
+如果要扩展应用,可以参考optional-app的写一个程序放到APP文件夹,见example-app的readme.
+如果要使用已有的app，请参考optional-app的readme.
 
 
 
