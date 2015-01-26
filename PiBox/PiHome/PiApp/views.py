@@ -44,10 +44,10 @@ def dashboard(request, title='dashboard', belong=None):
     #logfile
     pihome_log_file = open(globaldata.BASE_DIR + '/log/pihome.log', 'r')
     pihome_log_lines = pihome_log_file.readlines()
-    pihome_log = utils.lineslimit(pihome_log_lines, 300)
+    pihome_log = utils.lineslimit(pihome_log_lines, 100)
     cpp_log_file = open(globaldata.BASE_DIR + '/log/pihome.log', 'r')
     cpp_log_lines = cpp_log_file.readlines()
-    cpp_log = utils.lineslimit(cpp_log_lines, 300)
+    cpp_log = utils.lineslimit(cpp_log_lines, 100)
 
     t = get_template('dashboard/dashboard.html')
     c = RequestContext(request,locals())

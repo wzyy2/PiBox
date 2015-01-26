@@ -47,6 +47,7 @@ urlpatterns += patterns('',
     (r'^home/edit_sensor/$', edit_sensor_view), 
 )
 
+
 '''
     register pihome control interface list,will be used to create sidebar and titlebar 
 '''    
@@ -59,7 +60,8 @@ pci_list.register('application', '', 'fa-folder')
 list = os.listdir(globaldata.APP_DIR)
 for item in list:
     if os.path.isdir(os.path.join(globaldata.APP_DIR, item)):
-        pci_list.addchild(item, "/PiApp/app/" + item, 'application')
+        name = globaldata.app_ini.read(item, 'Name')
+        pci_list.addchild(name, "/PiApp/app/" + item, 'application')
 
 
 pci_list.register('my house', "/PiApp/home/index/", 'fa-home')        
