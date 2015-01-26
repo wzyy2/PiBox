@@ -27,7 +27,7 @@ $(function() {
 
 
 function switch_refresh(get_id){
-    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/',  {}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -46,7 +46,7 @@ function switch_refresh(get_id){
 function switch_open(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
     $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');    
-    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 1}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 1}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -56,7 +56,7 @@ function switch_open(get_id){
 function switch_close(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-primary btn-lg active');
     $("#btn-open" + get_id).attr('class', 'btn btn-default btn-lg'); 
-    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 0}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -64,7 +64,7 @@ function switch_close(get_id){
     });  
 }
 function curvet_refresh(get_id, unit){
-    $.getJSON("{% url 'PiApp.api.history_datapoint_json' %}",  {sensor_id : get_id}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  { }, 
         function(data2){
             if(data2['msg'] != 'ok') {
                 alert('failed');
@@ -85,7 +85,7 @@ function curvet_refresh(get_id, unit){
     });                     
 }
 function img_refresh(get_id){
-    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id, key : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/',  {key : 0}, 
         function(data){
             if(data['msg'] != 'ok') {
                 // alert('failed');

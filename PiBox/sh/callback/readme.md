@@ -6,19 +6,19 @@
 --------------------------------------------------
 | url   | 作用   |  方法  |  请求参数 | 返回参数  |
 | -------- | -----:  | :----:  | :----:  |:----:  |
-| /API/home/datapoint/|修改|GET|sensor_id，value| json = {'msg'} |
-| /API/home/datapoint/get/|查询|GET|sensor_id|json = {'msg', 'value}|
+| /API/sensor/{sensor_id}/datapoint/|修改|GET|value| json = {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/get/|查询|GET||json = {'msg', 'value}|
 
 数值传感器
 --------------------------------------------------
 | url   | 作用   |  方法  |  请求参数 | 返回参数  |
-| -------- | -----:  | :----:  | :----:  |:----:  |
-| /API/home/datapoint/|新增|GET，POST|GET（sensor_id，key，value）or POST（body : {'key','value'} or [{'key','value'}]）+ GET（sensor_id) | json = {'msg'} |
-| /API/home/datapoint/get/|查询|GET|sensor_id，key|json = {'msg', 'value}|
-| /API/home/datapoint/edit/|修改|GET|sensor_id，key，value| json = {'msg'} |
-| /API/home/datapoint/remove/|删除|GET|sensor_id，key| json = {'msg'} |
-| /API/home/datapoint/history/|历史（时间段）|GET|sensor_id,start,end,interval(间隔，单位秒）| json = {'msg'， 'datapoint'=[{'value','key'}] |
-| /API/home/datapoint/history/|历史（返回最新前二十条）|GET|sensor_id| json = {'msg'， 'datapoint'=[{'value','key'}]} |
+| -------- | :-----:  | :----:  | :----:  |:----:  |
+| /API/sensor/{sensor_id}/datapoint/|新增|GET，POST|GET（key，value）or POST（body : {'key','value'} or [{'key','value'}] | json = {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/get/|查询|GET|key|json = {'msg', 'value}|
+| /API/sensor/{sensor_id}/datapoint/edit/|修改|GET|key，value| json = {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/remove/|删除|GET|key| json = {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/history/|历史（时间段）|GET|start,end,interval(间隔，单位秒）| json = {'msg'， 'datapoint'=[{'value','key'}] |
+| /API/sensor/{sensor_id}/datapoint/history/|历史（返回最新前二十条）|GET|| json = {'msg'， 'datapoint'=[{'value','key'}]} |
 json data could be like this：
 
     {

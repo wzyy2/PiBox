@@ -20,22 +20,20 @@
             <div class="box-body  ">
 
 
-
-
 <div class="md-section-divider"></div>
 
 <div class="md-section-divider"></div>
 
-<h1 id="上传数据" data-anchor-id="1x97">上传数据</h1>
+<h1 id="上传数据" data-anchor-id="jtvw">上传数据</h1>
 
-<p data-anchor-id="hufl">注意，所有的时间(key,start,end)用标准时间格式，例如：2012-03-15T16:13:14 或者 <br>
+<p data-anchor-id="6cpr">注意，所有的时间(key,start,end)用标准时间格式，例如：2012-03-15T16:13:14 或者 <br>
 2012-03-15 16:13:14。</p>
 
 <div class="md-section-divider"></div>
 
-<h2 id="开关传感器" data-anchor-id="je9q">开关传感器</h2>
+<h2 id="开关传感器" data-anchor-id="q2sr">开关传感器</h2>
 
-<table data-anchor-id="swk9" class="table table-striped-white table-bordered">
+<table data-anchor-id="f64t" class="table table-striped-white table-bordered">
 <thead>
 <tr>
  <th>url</th>
@@ -46,92 +44,92 @@
 </tr>
 </thead>
 <tbody><tr>
- <td>/API/home/datapoint/</td>
+ <td>/API/sensor/{sensor_id}/datapoint/</td>
  <td style="text-align:right;">修改</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id，value</td>
+ <td style="text-align:center;">value</td>
  <td style="text-align:center;">json = {'msg'}</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/get/</td>
+ <td>/API/sensor/{sensor_id}/datapoint/get/</td>
  <td style="text-align:right;">查询</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id</td>
- <td style="text-align:center;">json = {'msg', 'value'}</td>
+ <td style="text-align:center;"></td>
+ <td style="text-align:center;">json = {'msg', 'value}</td>
 </tr>
 </tbody></table>
 
 
 <div class="md-section-divider"></div>
 
-<h2 id="数值传感器" data-anchor-id="lu14">数值传感器</h2>
+<h2 id="数值传感器" data-anchor-id="52qw">数值传感器</h2>
 
-<table data-anchor-id="785z" class="table table-striped-white table-bordered">
+<table data-anchor-id="svgz" class="table table-striped-white table-bordered">
 <thead>
 <tr>
  <th>url</th>
- <th style="text-align:right;">作用</th>
+ <th style="text-align:center;">作用</th>
  <th style="text-align:center;">方法</th>
  <th style="text-align:center;">请求参数</th>
  <th style="text-align:center;">返回参数</th>
 </tr>
 </thead>
 <tbody><tr>
- <td>/API/home/datapoint/</td>
- <td style="text-align:right;">新增</td>
+ <td>/API/sensor/{sensor_id}/datapoint/</td>
+ <td style="text-align:center;">新增</td>
  <td style="text-align:center;">GET，POST</td>
- <td style="text-align:center;">GET（sensor_id，key，value）or POST（body : {'key','value'} or [{'key','value'}]）+ GET（sensor_id)</td>
+ <td style="text-align:center;">GET（key，value）or POST（body : {'key','value'} or [{'key','value'}]</td>
  <td style="text-align:center;">json = {'msg'}</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/get/</td>
- <td style="text-align:right;">查询</td>
+ <td>/API/sensor/{sensor_id}/datapoint/get/</td>
+ <td style="text-align:center;">查询</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id，key</td>
- <td style="text-align:center;">json = {'msg', 'value'}</td>
+ <td style="text-align:center;">key</td>
+ <td style="text-align:center;">json = {'msg', 'value}</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/edit/</td>
- <td style="text-align:right;">修改</td>
+ <td>/API/sensor/{sensor_id}/datapoint/edit/</td>
+ <td style="text-align:center;">修改</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id，key，value</td>
+ <td style="text-align:center;">key，value</td>
  <td style="text-align:center;">json = {'msg'}</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/remove/</td>
- <td style="text-align:right;">删除</td>
+ <td>/API/sensor/{sensor_id}/datapoint/remove/</td>
+ <td style="text-align:center;">删除</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id，key</td>
+ <td style="text-align:center;">key</td>
  <td style="text-align:center;">json = {'msg'}</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/history/</td>
- <td style="text-align:right;">历史（时间段）</td>
+ <td>/API/sensor/{sensor_id}/datapoint/history/</td>
+ <td style="text-align:center;">历史（时间段）</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id,start,end,interval(间隔，单位秒）</td>
+ <td style="text-align:center;">start,end,interval(间隔，单位秒）</td>
  <td style="text-align:center;">json = {'msg'， 'datapoint'=[{'value','key'}]</td>
 </tr>
 <tr>
- <td>/API/home/datapoint/history/</td>
- <td style="text-align:right;">历史（返回最新前二十条）</td>
+ <td>/API/sensor/{sensor_id}/datapoint/history/</td>
+ <td style="text-align:center;">历史（返回最新前二十条）</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">sensor_id</td>
+ <td style="text-align:center;"></td>
  <td style="text-align:center;">json = {'msg'， 'datapoint'=[{'value','key'}]}</td>
 </tr>
 </tbody></table>
 
 
-<p data-anchor-id="103f">json data could be like this：</p>
+<p data-anchor-id="i89e">json data could be like this：</p>
 
-<pre data-anchor-id="an27"><code>{
+<pre data-anchor-id="ylq8"><code>{
   "key":"2012-03-15T16:13:14",
   "value":294.34
 }
 </code></pre>
 
-<p data-anchor-id="4fi6">or</p>
+<p data-anchor-id="6qel">or</p>
 
-<pre data-anchor-id="b3z4"><code>[
+<pre data-anchor-id="godo"><code>[
   {"key": "2012-06-15T14:00:00", "value":315.01},
   {"key": "2012-06-15T14:00:10", "value":316.23},
   {"key": "2012-06-15T14:00:20", "value":317.26},
@@ -142,48 +140,48 @@
 
 <div class="md-section-divider"></div>
 
-<h2 id="图像传感器" data-anchor-id="5sqa">图像传感器</h2>
+<h2 id="图像传感器" data-anchor-id="b2eo">图像传感器</h2>
 
-<p data-anchor-id="u7lg">懒的写了。。。自己看PiApp.api.py里的从new_datapoint_json起往下,和数值差不多，不过不支持批量，get的value全换成post上传文件。。。</p>
-
-<div class="md-section-divider"></div>
-
-<h2 id="example" data-anchor-id="p7ci">Example</h2>
-
-<p data-anchor-id="o94w">暂无</p>
+<p data-anchor-id="d9a2">懒的写了。。。自己看PiApp.api.py里的从new_datapoint_json起往下,和数值差不多，不过不支持批量，get的value全换成post上传文件。。。</p>
 
 <div class="md-section-divider"></div>
 
-<h1 id="callback" data-anchor-id="t5zu">CallBack</h1>
+<h2 id="example" data-anchor-id="3z2x">Example</h2>
+
+<p data-anchor-id="ggjz">暂无</p>
 
 <div class="md-section-divider"></div>
 
-<h2 id="explain" data-anchor-id="wy36">Explain</h2>
+<h1 id="callback" data-anchor-id="1bga">CallBack</h1>
 
-<p data-anchor-id="1jzr">Callback file是传感器满足条件后被调用的python代码文件名（比如callback_file=gpio.py)，同时文件需要放在PiBox/sh/callback/下。 <br>
+<div class="md-section-divider"></div>
+
+<h2 id="explain" data-anchor-id="l075">Explain</h2>
+
+<p data-anchor-id="wnw8">Callback file是传感器满足条件后被调用的python代码文件名（比如callback_file=gpio.py)，同时文件需要放在PiBox/sh/callback/下。 <br>
 不使用的话只需提供不存在的文件名或者保持为空即可。</p>
 
-<p data-anchor-id="7irs">对开关传感器来说，每一次开关数值点发生修改，callback_file都会被按如下格式调用</p>
+<p data-anchor-id="596v">对开关传感器来说，每一次开关数值点发生修改，callback_file都会被按如下格式调用</p>
 
-<pre data-anchor-id="65sy"><code>    python callback_file sensor.name swtich_status(1 or 0)
+<pre data-anchor-id="txbt"><code>    python callback_file sensor.name swtich_status(1 or 0)
 </code></pre>
 
-<p data-anchor-id="0cnk">对数值传感器来说,每一次新增或者修改的数值都会检查条件，如果满足条件，callback_file都会被按如下格式调用</p>
+<p data-anchor-id="qgk6">对数值传感器来说,每一次新增或者修改的数值都会检查条件，如果满足条件，callback_file都会被按如下格式调用</p>
 
-<pre data-anchor-id="qzxl"><code>    python callback_file sensor.name value（溢出的数值） key（时间）
+<pre data-anchor-id="2k15"><code>    python callback_file sensor.name value（溢出的数值） key（时间）
 </code></pre>
 
 <div class="md-section-divider"></div>
 
-<h2 id="example-1" data-anchor-id="74jv">Example</h2>
+<h2 id="example-1" data-anchor-id="n0h4">Example</h2>
 
-<p data-anchor-id="9jfn">在sh/callback下有两个文件实例可以直接使用</p>
+<p data-anchor-id="jjz9">在sh/callback下有两个文件实例可以直接使用</p>
 
 <div class="md-section-divider"></div>
 
-<h3 id="gpiopy" data-anchor-id="u6rr">gpio.py</h3>
+<h3 id="gpiopy" data-anchor-id="wefi">gpio.py</h3>
 
-<pre data-anchor-id="ffny"><code>import os,sys
+<pre data-anchor-id="s032"><code>import os,sys
 
 cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
 sys.path.append(os.path.join(cwd, 'PiHome'))
@@ -203,28 +201,20 @@ gpio.write_gpio_direction('out')
 gpio.write_gpio_value(sys.argv[2])
 </code></pre>
 
-<p data-anchor-id="rxjh">在需要的开关传感器下填入gpio.py,将文件的GPIO_NUM改成所需的gpio编号，每次开关状态改变，就会带动gpio改变。</p>
+<p data-anchor-id="5rdx">在需要的开关传感器下填入gpio.py,将文件的GPIO_NUM改成所需的gpio编号，每次开关状态改变，就会带动gpio改变。</p>
 
 <div class="md-section-divider"></div>
 
-<h3 id="calloutpy" data-anchor-id="od8r">callout.py</h3>
+<h3 id="calloutpy" data-anchor-id="g5gq">callout.py</h3>
 
-<pre data-anchor-id="6z9f"><code>import os,sys
+<pre data-anchor-id="9ewj"><code>import os,sys
 
 print 'Sensor:', str(sys.argv[1])
 print 'Value:', str(sys.argv[2])
 print 'key:', str(sys.argv[3])
 </code></pre>
 
-<p data-anchor-id="yeyf">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。</p>
-
-
-
-
-
-
-
-
+<p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。</p>
 
 
 

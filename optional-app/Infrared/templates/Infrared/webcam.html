@@ -1,0 +1,68 @@
+{% extends "base-user.html" %}
+
+{% block css%}    
+<style type="text/css">
+
+</style>
+{% endblock %}
+
+{% block js%}  
+{% endblock %}
+
+{% block on_ready%}    
+<script>
+$(function() {
+    $("#open").click( function(){  
+        port = $('#camera_port').val();
+        $.getJSON("/App/webcam/open",  {camera_port : port}, 
+            function(data){
+                if(data['msg'] != 'ok') {
+                    alert("Open failed");
+                }
+                $("#surface").attr('src', "temp.jpg?t=" + Math.random());
+            });
+    });
+    $("#close").click( function(){  
+        $.getJSON("/App/webcam/close",           
+            function(data){
+                if(data['msg'] != 'ok') {
+                    alert("Close failed");                  
+                }
+                $("#surface").attr('src', "temp.jpg?t=" + Math.random());
+            });     
+    });
+    $("#refresh").click( function(){   
+            $("#surface").attr('src', "temp.jpg?t=" + Math.random() );
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %} 
+<div class="row">
+    <div class="col-md-6">
+        <center style="padding-top:20px;">
+            <span>Port:</span>
+            <input type="text" id="camera_port" style="margin-left:5px;" value="0">
+        </center>
+    </div>
+    <div class="col-md-6">
+        <center style="padding-top:20px;">
+            <span>Control:</span>
+            <div class="btn-group" style="margin-left:5px;" >
+                <button class="btn btn-primary" id="open"><span class="glyphicon glyphicon-play"></span></button>
+                <button class="btn btn-primary" id="close"><span class="glyphicon glyphicon-pause"></span></button>
+                <button class="btn btn-primary" id="refresh"><span class="glyphicon glyphicon-refresh"></span></button>
+            </div>
+        </center>
+    </div>
+</div>
+<div class="row">
+    <center style="margin-top: 60px;">
+        <h4 class="page-header">snapshot<h4>
+        <img id="surface" src="temp.jpg" style="margin-top: 20px;"></img>
+   </center>
+</div>
+
+
+{% endblock %}

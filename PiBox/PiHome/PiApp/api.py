@@ -182,9 +182,8 @@ def kill_process_api(request):
 
 
 ###################my home##################
-def remove_device_by_id_json(request):
+def remove_device_by_id_json(request, device_id):
     try:
-        device_id = request.REQUEST['device_id']
         device_instance = Device.objects.get(id =device_id)    
         device_instance.delete()
         ret = {'msg':'ok'}
@@ -192,30 +191,29 @@ def remove_device_by_id_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))     
 
-def get_device_by_id_json(request):
+def get_device_by_id_json(request, device_id):
     try: 
-        device_id = request.REQUEST['device_id']
+        # device_id = request.REQUEST['device_id']
         device_instance = Device.objects.get(id =device_id)    
-        ret = {'msg':'ok', 'title':device_instance.name,'location':device_instance.describe,\
-                'about':device_instance.location,'x':device_instance.x,'y':device_instance.y,}
+        ret = {'msg':'ok', 'title':device_instance.name,'location':device_instance.location,\
+                'about':device_instance.describe,'x':device_instance.x,'y':device_instance.y,'id':device_instance.id}
     except:
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))  
 
-def get_sensor_by_device_id_json(request):
+def get_sensor_by_device_id_json(request, device_id):
     try: 
-        device_id = request.REQUEST['device_id']
+        # device_id = request.REQUEST['device_id']
         device_instance = Device.objects.get(id = device_id)    
         sensors = device_instance.sensor.all()   
         ret_sensor = list()
         for sensor in sensors:
             a = dict()
             a['id'] = sensor.id
-            a['title'] = sensor.name
-            a['about'] = sensor.describe
+            a['name'] = sensor.name
+            a['describe'] = sensor.describe
             a['type'] = sensor.sensor_class 
-            a['unit_symbol'] = sensor.unit   
-            
+            a['unit'] = sensor.unit   
 
             ret_sensor.append(a)
         ret = {'msg':'ok'}     
@@ -224,9 +222,26 @@ def get_sensor_by_device_id_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret)) 
 
-def remove_sensor_by_id_json(request):
+def get_sensor_by_sensor_id_json(request, device_id, sensor_id):
+    try: 
+        # device_id = request.REQUEST['device_id']
+        sensor_instance = Sensor.objects.get(id = sensor_id)  
+        a = dict()
+        a['id'] = sensor_instance.id
+        a['name'] = sensor_instance.name
+        a['describe'] = sensor_instance.describe
+        a['sensor_class'] = sensor_instance.sensor_class 
+        a['unit'] = sensor_instance.unit   
+        ret = {'msg':'ok'}     
+        ret['sensor'] = a   
+    except:
+        ret = {'msg':'fail'}
+    return HttpResponse(simplejson.dumps(ret)) 
+
+
+def remove_sensor_by_id_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         sensor_instance.delete()
         ret = {'msg':'ok'}
@@ -234,9 +249,9 @@ def remove_sensor_by_id_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))   
 
-def add_sensor_callback_json(request):
+def add_sensor_callback_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         callback = request.REQUEST['callback_file']
         sensor_instance.callback_file = callback
@@ -253,10 +268,10 @@ def add_sensor_callback_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))  
 
-def get_sensor_callback_json(request):
+def get_sensor_callback_json(request, sensor_id):
     try: 
         ret = {'msg':'ok'}
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)          
         ret['callback_file'] = sensor_instance.callback_file  
         if sensor_instance.sensor_class == 'n':
@@ -268,11 +283,11 @@ def get_sensor_callback_json(request):
 #######################################
 ##           MYHOME_API             ###
 #######################################
-def new_datapoint_json(request):
+def new_datapoint_json(request, sensor_id):
     # device_id = request.REQUEST['device_id']
     # device_instance = Device.objects.get(id = device_id) 
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         ret = dict()
         ret['msg'] = 'ok'
@@ -316,9 +331,9 @@ def new_datapoint_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))   
 
-def get_datapoint_json(request):
+def get_datapoint_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)          
         # sensors = device_instance.sensor.all()   
         ret = dict()
@@ -345,9 +360,9 @@ def get_datapoint_json(request):
     return HttpResponse(simplejson.dumps(ret))   
 
 
-def edit_datapoint_json(request):
+def edit_datapoint_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         ret = dict()
         ret['msg'] = 'ok'
@@ -384,9 +399,9 @@ def remove_datapoint_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))   
 
-def history_datapoint_json(request):
+def history_datapoint_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)  
         try:   
             start = request.REQUEST['start']
@@ -469,9 +484,9 @@ def history_datapoint_json(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))      
 
-def key_range_datapoint_json(request):
+def key_range_datapoint_json(request, sensor_id):
     try:
-        sensor_id = request.REQUEST['sensor_id']
+        # sensor_id = request.REQUEST['sensor_id']
         sensor_instance = Sensor.objects.get(id = sensor_id)     
 
         # sensors = device_instance.sensor.all()   

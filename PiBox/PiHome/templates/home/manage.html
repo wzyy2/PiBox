@@ -17,7 +17,7 @@ function edit_device(id){
 }
 function remove_device(get_id){
     if(confirm('Sure?')) {
-        $.getJSON("{% url 'PiApp.api.remove_device_by_id_json' %}",  {device_id : get_id}, 
+        $.getJSON("/API/device/"  +  get_id  + "/remove",  {}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -28,7 +28,7 @@ function remove_device(get_id){
     }
 }
 function get_data(get_id){
-    $.getJSON("{% url 'PiApp.api.get_device_by_id_json' %}",  {device_id : get_id}, 
+    $.getJSON("/API/device/" + get_id ,  {device_id : get_id}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -50,6 +50,8 @@ function get_data(get_id){
                 content += '<button class="btn btn-default" onclick="remove_device(' + get_id + ')"><i class="fa fa-minus"></i></button>'
                     
                 $('#device-btn').html(content);
+                content = data['id'];
+                $('#device-id').html(content);
                 get_sensor(get_id);
 
             }                  
@@ -60,7 +62,7 @@ function add_sensor(){
     window.location.href=("{% url 'PiApp.views.add_sensor_view' %}?device_id=" + id);
 }
 function get_sensor(get_id){
-    $.getJSON("{% url 'PiApp.api.get_sensor_by_device_id_json' %}",  {device_id : get_id}, 
+    $.getJSON("/API/device/" + get_id + "/sensor",  { }, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('get sensor failed');
@@ -75,7 +77,7 @@ function get_sensor(get_id){
                         switch_refresh(data['sensor'][i]['id']);
                         callback_refresh(data['sensor'][i]['id']);
                     } else if(data['sensor'][i]['type'] == 'n'){
-                        curvet_refresh(data['sensor'][i]['id'], data['sensor'][i]['unit_symbol']);
+                        curvet_refresh(data['sensor'][i]['id'], data['sensor'][i]['unit']);
                         callback_refresh(data['sensor'][i]['id']);
                     } else if(data['sensor'][i]['type'] == 'p'){
                         img_refresh(data['sensor'][i]['id']);
@@ -95,11 +97,11 @@ function get_sensor_content(sensor){
         content += '<img src="/static/img/sensor-picture.png"></img><div style="padding-top:8px;padding-bottom:8px;">'        
     }
 
-    content += '<b>' + sensor['title'] + '</b></div><div id="sensor-btn" class="btn-group">'
+    content += '<b>' + sensor['name'] + '</b></div><div id="sensor-btn" class="btn-group">'
     content += '<button class="btn btn-primary btn-sm" onclick="edit_sensor(' + sensor['id'] + ')"><i class="fa fa-edit"></i></button>'
     content += '<button class="btn btn-primary btn-sm" onclick="remove_sensor(' + sensor['id'] + ')"><i class="fa fa-minus"></i></button>'
     content += '</div><div style="padding-top:8px;padding-bottom:8px;">'
-    content += '<p>' + sensor['about'] + '</p>'
+    content += '<p>' + sensor['describe'] + '</p>'
     content += '<b>SensorId:' + sensor['id'] + '</b>'
     content += '</div></div>'
     content += '<div class="col-md-10">'
@@ -124,7 +126,7 @@ function get_sensor_content(sensor){
 
         content += '<form style="display:none;" sensor_id=' + sensor['id'] + ' sensor_type=' + sensor['type'] + '>'
         content += '<div class="form-group"><label>Callback file</label>'                  
-        content += '<div class="input-group input-group-sm"><input class="form-control" maxlength="120" name="callback" type="text" value=' + sensor['callback']  + '>'
+        content += '<div class="input-group input-group-sm"><input class="form-control" maxlength="120" name="callback" type="text" value="">'
         content += '<span class="input-group-btn"><button class="btn btn-primary btn-flat btn-callback" type="button" onclick="submit_callback(' + sensor['id'] + ')">Submit</button></span></div></div>'
     }
    
@@ -159,7 +161,7 @@ function get_sensor_content(sensor){
 }
 function remove_sensor(get_id){
     if(confirm('Sure?')) {
-        $.getJSON("{% url 'PiApp.api.remove_sensor_by_id_json' %}",  {sensor_id : get_id}, 
+        $.getJSON("/API/sensor/" + get_id + "/remove" ,  {}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -175,7 +177,7 @@ function edit_sensor(get_id){
 function switch_open(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-default btn-lg');
     $("#btn-open" + get_id).attr('class', 'btn btn-primary btn-lg active');    
-    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 1}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 1}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -185,7 +187,7 @@ function switch_open(get_id){
 function switch_close(get_id){
     $("#btn-close" + get_id).attr('class', 'btn btn-primary btn-lg active');
     $("#btn-open" + get_id).attr('class', 'btn btn-default btn-lg'); 
-    $.getJSON("{% url 'PiApp.api.new_datapoint_json' %}",  {sensor_id : get_id, status : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint' ,  {status : 0}, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -193,7 +195,7 @@ function switch_close(get_id){
     });  
 }
 function switch_refresh(get_id){
-    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/' ,  { }, 
         function(data){
             if(data['msg'] != 'ok') {
                 alert('failed');
@@ -210,7 +212,7 @@ function switch_refresh(get_id){
     });  
 }
 function curvet_refresh(get_id, unit){
-    $.getJSON("{% url 'PiApp.api.history_datapoint_json' %}",  {sensor_id : get_id}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  { }, 
         function(data2){
             if(data2['msg'] != 'ok') {
                 alert('failed');
@@ -225,13 +227,13 @@ function curvet_refresh(get_id, unit){
                     // xLabels: [''],
                     postUnits : unit,
                     lineColors: ['#3c8dbc'],
-                    hideHover: 'auto'
+                    hideHover: 'auto',
                 });                              
             }               
     });                     
 }
 function img_refresh(get_id){
-    $.getJSON("{% url 'PiApp.api.get_datapoint_json' %}",  {sensor_id : get_id, key : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/',  {key : 0}, 
         function(data){
             if(data['msg'] != 'ok') {
                 // alert('failed');
@@ -243,7 +245,7 @@ function img_refresh(get_id){
 function submit_callback(get_id){
     if($("form[sensor_id=" + get_id + "]").attr("sensor_type")=='s') {
         callback_file_ = $("form[sensor_id=" + get_id + "] input[name='callback']").val();
-        $.getJSON("{% url 'PiApp.api.add_sensor_callback_json' %}",  {sensor_id : get_id, callback_file : callback_file_}, 
+        $.getJSON("/API/sensor/" + get_id + '/add_callback',  {callback_file : callback_file_}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -254,7 +256,7 @@ function submit_callback(get_id){
         callback_value_ = $("form[sensor_id=" + get_id + "] input[name='callback_value']").val();
         callback_condition_ = $("form[sensor_id=" + get_id + "] select[name='callback_condition']").val();
 
-        $.getJSON("{% url 'PiApp.api.add_sensor_callback_json' %}",  {sensor_id : get_id, callback_file : callback_file_, callback_value :callback_value_, callback_condition : callback_condition_,}, 
+        $.getJSON("/API/sensor/" + get_id + '/add_callback' , {callback_file : callback_file_, callback_value :callback_value_, callback_condition : callback_condition_,}, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -265,7 +267,7 @@ function submit_callback(get_id){
 }
 function callback_refresh(get_id){
     if($("form[sensor_id=" + get_id + "]").attr("sensor_type")=='s') {
-        $.getJSON("{% url 'PiApp.api.get_sensor_callback_json' %}",  {sensor_id : get_id}, 
+        $.getJSON("/API/sensor/" + get_id + '/get_callback',  { }, 
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -274,7 +276,7 @@ function callback_refresh(get_id){
                 }          
         });          
     } else {
-        $.getJSON("{% url 'PiApp.api.get_sensor_callback_json' %}",  {sensor_id : get_id}, 
+        $.getJSON("/API/sensor/" + get_id + '/get_callback',  { },
             function(data){
                 if(data['msg'] != 'ok') {
                     alert('failed');
@@ -329,11 +331,13 @@ function show_callback(get_id){
                             <th>X</th>
                             <th>Y</th>
                             <th>Location</th>
+                            <th>ID</th>
                         </tr>
                         <tr>
                             <th id="device-x"></th>
                             <th id="device-y"></th>
                             <th id="device-location"></th>
+                            <th id="device-id"></th>
                         </tr>
                     </tbody>
                 </table>
