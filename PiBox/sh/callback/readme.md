@@ -1,24 +1,26 @@
 上传数据
 ============================
-注意，所有的时间(key,start,end)用标准时间格式，例如：2012-03-15T16:13:14 或者
+**Datetime** is ISO 8601, such as 2012-03-15T16:13:14 或者
 2012-03-15 16:13:14。
+
 开关传感器
 --------------------------------------------------
 | url   | 作用   |  方法  |  请求参数 | 返回参数  |
 | -------- | -----:  | :----:  | :----:  |:----:  |
-| /API/sensor/{sensor_id}/datapoint/|修改|GET|value| json = {'msg'} |
-| /API/sensor/{sensor_id}/datapoint/get/|查询|GET||json = {'msg', 'value'}|
+| /API/sensor/{sensor_id}/datapoint/|修改|GET|value`int`| {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/get/|查询|GET||{'msg', 'value'}|
 
 数值传感器
 --------------------------------------------------
 | url   | 作用   |  方法  |  请求参数 | 返回参数  |
-| -------- | :-----:  | :----:  | :----:  |:----:  |
-| /API/sensor/{sensor_id}/datapoint/|新增|GET，POST|GET（key，value）or POST（body : {'key','value'} or [{'key','value'}] | json = {'msg'} |
-| /API/sensor/{sensor_id}/datapoint/get/|查询|GET|key|json = {'msg', 'value}|
-| /API/sensor/{sensor_id}/datapoint/edit/|修改|GET|key，value| json = {'msg'} |
-| /API/sensor/{sensor_id}/datapoint/remove/|删除|GET|key| json = {'msg'} |
-| /API/sensor/{sensor_id}/datapoint/history/|历史（时间段）|GET|start,end,interval(间隔，单位秒）| json = {'msg'， 'datapoint'=[{'value','key'}] |
-| /API/sensor/{sensor_id}/datapoint/history/|历史（返回最新前二十条）|GET|| json = {'msg'， 'datapoint'=[{'value','key'}]} |
+| ------- | :-----:  | :----:  | :------:  |  :----:  |
+| /API/sensor/{sensor_id}/datapoint/|新增|GET | key`datetime`，value`float`|  {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/|新增|POST| [{'key' : `datetime`, 'value' : `float`}] |  {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/get/|查询|GET|key`datetime`| {'msg', 'value}|
+| /API/sensor/{sensor_id}/datapoint/edit/|修改|GET|key`datetime`，value`float`| {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/remove/|删除|GET|key`datetime`|  {'msg'} |
+| /API/sensor/{sensor_id}/datapoint/history/|历史（时间段）|GET|start`datetime`, end`datetime`, interval`int(seconds）`| {'msg'， 'datapoint'=[{'value','key'}] |
+| /API/sensor/{sensor_id}/datapoint/history/|历史（返回最新前二十条）|GET|  | {'msg'， 'datapoint'=[{'value','key'}]} |
 json data could be like this：
 ```
     {

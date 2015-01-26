@@ -298,7 +298,7 @@ def new_datapoint_json(request, sensor_id):
                 datapoint_instance = SwitchDatapoint.objects.create(sensor = sensor_instance)
             if int(request.REQUEST['value']) == 1:
                 callback.switch_callback(sensor_instance, 1)
-                datapoint_instance.value = True
+                datapoint_instance.status = True
             elif int(request.REQUEST['value']) == 0:
                 callback.switch_callback(sensor_instance, 0)
                 datapoint_instance.status = False

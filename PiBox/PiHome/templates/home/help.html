@@ -26,7 +26,7 @@
 
 <h1 id="上传数据" data-anchor-id="jtvw">上传数据</h1>
 
-<p data-anchor-id="6cpr">注意，所有的时间(key,start,end)用标准时间格式，例如：2012-03-15T16:13:14 或者 <br>
+<p data-anchor-id="6cpr"><strong>Datetime</strong> is ISO 8601, such as 2012-03-15T16:13:14 或者 <br>
 2012-03-15 16:13:14。</p>
 
 <div class="md-section-divider"></div>
@@ -47,15 +47,15 @@
  <td>/API/sensor/{sensor_id}/datapoint/</td>
  <td style="text-align:right;">修改</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">value</td>
- <td style="text-align:center;">json = {'msg'}</td>
+ <td style="text-align:center;">value<code>int</code></td>
+ <td style="text-align:center;">{'msg'}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/get/</td>
  <td style="text-align:right;">查询</td>
  <td style="text-align:center;">GET</td>
  <td style="text-align:center;"></td>
- <td style="text-align:center;">json = {'msg', 'value'}</td>
+ <td style="text-align:center;">{'msg', 'value'}</td>
 </tr>
 </tbody></table>
 
@@ -77,44 +77,51 @@
 <tbody><tr>
  <td>/API/sensor/{sensor_id}/datapoint/</td>
  <td style="text-align:center;">新增</td>
- <td style="text-align:center;">GET，POST</td>
- <td style="text-align:center;">GET（key，value）or POST（body : {'key','value'} or [{'key','value'}]</td>
- <td style="text-align:center;">json = {'msg'}</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;">key<code>datetime</code>，value<code>float</code></td>
+ <td style="text-align:center;">{'msg'}</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/</td>
+ <td style="text-align:center;">新增</td>
+ <td style="text-align:center;">POST</td>
+ <td style="text-align:center;">[{'key' : <code>datetime</code>, 'value' : <code>float</code>}]</td>
+ <td style="text-align:center;">{'msg'}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/get/</td>
  <td style="text-align:center;">查询</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">key</td>
- <td style="text-align:center;">json = {'msg', 'value}</td>
+ <td style="text-align:center;">key<code>datetime</code></td>
+ <td style="text-align:center;">{'msg', 'value}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/edit/</td>
  <td style="text-align:center;">修改</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">key，value</td>
- <td style="text-align:center;">json = {'msg'}</td>
+ <td style="text-align:center;">key<code>datetime</code>，value<code>float</code></td>
+ <td style="text-align:center;">{'msg'}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/remove/</td>
  <td style="text-align:center;">删除</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">key</td>
- <td style="text-align:center;">json = {'msg'}</td>
+ <td style="text-align:center;">key<code>datetime</code></td>
+ <td style="text-align:center;">{'msg'}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/history/</td>
  <td style="text-align:center;">历史（时间段）</td>
  <td style="text-align:center;">GET</td>
- <td style="text-align:center;">start,end,interval(间隔，单位秒）</td>
- <td style="text-align:center;">json = {'msg'， 'datapoint'=[{'value','key'}]</td>
+ <td style="text-align:center;">start<code>datetime</code>, end<code>datetime</code>, interval<code>int(seconds）</code></td>
+ <td style="text-align:center;">{'msg'， 'datapoint'=[{'value','key'}]</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/history/</td>
  <td style="text-align:center;">历史（返回最新前二十条）</td>
  <td style="text-align:center;">GET</td>
  <td style="text-align:center;"></td>
- <td style="text-align:center;">json = {'msg'， 'datapoint'=[{'value','key'}]}</td>
+ <td style="text-align:center;">{'msg'， 'datapoint'=[{'value','key'}]}</td>
 </tr>
 </tbody></table>
 
@@ -225,6 +232,9 @@ print 'key:', str(sys.argv[3])
 
 <p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。 <br>
 如果在下面按网上教程加入发邮件或者发微博代码，就可以实现监控报警的效果。</p>
+
+
+
 
 
 
