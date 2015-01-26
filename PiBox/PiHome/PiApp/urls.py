@@ -62,25 +62,25 @@ for item in list:
         pci_list.addchild(item, "/PiApp/app/" + item, 'application')
 
 
-pci_list.register('my house', "", 'fa-home')        
+pci_list.register('my house', "/PiApp/home/index/", 'fa-home')        
 pci_list.addchild('home', "/PiApp/home/index/", 'my house')
 pci_list.addchild('add device', "/PiApp/home/add_device/", 'my house')
 pci_list.addchild('manage device', "/PiApp/home/manage_device/", 'my house')
 pci_list.addchild('document', "/PiApp/home/help/", 'my house')
 
-pci_list.register('nas', "", 'fa-hdd-o')       
-pci_list.addchild('fileBrowser', "/PiApp/nas/video/", 'nas')
+pci_list.register('nas', "/PiApp/nas/file/", 'fa-hdd-o')       
+pci_list.addchild('fileBrowser', "/PiApp/nas/file/", 'nas')
 pci_list.addchild('download', "/PiApp/nas/download/", 'nas')
 
 pci_list.register('SSH', "/PiApp/webssh/", 'fa-laptop')       
 
-pci_list.register('status', "", 'fa-bar-chart-o')       
+pci_list.register('status', "/PiApp/status/default/", 'fa-bar-chart-o')       
 pci_list.addchild('default', "/PiApp/status/default/", 'status')
 pci_list.addchild('kernel log', "/PiApp/status/dmesg/", 'status')
 pci_list.addchild('process', "/PiApp/status/process/", 'status')
 pci_list.addchild('about', "/PiApp/status/about/", 'status')
 
-pci_list.register('settings', "", 'fa-cog')       
+pci_list.register('settings', "/PiApp/settings/general/", 'fa-cog')       
 pci_list.addchild('general', "/PiApp/settings/general/", 'settings')
 pci_list.addchild('account', "/PiApp/settings/account/", 'settings')
 

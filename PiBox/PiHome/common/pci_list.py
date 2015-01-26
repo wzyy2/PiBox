@@ -30,6 +30,12 @@ class PciList():
             if item['title'] ==  'application':
                 return item['child'] 
 
+    def urldict(self):
+        a = dict()
+        for item in self.content: 
+            a[item['title']] = item['url']
+        return a
+
     def delete(self):
         pass
 

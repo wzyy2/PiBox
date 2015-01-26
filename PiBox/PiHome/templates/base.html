@@ -101,7 +101,7 @@
             <ol class="breadcrumb">
                 <!-- <li><a href="{% url 'PiApp.views.dashboard' %}">Home</a></li> -->
                 {% for item in belong %}
-                <li>{{ item | capfirst }}</li>
+                <li><a>{{ item | capfirst }}</a></li>
                 {% endfor %}
                 <li class="active">{{ title | capfirst }}</li>
             </ol>

@@ -64,12 +64,12 @@ def fzz_view(request, title='500', belong=None):
     return HttpResponse(t.render(c))
 
 @login_required 
-def settings_account_view(request, title='account', belong={'settings'}):
+def settings_account_view(request, title='account', belong=['settings']):
     user = PiUser.objects.get(username = request.user.username)
     form = PiAccountForm(request.POST or None, instance = user)
     if form.is_valid():
         user.first_name=form.cleaned_data['first_name']
-        user.last_name=form.cleaned_data['last_name']      
+        user.last_name=form.cleaned_data['last_name'] 
         if(form.cleaned_data['password1']  !=  ""):   
             password=form.cleaned_data['password1']
             if password != None:
@@ -80,7 +80,7 @@ def settings_account_view(request, title='account', belong={'settings'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def settings_general_view(request, title='general', belong={'settings'}):
+def settings_general_view(request, title='general', belong=['settings']):
     pisettings_instance = globaldata.getclient()
     form = PiSettingsForm(request.POST or None, instance = pisettings_instance)
     if form.is_valid():
@@ -91,7 +91,7 @@ def settings_general_view(request, title='general', belong={'settings'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def status_process_view(request, title='process', belong={'status'}):
+def status_process_view(request, title='process', belong=['status']):
     info = os.popen('ps aux').readlines()
     i = 0
     process_info = list()
@@ -113,13 +113,13 @@ def status_process_view(request, title='process', belong={'status'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def status_about_view(request, title='about', belong={'status'}):                                             
+def status_about_view(request, title='about', belong=['status']):                                             
     t = get_template('status/about.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
 @login_required 
-def  status_default_view(request, title='default', belong={'status'}):
+def  status_default_view(request, title='default', belong=['status']):
     pisettings_instance = globaldata.getclient()
 
     message = { "title" : "status"}
@@ -132,7 +132,7 @@ def  status_default_view(request, title='default', belong={'status'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  status_dmesg_view(request, title='kernel log', belong={'status'}):
+def  status_dmesg_view(request, title='kernel log', belong=['status']):
     dmesg = os.popen("dmesg")
     log = dmesg.read()   
     t = get_template('status/dmesg.html')
@@ -140,7 +140,7 @@ def  status_dmesg_view(request, title='kernel log', belong={'status'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  nas_video_view(request, title='video', belong={'nas'}):
+def  nas_video_view(request, title='video', belong=['nas']):
     minidlna_url = request.get_host()
     minidlna_url = minidlna_url[ :minidlna_url.find(':')]+ ':8200'
 
@@ -149,13 +149,13 @@ def  nas_video_view(request, title='video', belong={'nas'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  nas_download_view(request, title='download', belong={'nas'}):
+def  nas_download_view(request, title='download', belong=['nas']):
     t = get_template('nas/download.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
 @login_required 
-def  nas_file_view(request, title='filebrowser', belong={'nas'}):
+def  nas_file_view(request, title='filebrowser', belong=['nas']):
     t = get_template('nas/file.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
@@ -170,7 +170,20 @@ def  webssh_view(request, title='webssh', belong=None):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  add_home_view(request, title='add home', belong={'home'}):
+def  home_view(request, title='my house', belong=None):
+    try:
+        home_instance = Home.objects.get(id = 1)
+        img_url = '/media/' + str(home_instance.img)
+        home_exist = True
+        device_all = Device.objects.all()  
+    except:
+        home_exist = False
+    t = get_template('home/home.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required 
+def  add_home_view(request, title='add home', belong=['my house']):
     try:
         home_instance = Home.objects.get(id =1)
         form = HomeForm(request.POST or None, request.FILES, instance = home_instance)    
@@ -197,20 +210,7 @@ def  add_home_view(request, title='add home', belong={'home'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  home_view(request, title='home', belong=None):
-    try:
-        home_instance = Home.objects.get(id = 1)
-        img_url = '/media/' + str(home_instance.img)
-        home_exist = True
-        device_all = Device.objects.all()  
-    except:
-        home_exist = False
-    t = get_template('home/home.html')
-    c = RequestContext(request,locals())
-    return HttpResponse(t.render(c))
-
-@login_required 
-def  home_help_view(request, title='document', belong={'home'}):
+def  home_help_view(request, title='document', belong=['my house']):
     t = get_template('home/help.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
@@ -226,7 +226,7 @@ def  device_view(request):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  add_device_view(request, title='add device', belong={'home'}):
+def  add_device_view(request, title='add device', belong=['my house']):
     try:
         home_instance = Home.objects.get(id =1)
         img_url = '/media/' + str(home_instance.img)
@@ -241,7 +241,7 @@ def  add_device_view(request, title='add device', belong={'home'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  manage_device_view(request, title='manage', belong={'home'}):
+def  manage_device_view(request, title='manage', belong=['my house']):
     device_all = Device.objects.all()    
     count = Device.objects.count()   
     t = get_template('home/manage.html')
@@ -249,7 +249,7 @@ def  manage_device_view(request, title='manage', belong={'home'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  edit_device_view(request, title='edit device', belong={'home'}):
+def  edit_device_view(request, title='edit device', belong=['my house', 'manage']):
     try:
         home_instance = Home.objects.get(id = 1)
         img_url = '/media/' + str(home_instance.img)
@@ -269,7 +269,7 @@ def  edit_device_view(request, title='edit device', belong={'home'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  add_sensor_view(request, title='add sensor', belong={'home'}):
+def  add_sensor_view(request, title='add sensor', belong=['my house', 'manage']):
     device_id = request.GET['device_id']
     get_device = Device.objects.get(id = device_id)
     form = SensorForm(request.POST or None)
@@ -285,7 +285,7 @@ def  add_sensor_view(request, title='add sensor', belong={'home'}):
     return HttpResponse(t.render(c))
 
 @login_required 
-def  edit_sensor_view(request, title='edit sensor', belong={'home'}):
+def  edit_sensor_view(request, title='edit sensor', belong=['my house', 'manage']):
     sensor_id = request.GET['sensor_id']
     get_sensor = Sensor.objects.get(id = sensor_id)
     form = SensorForm(request.POST or None, instance = get_sensor)
@@ -359,7 +359,7 @@ def register_view(request):
         c = RequestContext(request,locals())
         return HttpResponse(t.render(c))  
 
-        
+
 # def requires_login(view):
 #     def new_view(request, *args, **kwargs):
 #         return view(request, *args, **kwargs)                       
