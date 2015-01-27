@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# The code in this file will modify url and register pci list
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from views import *

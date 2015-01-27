@@ -1,4 +1,10 @@
 #coding=utf-8
+'''
+# This file contains django views which used to return json data
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.shortcuts import render
 from django import forms
 from django.template import RequestContext

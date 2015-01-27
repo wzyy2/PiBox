@@ -1,3 +1,9 @@
+'''
+# This modules is used to read conf from registered app.
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 import ConfigParser
 import string, os, sys
 

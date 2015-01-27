@@ -1,4 +1,10 @@
 #coding=utf-8
+'''
+# This modules contains shared data
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 import os,sys,logging
 from PiApp.forms import *
 from PiApp.models import *

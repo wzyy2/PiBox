@@ -1,4 +1,10 @@
 #coding=utf-8
+'''
+# The modules contains global template data
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from common import globaldata
 
 

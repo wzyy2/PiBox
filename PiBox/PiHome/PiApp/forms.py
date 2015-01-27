@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# The modules contains PiApp's forms 
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 #/usr/bin/python 
 #coding: utf8
 

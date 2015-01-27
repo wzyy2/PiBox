@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# This modules contains pihome control interface list, which used to create sidebar for pihome.
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.core.urlresolvers import reverse
 import os,sys
 

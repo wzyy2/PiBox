@@ -1,4 +1,11 @@
 #coding=utf-8
+'''
+# deprecated!
+# communication with CPP client.
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 import re,os
 import sys
 from socket import *

@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# The code in this file will modify api url which used to ret json data
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from PiApp.views import *

@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# The modules contains PiApp's models 
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from PiHome import settings

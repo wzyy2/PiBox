@@ -1,4 +1,11 @@
 #coding=utf-8
+'''
+# PiApp's view here!
+# The view that return json data is in api.py
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 from django.shortcuts import render
 from django import forms
 from django.template import RequestContext

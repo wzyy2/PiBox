@@ -1,4 +1,10 @@
 #coding=utf-8
+'''
+# handle Callback
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 import os,sys 
 from PiApp.forms import *
 from PiApp.models import *
@@ -9,11 +15,6 @@ import globaldata
 cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
 callback_dir  = cwd + '/sh/callback'
 callback_list = os.listdir(callback_dir)
-# for item in callback_list:
-#     if os.path.isdir(os.path.join(APP_DIR, item)):
-#         app = Appstruct()
-#         app.name = item
-#         AppList.append(app)
 
 def switch_callback(sensor, status):
     if sensor.callback_file in callback_list:

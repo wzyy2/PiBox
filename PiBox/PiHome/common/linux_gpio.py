@@ -1,3 +1,10 @@
+#coding=utf-8
+'''
+# This modules is used to handle gpio with sysfs interface
+
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
+
 import os,re
 
 GPIO_DIR = '/sys/class/gpio'
