@@ -132,7 +132,7 @@ function get_sensor_content(sensor){
    
 
     if(sensor['type'] == 'n') {
-        content += '<div style="margin-top:15px; margin-bottom:10px;">&nbsp <div class="align-right"><a onclick="show_callback(' + sensor['id'] + ')">+ add callback</a></div><div class="align-left"><b>Callback</b><a href="{% url "PiApp.views.home_help_view" %}#doc-callback">(Help)</a></div></div>' 
+        content += '<div style="margin-top:15px; margin-bottom:10px;">&nbsp <div class="align-right"><a onclick="show_callback(' + sensor['id'] + ')">+ add callback</a></div><div class="align-left"><b>Callback</b><a href="{% url "PiApp.views.home_help_view" %}#callback">(Help)</a></div></div>' 
 
         content += '<form style="display:none;" sensor_id=' + sensor['id'] + ' sensor_type=' + sensor['type'] + '>'
         content += '<div class="form-group"><label>Conditions</label>'

@@ -363,7 +363,7 @@ def get_datapoint_json(request, sensor_id):
             else:
                 datapoint_instance = PicDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key']) 
             ret['value'] = settings.MEDIA_URL + str(datapoint_instance.pic_file)   
-            ret['key'] =  str(datapoint_instance.key)  
+            # ret['key'] =  str(datapoint_instance.key)  
     except:
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret))   
@@ -385,7 +385,7 @@ def edit_datapoint_json(request, sensor_id):
                 pass 
         elif sensor_instance.sensor_class == "p":
             datapoint_instance = PicDatapoint.objects.get(sensor = sensor_instance, key = request.REQUEST['key']) 
-            datapoint_instance.value = request.FILES['value']
+            datapoint_instance.pic_file = request.FILES['value']
             datapoint_instance.save()
         
     except:

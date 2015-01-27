@@ -1,12 +1,15 @@
 #/bin/env python
 # -*-coding:utf8-*-
+'''
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
 import urllib  
 import json
 
 if __name__ == '__main__':
 
     choose = int(raw_input('1.write   2.read '))
-    domain = raw_input('domain(like 192.168.10.106:8000) : ')
+    domain = raw_input('domain(as 192.168.10.106:8000) : ')
     sensor_id = raw_input('sensor_id(int) : ')
 
     if choose == 1:

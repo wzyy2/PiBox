@@ -1,5 +1,8 @@
 #/bin/env python
 # -*-coding:utf8-*-
+'''
+# Any issues or improvements please contact jacob-chen@iotwrt.com
+'''
 import urllib  
 import json
 
@@ -9,6 +12,7 @@ if __name__ == '__main__':
     domain = raw_input('domain(as 192.168.10.106:8000) : ')
     sensor_id = raw_input('sensor_id(int) : ')
 
+    #write
     if choose == 1:
         a = list()
         ex = 'y'
@@ -29,6 +33,7 @@ if __name__ == '__main__':
         s = json.loads(get)
         print 'msg:', s['msg']
 
+    #read
     elif choose == 2:
         key = raw_input('key(as 2012-12-12T11:11:11) : ')
         params = urllib.urlencode({'key': key})
@@ -38,6 +43,7 @@ if __name__ == '__main__':
         s = json.loads(get)
         print 'key:',s['key'],'value:',s['value']
 
+    #edit
     elif choose == 3:
         key = raw_input('key(as 2012-12-12T11:11:11) : ')
         value = float(raw_input('value(float) : '))     
@@ -48,6 +54,7 @@ if __name__ == '__main__':
         s = json.loads(get)
         print 'msg:', s['msg']
 
+    #remove
     elif choose == 4:
         key = raw_input('key(as 2012-12-12T11:11:11) : ')
         params = urllib.urlencode({'key': key})
@@ -57,6 +64,7 @@ if __name__ == '__main__':
         s = json.loads(get)
         print 'msg:', s['msg']
 
+    #history
     elif choose == 5:
         ex = raw_input('latest 20?y or n')
         if ex == 'y':

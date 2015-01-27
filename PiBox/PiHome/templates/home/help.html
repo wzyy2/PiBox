@@ -20,14 +20,25 @@
             <div class="box-body  ">
 
 
-<div class="md-section-divider"></div>
+
+
+
+
 
 <div class="md-section-divider"></div>
 
-<h1 id="上传数据" data-anchor-id="jtvw">上传数据</h1>
+<div class="md-section-divider"></div>
 
-<p data-anchor-id="6cpr"><strong>Datetime</strong> is ISO 8601, such as 2012-03-15T16:13:14 或者 <br>
-2012-03-15 16:13:14。</p>
+<h1 id="上传数据" data-anchor-id="g86a">上传数据</h1>
+
+<p data-anchor-id="2rd7"><strong>值类型</strong>：</p>
+
+<ul data-anchor-id="r6lx">
+<li>msg：'ok'  or  'fail'</li>
+<li>key：datetime, such as 2012-03-15T16:13:14  or  <br>
+2012-03-15 16:13:14。</li>
+<li>value： url(as '/pibox_upload/xxxx')  or  float</li>
+</ul>
 
 <div class="md-section-divider"></div>
 
@@ -93,7 +104,7 @@
  <td style="text-align:center;">查询</td>
  <td style="text-align:center;">GET</td>
  <td style="text-align:center;">key<code>datetime</code></td>
- <td style="text-align:center;">{'msg', 'value}</td>
+ <td style="text-align:center;">{'msg', 'value'}</td>
 </tr>
 <tr>
  <td>/API/sensor/{sensor_id}/datapoint/edit/</td>
@@ -142,24 +153,82 @@
 
 <h2 id="图像传感器" data-anchor-id="b2eo">图像传感器</h2>
 
-<p data-anchor-id="7g8l">暂未测试</p>
+<table data-anchor-id="mj4i" class="table table-striped-white table-bordered">
+<thead>
+<tr>
+ <th>url</th>
+ <th style="text-align:center;">作用</th>
+ <th style="text-align:center;">方法</th>
+ <th style="text-align:center;">请求参数</th>
+ <th style="text-align:center;">返回参数</th>
+</tr>
+</thead>
+<tbody><tr>
+ <td>/API/sensor/{sensor_id}/datapoint/</td>
+ <td style="text-align:center;">新增</td>
+ <td style="text-align:center;">POST</td>
+ <td style="text-align:center;">key<code>datetime</code>，value<code>file</code></td>
+ <td style="text-align:center;">{'msg'}</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/get/</td>
+ <td style="text-align:center;">查询</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;">key<code>datetime</code></td>
+ <td style="text-align:center;">{'msg', 'value<code>url</code>'}</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/edit/</td>
+ <td style="text-align:center;">修改</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;">key<code>datetime</code>，value<code>file</code></td>
+ <td style="text-align:center;">{'msg'}</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/remove/</td>
+ <td style="text-align:center;">删除</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;">key<code>datetime</code></td>
+ <td style="text-align:center;">{'msg'}</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/history/</td>
+ <td style="text-align:center;">历史（时间段）</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;">start<code>datetime</code>, end<code>datetime</code>, interval<code>int(seconds）</code></td>
+ <td style="text-align:center;">{'msg'， 'datapoint'=[{'value<code>url</code>','key'}]</td>
+</tr>
+<tr>
+ <td>/API/sensor/{sensor_id}/datapoint/history/</td>
+ <td style="text-align:center;">历史（返回最新前二十条）</td>
+ <td style="text-align:center;">GET</td>
+ <td style="text-align:center;"></td>
+ <td style="text-align:center;">{'msg'， 'datapoint'=[{'value<code>url</code>','key'}]}</td>
+</tr>
+</tbody></table>
+
+
+<p data-anchor-id="mpnj">ret can be like this</p>
+
+<div class="md-section-divider"></div>
+
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="8gcc" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">      </span><span class="str">"key"</span><span class="pun">:</span><span class="str">"2012-03-15T16:13:14"</span><span class="pun">,</span></code></li><li class="L2"><code><span class="pln">      </span><span class="str">"value"</span><span class="pun">:</span><span class="str">"/media/pibox_upload/pic_datapoint/111.png"</span></code></li><li class="L3"><code><span class="pln">    </span><span class="pun">}</span></code></li></ol></pre>
+
+<p data-anchor-id="oohn">注意返回的都是url，具体图片再从url读</p>
 
 <div class="md-section-divider"></div>
 
 <h2 id="example" data-anchor-id="3z2x">Example</h2>
 
-<p data-anchor-id="6ojs">在sh/datapoint_tools下有数据的测试脚本，可以用来增删数据，也可以用来做例子。 <br>
-<a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/switch.py" target="_blank">开关传感的读写脚本</a></p>
+<p data-anchor-id="6ojs">在sh/datapoint_tools下有使用urllib的数据测试脚本，可以用来增删数据，也可以用来做例子。 <br>
+<a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/switch.py" target="_blank">开关传感的读写脚本</a> <br>
+<a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/num.py" target="_blank">数据传感的CURD脚本</a> <br>
+<a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/pic.py" target="_blank">图片传感的CURD脚本</a> <br>
+使用办法如下</p>
 
 <div class="md-section-divider"></div>
 
-<pre class="prettyprint linenums prettyprinted" data-anchor-id="7q0x" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    python </span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">py</span></code></li></ol></pre>
-
-<p data-anchor-id="dsvj"><a href="https://github.com/wzyy2/PiBox/tree/master/PiBox/sh/datapoint_tools/num.py" target="_blank">数据传感的CURD脚本</a></p>
-
-<div class="md-section-divider"></div>
-
-<pre class="prettyprint linenums prettyprinted" data-anchor-id="7z2p" style=""><ol class="linenums"><li class="L0"><code><span class="pln">    python num</span><span class="pun">.</span><span class="pln">py</span></code></li></ol></pre>
+<pre class="prettyprint linenums prettyprinted" data-anchor-id="3qud" style=""><ol class="linenums"><li class="L0"><code><span class="pun">输入</span><span class="pln">python </span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">py</span></code></li><li class="L1"><code><span class="pun">输出</span><span class="lit">1.write</span><span class="pln">   </span><span class="lit">2.read</span><span class="pln"> </span><span class="pun">选择</span><span class="pln"> </span><span class="lit">1</span></code></li><li class="L2"><code><span class="pun">输出</span><span class="pln">domain</span><span class="pun">(</span><span class="kwd">as</span><span class="pln"> </span><span class="lit">192.168</span><span class="pun">.</span><span class="lit">10.106</span><span class="pun">:</span><span class="lit">8000</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">输入</span><span class="lit">192.168</span><span class="pun">.</span><span class="lit">10.106</span><span class="pun">:</span><span class="lit">8000</span></code></li><li class="L3"><code><span class="pun">输出</span><span class="pln">sensor_id</span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">输入</span><span class="pln"> </span><span class="lit">1</span></code></li><li class="L4"><code><span class="pun">输出</span><span class="pln">value</span><span class="pun">(</span><span class="kwd">int</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">输入</span><span class="pln"> </span><span class="lit">1</span></code></li></ol></pre>
 
 <p data-anchor-id="tzn4">只要对这些脚本稍加修改，另外加上一些python代码就可以通过以下思路，实现自己的本地智能家居： <br>
 * 通过串口等通讯模块，关联单片机，然后关联上native yeelink。 <br>
@@ -169,11 +238,7 @@
 
 <h1 id="callback" data-anchor-id="1bga">CallBack</h1>
 
-<div class="md-section-divider"></div>
-
-<h2 id="explain" data-anchor-id="l075">Explain</h2>
-
-<p data-anchor-id="wnw8">Callback file是传感器满足条件后被调用的python代码文件名（比如callback_file=gpio.py)，同时文件需要放在PiBox/sh/callback/下。 <br>
+<p data-anchor-id="wnw8">Callback file是传感器满足条件后被调用的python代码文件名<code>比如gpio.py</code>，被调用的文件需要放在PiBox/sh/callback/下。 <br>
 不使用的话只需提供不存在的文件名或者保持为空即可。</p>
 
 <p data-anchor-id="596v">对开关传感器来说，每一次开关数值点发生修改，callback_file都会被按如下格式调用</p>
@@ -188,13 +253,13 @@
 
 <div class="md-section-divider"></div>
 
-<h2 id="example-1" data-anchor-id="n0h4">Example</h2>
+<h2 id="case" data-anchor-id="4pdr">Case</h2>
 
-<p data-anchor-id="jjz9">在sh/callback下有两个文件实例可以直接使用</p>
+<p data-anchor-id="jjz9">在sh/callback下有几个文件实例可以直接使用</p>
 
 <div class="md-section-divider"></div>
 
-<h3 id="gpiopy" data-anchor-id="wefi">gpio.py</h3>
+<h3 id="gpiopy开关" data-anchor-id="wefi">gpio.py（开关）</h3>
 
 <pre data-anchor-id="s032"><code>import os,sys
 
@@ -221,7 +286,7 @@ gpio.write_gpio_value(sys.argv[2])
 
 <div class="md-section-divider"></div>
 
-<h3 id="calloutpy" data-anchor-id="g5gq">callout.py</h3>
+<h3 id="calloutpy数值" data-anchor-id="g5gq">callout.py（数值）</h3>
 
 <pre data-anchor-id="9ewj"><code>import os,sys
 
@@ -230,8 +295,20 @@ print 'Value:', str(sys.argv[2])
 print 'key:', str(sys.argv[3])
 </code></pre>
 
-<p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。 <br>
-如果在下面按网上教程加入发邮件或者发微博代码，就可以实现监控报警的效果。</p>
+<p data-anchor-id="zyli">在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。</p>
+
+<div class="md-section-divider"></div>
+
+<h3 id="sendemailpy数值" data-anchor-id="drlv">send_email.py（数值）</h3>
+
+<p data-anchor-id="kr0r">发邮件到指定邮箱，需要修改账号密码，详见sh/callback</p>
+
+<div class="md-section-divider"></div>
+
+<h1 id="others" data-anchor-id="95f5">others</h1>
+
+<p data-anchor-id="5pfr">Any issues or improvements please contact jacob-chen@iotwrt.com</p>
+
 
 
 
