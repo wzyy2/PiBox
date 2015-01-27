@@ -76,8 +76,8 @@ Callback file是传感器满足条件后被调用的python代码文件名（比�
         
 Example
 --------------------------------------------------
-在sh/callback下有两个文件实例可以直接使用
-### gpio.py
+在sh/callback下有几个文件实例可以直接使用
+### gpio.py（开关）
 
     import os,sys
     
@@ -100,7 +100,7 @@ Example
 在需要的开关传感器下填入gpio.py,将文件的GPIO_NUM改成所需的gpio编号，每次开关状态改变，就会带动gpio改变。
 直接使用这个脚本就可以通过web来控制简单电器
 
-### callout.py
+### callout.py（数值）
 
     import os,sys
 
@@ -108,4 +108,6 @@ Example
     print 'Value:', str(sys.argv[2])
     print 'key:', str(sys.argv[3])
 在需要的数值传感器下填入callout.py和条件,数值发生改变时条件若满足，会发送debug信息到log里。
-如果在下面按网上教程加入发邮件或者发微博代码，就可以实现监控报警的效果。
+
+### send_email.py（数值）
+发邮件到指定邮箱，需要修改账号密码，详见sh/callback

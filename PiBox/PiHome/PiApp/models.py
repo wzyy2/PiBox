@@ -12,8 +12,8 @@ from PiHome import settings
 import os
 
 UPLOAD_ROOT = 'pibox_upload'
-UPLOAD_ROOT_HOUSR_PLAN='pibox_upload/house_plan'
-UPLOAD_ROOT_PIC='pibox_upload/pic_datapoint'
+UPLOAD_ROOT_HOUSR_PLAN='pibox_upload/house_plan/'
+UPLOAD_ROOT_PIC='pibox_upload/pic_datapoint/'
 
 class PiUser(AbstractUser):
     new_field = models.CharField(max_length=100)
@@ -63,7 +63,6 @@ class Sensor(models.Model):
     callback_value = models.FloatField(default=0)
     callback_condition = models.CharField(max_length=3, blank=True, choices=CONDITIONCHOICE)
     callback_file = models.CharField(max_length=120, blank=True)
-
 
 
 class SwitchDatapoint(models.Model):    

@@ -23,8 +23,11 @@ void NasService::Start(Json::Value *send_root, Json::Value *recv_root)
 
         if ((*recv_root)["cmd"] == std::string("open"))
             ret = system("sh ./sh/aria2/start.sh") ;
-        else if ((*recv_root)["cmd"] == std::string("close"))
+        else if ((*recv_root)["cmd"] == std::string("close")) {
             ret = system("sh ./sh/aria2/stop.sh") ;
+            ret = 0;
+        }
+            
         else if ((*recv_root)["cmd"] == std::string("time"))
             ;
 
