@@ -53,7 +53,7 @@ If you want more background on how it works,create an issue or email me:-).
 ![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/index2.jpg)
 ![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/house.jpg)
 ![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/filebrowser.png)
-![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/phone.png)
+
 
 # Chinese #
 ## 介绍 
