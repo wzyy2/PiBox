@@ -20,12 +20,13 @@ from django.contrib.auth.decorators import login_required
 import os
 import json as simplejson    
 
-from forms import *
-from models import *
-from common import client
+from PiHome import settings
+from PiApp.forms import *
+from PiApp.models import *
+from common.api import client
 from common import globaldata
 from common import utils
-from PiHome import settings
+
 
 
 @login_required  

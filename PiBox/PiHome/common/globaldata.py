@@ -6,10 +6,11 @@
 '''
 
 import os,sys,logging
-from PiApp.forms import *
-from PiApp.models import *
-import pci_list
-import app_ini
+
+from PiApp.models import PiSettings
+
+import struct.pci_list
+import struct.app_ini
 
 VERSION = '0.3.0'
 
@@ -17,9 +18,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
 APP_DIR  = BASE_DIR + '/App'
 
 #pihome control interface list,will be used to create sidebar and titlebar 
-pci_list = pci_list.PciList()
+pci_list = struct.pci_list.PciList()
 #app info read from ini
-app_ini = app_ini.AppIni(APP_DIR)
+app_ini = struct.app_ini.AppIni(APP_DIR)
 
 #others
 def getclient():

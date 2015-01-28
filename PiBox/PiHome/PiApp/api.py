@@ -18,13 +18,13 @@ from django.contrib.auth.decorators import login_required
 from django.db import models
 import json as simplejson   
 
-from models import *
-from forms import *
+from PiApp.models import *
+from PiApp.forms import *
 
-from common import client
+from common.api import client,callback
 from common import globaldata
 from common import utils
-from common import callback
+
 
 def login_api(request):           
     if request.method == 'POST':  

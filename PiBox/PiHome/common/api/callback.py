@@ -9,10 +9,10 @@ import os,sys
 from PiApp.forms import *
 from PiApp.models import *
 
-import globaldata
+from common import globaldata
 
 #register app list
-cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
+cwd = globaldata.BASE_DIR
 callback_dir  = cwd + '/sh/callback'
 callback_list = os.listdir(callback_dir)
 

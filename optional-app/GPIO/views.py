@@ -9,10 +9,11 @@ import json as simplejson
 from PiApp.forms import *
 from PiApp.models import *
 
-from common import client
+from common.api import client
+from common.driver import linux_gpio
 from common import globaldata
 from common import utils
-from common import linux_gpio
+
 
 
 gpio_dict = dict()

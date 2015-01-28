@@ -15,6 +15,7 @@ UPLOAD_ROOT = 'pibox_upload'
 UPLOAD_ROOT_HOUSR_PLAN='pibox_upload/house_plan/'
 UPLOAD_ROOT_PIC='pibox_upload/pic_datapoint/'
 
+
 class PiUser(AbstractUser):
     new_field = models.CharField(max_length=100)
 
@@ -24,18 +25,16 @@ class PiSettings(models.Model):
     port     = models.IntegerField(default=3333)
     enable_register = models.BooleanField(default=True)
 
-# class Notification(models.Model):
-#     content = models.TextField(default='')
-#     has_readed = models.BooleanField(default=False)
-#     pass
 
+"""
+    my house model
+"""
 class Device(models.Model):
     name = models.CharField(max_length=30)
     describe = models.TextField(default='')
     location = models.CharField(max_length=100)
     x = models.FloatField()
     y = models.FloatField()            
-
 
 class Home(models.Model):
     name = models.CharField(max_length=100)
@@ -78,3 +77,26 @@ class PicDatapoint(models.Model):
     #yyyy-MM-dd HH:mm:ss
     key = models.DateTimeField(unique=True)
     pic_file = models.ImageField(upload_to = UPLOAD_ROOT_PIC) 
+
+
+"""
+    others
+"""
+TYPECHOICE = (
+ ('lt', 'less than'),
+ ('lte', 'less than or equal'),
+ ('gt', 'greater than'),
+ ('gte', 'greater than or equal'),
+ ('ne', 'not equal'),
+ ('e', 'equal'),
+)
+
+class Notification(models.Model):
+    """一个简化过的Notification类，拥有三个字段：
+
+    - `content`: 消息的内容
+    - `has_readed`: 表示消息是否已读
+    """
+    type = models.CharField(max_length=1, choices=TYPECHOICE)
+    content = models.TextField(default='')
+    has_readed = models.BooleanField(default=False)

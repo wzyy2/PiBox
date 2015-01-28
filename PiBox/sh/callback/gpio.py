@@ -7,7 +7,7 @@ import os,sys
 cwd = os.path.dirname(os.path.abspath(__file__)) + '/..' + '/..'
 sys.path.append(os.path.join(cwd, 'PiHome'))
 
-from common import linux_gpio
+from common.driver import linux_gpio
 
 print 'Sensor:', str(sys.argv[1])
 print 'Value:', str(sys.argv[2])
