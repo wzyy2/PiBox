@@ -9,7 +9,7 @@
 {% for device in device_all %}  
     var device{{forloop.counter}} = new Array();
     device{{forloop.counter}}['id']={{device.id}};
-    device{{forloop.counter}}['name']='{{device.name}}';
+    device{{forloop.counter}}['name']='{{device.name}}'.substr(0,3) ;
     device{{forloop.counter}}['x']={{device.x}};
     device{{forloop.counter}}['y']={{device.y}};
 {% endfor %}

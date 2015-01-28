@@ -53,6 +53,7 @@ urlpatterns += patterns('',
     (r'^home/manage_device/$', manage_device_view),  
     (r'^home/add_sensor/$', add_sensor_view),  
     (r'^home/edit_sensor/$', edit_sensor_view), 
+    (r'^home/sensor_data/$', sensor_data_view), 
 )
 
 

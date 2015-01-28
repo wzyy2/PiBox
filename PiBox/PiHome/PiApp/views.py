@@ -64,7 +64,7 @@ def dashboard(request, title='dashboard', belong=None):
 @login_required  
 def notification_view(request, title='notification', belong=None):
     others = notification.get_all(request.user.id)
-    
+
     unread = notification.get_unread_clear(request.user.id)
    
     t = get_template('notification.html')
@@ -317,7 +317,20 @@ def  edit_sensor_view(request, title='edit sensor', belong=['my house', 'manage'
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 
+@login_required 
+def  sensor_data_view(request, title='sensor data', belong=['my house', 'manage']):
+    sensor_id = request.GET['sensor_id']
+    get_sensor = Sensor.objects.get(id = sensor_id)
 
+    if get_sensor.sensor_class == 'n':
+        datapoint = NumDatapoint.objects.filter(sensor = get_sensor)
+    elif get_sensor.sensor_class == 'p': 
+        datapoint = PicDatapoint.objects.filter(sensor = get_sensor)
+
+    domain = request.get_host() + settings.MEDIA_URL
+    t = get_template('home/sensor_data.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
 '''
  user admin
 '''

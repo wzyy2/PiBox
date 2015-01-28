@@ -64,7 +64,7 @@ function switch_close(get_id){
     });  
 }
 function curvet_refresh(get_id, unit){
-    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  { }, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  {}, 
         function(data2){
             if(data2['msg'] != 'ok') {
                 alert('failed');
@@ -85,14 +85,29 @@ function curvet_refresh(get_id, unit){
     });                     
 }
 function img_refresh(get_id){
-    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/',  {key : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  {}, 
         function(data){
             if(data['msg'] != 'ok') {
                 // alert('failed');
             } else {
-                $('img[sensor_id=' + get_id + ']').attr("src", data['value']);                             
+                for(var n=0; n < data['datapoint'].length; n++){
+                    var content;
+                    if(n == 0) {
+                        content = '<div class="item active">'                        
+                    }
+                    else{
+                        content = '<div class="item">'                             
+                    }                  
+                    content += '<center><img src="' + data['datapoint'][n]['value'] + '"></center>\
+                                <div class="carousel-caption">\
+                                    <h4 style="color:#fff;">Time</h4>\
+                                    <p style="color:#fff;">' + data['datapoint'][n]['key'] + '</p> \
+                                </div>\
+                              </div>' 
+                    $('.carousel-inner[sensor_id=' + get_id + ']').append(content);   
+                }                                
             }               
-    });                     
+    });                           
 }
 </script>   
 {% endblock %}
@@ -108,18 +123,32 @@ function img_refresh(get_id){
 
 {% for sensor in sensors %}  
 <div class="callout callout-info">
-    <p><b>Name:</b>{{sensor.name}}</p>
+    
     {% if sensor.sensor_class == 's' %}
+    <p><b>Name:</b>{{sensor.name}}</p>
     <div class="btn-group" data-toggle="btn-toggle">
         <button id="btn-open{{sensor.id}}" style="height:100px;width:180px;" type="button" class="btn btn-default btn-lg" onclick="switch_open({{sensor.id}})"><span class="glyphicon glyphicon-play"></span></button>
         <button id="btn-close{{sensor.id}}" style="height:100px;width:180px;" type="button" class="btn btn-primary btn-lg active" onclick="switch_close({{sensor.id}})"><span class="glyphicon glyphicon-pause"></span></button>
     </div>
     {% endif %}
     {% if sensor.sensor_class == 'n' %}
+    <a href="{% url 'PiApp.views.sensor_data_view' %}?sensor_id={{sensor.id}}"  style="float:right;">more here</a>
+    <p><b>Name:</b>{{sensor.name}}</p>
     <div class="chart-responsive" style=""><div class="chart" id="revenue-chart-{{sensor.id}}" style="height: 250px;"></div></div>
     {% endif %}
     {% if sensor.sensor_class == 'p' %}
-    <img sensor_id={{sensor.id}}></img>
+    <a href="{% url 'PiApp.views.sensor_data_view' %}?sensor_id={{sensor.id}}" style="float:right;">more here</a>
+    <p><b>Name:</b>{{sensor.name}}</p>
+    <div class="carousel slide" id="carousel-506941">
+        <div sensor_id='{{sensor.id}}' class="carousel-inner">
+        </div>
+        <a class="left carousel-control" href="#carousel-506941" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-506941" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
     {% endif %}
 </div>
 {% endfor %}

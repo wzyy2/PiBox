@@ -115,12 +115,31 @@ function get_sensor_content(sensor){
         content += '<button id="btn-close' + sensor['id'] + '" style="height:100px;width:180px;" type="button" class="btn btn-primary btn-lg active" onclick="switch_close(' + sensor['id'] + ')"><span class="glyphicon glyphicon-pause"></span></button>'
         content += '</div></center></div></div>'
     } else if(sensor['type'] == 'n') {
-        content += '<div class="box-header"><h3 class="box-title">Data curvet</h3></div>'
+        content += '<div class="box-header"><h3 class="box-title">Latest 20</h3>'
+        content += '<div class="box-tools pull-right"><a href="{% url "PiApp.views.sensor_data_view" %}?sensor_id=' + sensor['id']
+        content += '" style="color:#428bca;" )="">more here</a></div>'
+        content += '</div>'
         content += '<div class="box-body chart-responsive""><div class="chart" id="revenue-chart-'+ sensor['id'] + '" style="height: 250px;"></div></div></div>'
     } else if(sensor['type'] == 'p') {
-        content += '<div class="box-header"><h3 class="box-title"><img sensor_id=' + sensor['id'] + '></img></h3></div>'
-        content += '<div class="box-body"></div></div>'         
+        content += '<div class="box-header"><h3 class="box-title">Latest 20</h3>'
+        content += '<div class="box-tools pull-right"><a href="{% url "PiApp.views.sensor_data_view" %}?sensor_id=' + sensor['id']
+        content += '" style="color:#428bca;" )="">more here</a></div>'
+        content += '</div>'
+        content += '<div class="box-body">'
+        content += '<div class="carousel slide" id="carousel-506941">\
+                        <div sensor_id=' + sensor['id'] + ' class="carousel-inner">\
+                        </div>\
+                        <a class="left carousel-control" href="#carousel-506941" data-slide="prev">\
+                            <span class="glyphicon glyphicon-chevron-left"></span>\
+                        </a>\
+                        <a class="right carousel-control" href="#carousel-506941" data-slide="next">\
+                            <span class="glyphicon glyphicon-chevron-right"></span>\
+                        </a>\
+                    </div>'
+        content += '</div></div>'         
     }
+
+
     if(sensor['type'] == 's') {
         content += '<div style="margin-top:15px; margin-bottom:10px;">&nbsp <div class="align-right"><a onclick="show_callback(' + sensor['id'] + ')">+ add callback</a></div><div class="align-left"><b>Callback</b><a href="{% url "PiApp.views.home_help_view" %}#callback">(Help)</a></div></div>' 
 
@@ -233,12 +252,27 @@ function curvet_refresh(get_id, unit){
     });                     
 }
 function img_refresh(get_id){
-    $.getJSON("/API/sensor/" + get_id + '/datapoint/get/',  {key : 0}, 
+    $.getJSON("/API/sensor/" + get_id + '/datapoint/history/',  {}, 
         function(data){
             if(data['msg'] != 'ok') {
                 // alert('failed');
             } else {
-                $('img[sensor_id=' + get_id + ']').attr("src", data['value']);                             
+                for(var n=0; n < data['datapoint'].length; n++){
+                    var content;
+                    if(n == 0) {
+                        content = '<div class="item active">'                        
+                    }
+                    else{
+                        content = '<div class="item">'                             
+                    }                  
+                    content += '<center><img src="' + data['datapoint'][n]['value'] + '"></center>\
+                                <div class="carousel-caption">\
+                                    <h4 style="color:#fff;">Time</h4>\
+                                    <p style="color:#fff;">' + data['datapoint'][n]['key'] + '</p> \
+                                </div>\
+                              </div>' 
+                    $('.carousel-inner[sensor_id=' + get_id + ']').append(content);   
+                }                                
             }               
     });                     
 }
@@ -366,4 +400,6 @@ function show_callback(get_id){
         </div>
     </div>
 </div>  
+
+
 {% endblock %}
