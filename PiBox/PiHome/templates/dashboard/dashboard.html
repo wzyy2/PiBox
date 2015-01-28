@@ -13,7 +13,7 @@
 $(function() {
     //SLIMSCROLL FOR CHAT WIDGET
     $('#log-box').slimScroll({
-    	height: '280'
+    	height: $('#box-info').outerHeight(),
     });
     // $('#cpp-box').slimScroll({
     // 	height: '320px'
@@ -38,7 +38,6 @@ $(function() {
 <!-- Small boxes (Stat box) -->
 <div class="row">
 	<div class="col-md-3 col-xs-6">
-		<!-- small box -->
 		<div class="small-box bg-blue">
 			<div class="inner">
 				<h3>
@@ -55,9 +54,8 @@ $(function() {
 				More info <i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>
-	</div><!-- ./col -->
+	</div>
 	<div class="col-md-3 col-xs-6">
-		<!-- small box -->
 		<div class="small-box bg-aqua">
 			<div class="inner">
 				<h3>
@@ -74,9 +72,8 @@ $(function() {
 				More info <i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>
-	</div><!-- ./col -->
+	</div>
 	<div class="col-md-3 col-xs-6">
-		<!-- small box -->
 		<div class="small-box bg-green">
 			<div class="inner">
 				<h3>
@@ -93,9 +90,8 @@ $(function() {
 				More info <i class="fa fa-arrow-circle-right"></i>
 			</a>
 		</div>
-	</div><!-- ./col -->
+	</div>
 	<div class="col-md-3 col-xs-6">
-		<!-- small box -->
 		<div class="small-box bg-red">
 			<div class="inner">
 				<h3>
@@ -112,31 +108,17 @@ $(function() {
 				&nbsp
 			</a>
 		</div>
-	</div><!-- ./col -->
+	</div>
 
-</div><!-- /.row -->
+</div>
 <div class="row">
 	<div class="col-md-6">
-
-<!-- 		<div class="box box-solid" style="height:180px;">
-			<div class="box-header">
-				<i class="fa fa-bullhorn"></i>
-				<h3 class="box-title">Callouts</h3>
-			</div><
-			<div class="box-body">
-				<div class="callout callout-danger">
-					<h4>I am a danger callout!</h4>
-					<p>There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-				</div>
-			</div>
-		</div>
- -->
 		<div class="box box-solid">
 			<div class="box-header" >
 				<i class="fa fa-star"></i>
 				<h3 class="box-title">BoxInfo</h3>
 			</div>
-			<div class="box-body">
+			<div class="box-body" id="box-info">
 				<table class="table table-striped table-responsive"><tbody>
 	            	<tr>
 	            		<td>Version</td>
@@ -192,11 +174,8 @@ $(function() {
 			<div class="box-body" id="log-box">
 				<pre>{{  pihome_log }}</pre>
 			</div>
-<!-- 			<div class="box-body" id="cpp-box" style="display:none;">
-				<pre>{{  cpp_log }}</pre>
-			</div> -->
 		</div>
 	</div>
-</div><!-- /.row -->
+</div>
 
 {% endblock %}

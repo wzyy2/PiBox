@@ -22,40 +22,41 @@ function kill(pid_){
 {% endblock %}
 
 {% block content %} 
-<div class="pi-container"> 
-    <div class="row ">
-        <div class="box box-solid box-navy ">
-            <div class="box-header">
-                <i class="fa fa-laptop"></i>
-                <h3 class="box-title">Process</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body  ">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th style="width:8%;">PID</th>
-                  <th style="width:15%;">Owner</th>
-                  <th style="width:41%;">Command</th>
-                  <th style="width:10%;">CPU usage (%)</th>
-                  <th style="width:10%;">Memory usage (%)</th>
-                  <th style="width:16%;">Kill</th>
-                </tr>
-                {% for item in process_info %}
-                <tr>
-                  <td>{{item.pid}}</td>
-                  <td>{{item.owner}}</td>
-                  <td>{{item.command}}</td>
-                  <td>{{item.cpu}}</td>
-                  <td>{{item.memory}}</td>
-                  <td><button type="button" class="btn btn-danger" onclick="kill({{item.pid}})">kill</button></td>
-                </tr>
-                {% endfor %}
 
-              </tbody></table>
+<div class="row ">
+  <div class="col-md-12">
+    <div class="box box-solid box-navy ">
+      <div class="box-header">
+        <i class="fa fa-laptop"></i>
+        <h3 class="box-title">Process</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body  ">
+        <table class="table table-hover">
+          <tbody><tr>
+            <th style="width:8%;">PID</th>
+            <th style="width:15%;">Owner</th>
+            <th style="width:41%;">Command</th>
+            <th style="width:10%;">CPU usage (%)</th>
+            <th style="width:10%;">Memory usage (%)</th>
+            <th style="width:16%;">Kill</th>
+          </tr>
+          {% for item in process_info %}
+          <tr>
+            <td>{{item.pid}}</td>
+            <td>{{item.owner}}</td>
+            <td>{{item.command}}</td>
+            <td>{{item.cpu}}</td>
+            <td>{{item.memory}}</td>
+            <td><button type="button" class="btn btn-danger" onclick="kill({{item.pid}})">kill</button></td>
+          </tr>
+          {% endfor %}
+
+        </tbody></table>
 
 
-            </div><!-- /.box-body -->
+      </div><!-- /.box-body -->
 
-        </div><!-- /.box -->
-    </div>
+    </div><!-- /.box -->
+  </div>
 </div>
 {% endblock %}

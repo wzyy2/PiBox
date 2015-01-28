@@ -16,6 +16,8 @@ class gpio(object):
     def gpio_export(self):
         os.system('echo' + ' ' + str(self.NUM) + ' ' + '>' + ' ' + GPIO_DIR + '/export')
 
+    ## @brief change the direction of gpio
+    # @param    string    "in","out"
     def write_gpio_direction(self, direction):
         os.system('echo' + ' ' + direction + ' ' + '>' + ' ' + GPIO_DIR + '/gpio' + str(self.NUM) + '/direction')
 
@@ -25,6 +27,8 @@ class gpio(object):
     def gpio_unexport(self):
         os.system('echo' + ' ' + str(self.NUM) + ' ' + '>' + ' ' + GPIO_DIR + '/unexport')           
 
+    ## @brief get the direction of gpio
+    # @return string   "in","out"
     def read_gpio_direction(self):
         direction = os.popen('cat' + ' ' + GPIO_DIR + '/gpio' + str(self.NUM) + '/direction').read()  
         return direction
@@ -33,9 +37,14 @@ class gpio(object):
         value = os.popen('cat' + ' ' + GPIO_DIR + '/gpio' + str(self.NUM) + '/value').read()  
         return int(value)
 
+## @brief identify if gpio exists  
+# @param    int    the num of gpio
+# @return bool
 def gpio_exists(num):
     return os.path.exists(GPIO_DIR + '/gpio' + str(num))
 
+## @brief scan for exported gpio
+# @return list  as "gpio1","gpio2" 
 def scan_gpio():
     gpio_list = os.listdir(GPIO_DIR)
     ret = list()

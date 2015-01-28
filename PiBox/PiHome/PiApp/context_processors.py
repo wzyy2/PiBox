@@ -6,11 +6,14 @@
 '''
 
 from common import globaldata
+from common.api import notification
 
+# notification.send('i', 0, 'title', 'test!')
 
 def app_info(request):
     return  {
         'PCILIST': globaldata.pci_list.content,
+        'NOTIFICATION': notification.get_unread(request.user.id),
     }
 
 def version(request):

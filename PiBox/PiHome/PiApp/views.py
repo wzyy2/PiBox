@@ -23,7 +23,7 @@ import json as simplejson
 from PiHome import settings
 from PiApp.forms import *
 from PiApp.models import *
-from common.api import client
+from common.api import client, notification
 from common import globaldata
 from common import utils
 
@@ -58,6 +58,16 @@ def dashboard(request, title='dashboard', belong=None):
     cpp_log = utils.lineslimit(cpp_log_lines, 100)
 
     t = get_template('dashboard/dashboard.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
+
+@login_required  
+def notification_view(request, title='notification', belong=None):
+    others = notification.get_all(request.user.id)
+    
+    unread = notification.get_unread_clear(request.user.id)
+   
+    t = get_template('notification.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
 

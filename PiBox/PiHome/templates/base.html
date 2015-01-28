@@ -46,6 +46,14 @@
             </a>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
+                    <li class="notifications-menu">
+                        <a href="{% url 'PiApp.views.notification_view' %}">
+                            <i class="fa fa-envelope"></i>
+                            {% if NOTIFICATION.count != 0 %}
+                            <span class="label label-danger">{{NOTIFICATION.count}}</span>
+                            {% endif %}
+                        </a>
+                    </li>
                     {% block user-menu %}
                     {% endblock %}  
                 </ul>

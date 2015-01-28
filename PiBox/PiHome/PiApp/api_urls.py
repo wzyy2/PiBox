@@ -29,9 +29,11 @@ urlpatterns = patterns('',
     (r'^PiApp/nas/$', nas_api),
     (r'^PiApp/server/$', server_api),    
 
-
     (r'^PiApp/settings/account/$', settings_account_api),    
     (r'^PiApp/settings/general/$', settings_general_api),   
+
+    (r'^PiApp/notification/delete/$', delete_notification_api), 
+
 
 # .+
     (r'^device/(?P<device_id>\d*)/$', get_device_by_id_json),     

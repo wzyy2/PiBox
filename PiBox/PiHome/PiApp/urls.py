@@ -28,6 +28,7 @@ for item in list:
 urlpatterns += patterns('',
     (r'^$', dashboard),
     (r'^dashboard/$', dashboard),
+    (r'^notification/$', notification_view),
 
     (r'^settings/account/$', settings_account_view),
     (r'^settings/general/$', settings_general_view),

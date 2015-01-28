@@ -21,7 +21,7 @@ import json as simplejson
 from PiApp.models import *
 from PiApp.forms import *
 
-from common.api import client,callback
+from common.api import client,callback,notification
 from common import globaldata
 from common import utils
 
@@ -186,6 +186,13 @@ def kill_process_api(request):
         ret = {'msg':'fail'}
     return HttpResponse(simplejson.dumps(ret)) 
 
+def delete_notification_api(request):
+    try:
+        notification.delete(int(request.REQUEST['id']))
+        ret = {'msg':'ok'}
+    except:
+        ret = {'msg':'fail'}        
+    return HttpResponse(simplejson.dumps(ret))  
 
 ###################my home##################
 def remove_device_by_id_json(request, device_id):

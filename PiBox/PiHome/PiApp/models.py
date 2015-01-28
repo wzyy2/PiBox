@@ -83,20 +83,17 @@ class PicDatapoint(models.Model):
     others
 """
 TYPECHOICE = (
- ('lt', 'less than'),
- ('lte', 'less than or equal'),
- ('gt', 'greater than'),
- ('gte', 'greater than or equal'),
- ('ne', 'not equal'),
- ('e', 'equal'),
+ ('d', 'danger'),
+ ('i', 'info'),
+ ('w', 'warning'),
 )
 
 class Notification(models.Model):
-    """一个简化过的Notification类，拥有三个字段：
-
-    - `content`: 消息的内容
-    - `has_readed`: 表示消息是否已读
+    """消息通知类
     """
     type = models.CharField(max_length=1, choices=TYPECHOICE)
+    ## 0 for all
+    user_id = models.IntegerField(db_index=True, default=0)
+    title = models.TextField(default='')
     content = models.TextField(default='')
     has_readed = models.BooleanField(default=False)
