@@ -25,7 +25,7 @@ $(window).load(function(){
         var relativeY = offset.top + $('.house-plan').height() * device{{forloop.counter}}['y'] / 100;
 
         var content = get_device_content(device{{forloop.counter}});
-        $(".pi-container").append(content);
+        $("#home").append(content);
         $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').css("position", "absolute");
         var div_offset = $("div[sensor_id=" + device{{forloop.counter}}['id'] +']').offset();
 
@@ -75,7 +75,7 @@ function get_device_content(device){
 
 {% block content %} 
 <div class="row">      
-    <div class="col-md-12">
+    <div id="home" class="col-md-12">
         <div class="box box-solid box-navy ">
             <div class="box-header">
                 <i class="fa fa-home"></i>
