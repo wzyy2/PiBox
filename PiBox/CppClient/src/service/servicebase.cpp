@@ -3,7 +3,7 @@
 ServiceBase::ServiceBase()
 {
     // mutex_ = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_init(&mutex,NULL);
+    pthread_mutex_init(&mutex_,NULL);
     //pthread_mutex_lock(&mutex);
     //pthread_mutex_unlock(&mutex);
     //pthread_mutex_destroy(&mutex);
