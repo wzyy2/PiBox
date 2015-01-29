@@ -46,6 +46,7 @@ urlpatterns += patterns('',
 
     (r'^home/index/$', home_view),   
     (r'^home/help/$', home_help_view),   
+    (r'^home/help/en$', home_help_en_view),
     (r'^home/add_home/$', add_home_view),
     (r'^home/device/$', device_view), 
     (r'^home/add_device/$', add_device_view),  

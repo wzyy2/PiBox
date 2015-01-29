@@ -16,10 +16,11 @@
             <div class="box-header">
                 <i class="fa fa-h-square"></i>
                 <h3 class="box-title">Document</h3>
+
             </div><!-- /.box-header -->
             <div class="box-body  ">
 
-
+<a href="{% url 'PiApp.views.home_help_en_view' %}" style="float:right;">EN</a>
 
 
 
@@ -238,7 +239,7 @@
 
 <h1 id="callback" data-anchor-id="1bga">CallBack</h1>
 
-<p data-anchor-id="wnw8">Callback file是传感器满足条件后被调用的python代码文件名<code>比如gpio.py</code>，被调用的文件需要放在PiBox/sh/callback/下。 <br>
+<p data-anchor-id="wnw8">Callback file是传感器满足条件后被调用的python代码文件名<code>比如gpio.py</code>，被调用的文件需要放在PiBox/sh/callback/下(重启有效)。 <br>
 不使用的话只需提供不存在的文件名或者保持为空即可。</p>
 
 <p data-anchor-id="596v">对开关传感器来说，每一次开关数值点发生修改，callback_file都会被按如下格式调用</p>

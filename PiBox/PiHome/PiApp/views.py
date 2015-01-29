@@ -232,6 +232,10 @@ def  home_help_view(request, title='document', belong=['my house']):
     t = get_template('home/help.html')
     c = RequestContext(request,locals())
     return HttpResponse(t.render(c))
+def  home_help_en_view(request, title='document-en', belong=['my house']):
+    t = get_template('home/help_en.html')
+    c = RequestContext(request,locals())
+    return HttpResponse(t.render(c))
 
 @login_required 
 def  device_view(request):

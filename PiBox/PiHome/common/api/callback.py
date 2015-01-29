@@ -11,7 +11,7 @@ from PiApp.models import *
 
 from common import globaldata
 
-#register app list
+#register callback file
 cwd = globaldata.BASE_DIR
 callback_dir  = cwd + '/sh/callback'
 callback_list = os.listdir(callback_dir)

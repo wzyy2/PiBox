@@ -84,7 +84,7 @@ Example
 
 CallBack
 ============================
-Callback file是传感器满足条件后被调用的python代码文件名`比如gpio.py`，被调用的文件需要放在PiBox/sh/callback/下。
+Callback file是传感器满足条件后被调用的python代码文件名`比如gpio.py`，被调用的文件需要放在PiBox/sh/callback/下(重启有效)。
 不使用的话只需提供不存在的文件名或者保持为空即可。
 
 对开关传感器来说，每一次开关数值点发生修改，callback_file都会被按如下格式调用
