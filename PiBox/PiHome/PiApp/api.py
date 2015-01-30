@@ -49,9 +49,9 @@ def check_username(request):
                 return HttpResponse(simplejson.dumps({'msg':'Please enter a valid email format'}))  
             user = PiUser.objects.get(username = request.GET['username'])
             if user is not None:  
-                return HttpResponse(simplejson.dumps({'msg':'Username already exists'}))  
+                return HttpResponse(simplejson.dumps({'msg':'Email already exists'}))  
         except:  
-            return HttpResponse(simplejson.dumps({'msg':'Username can be used'}))  
+            return HttpResponse(simplejson.dumps({'msg':'Email can be used'}))  
 
 def check_login(request):  
     if request.user.is_authenticated():
