@@ -28,6 +28,9 @@ if [ "$ret" ];then
    exit
 fi
 
+echo "Attention : If you can't see anything in the browser, please check log in log/pihome.log"
+
+
 nohup ./CppClient/pihome > ./log/cpp.log 2>&1 &  
 nohup python ./PiHome/WebShell/webshell.py --ssl-disable 0 > ./log/pihome-webshell.log 2>&1 & 
 nohup python ./PiHome/manage.py runserver 0.0.0.0:8000 > ./log/pihome.log 2>&1 & 
