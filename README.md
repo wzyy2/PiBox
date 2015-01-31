@@ -1,6 +1,6 @@
 # PiBox #
-PiBox is a web control Interface for Embedded Board, writen by python.<br>
-With  PiBox，you can do something like that:
+PiBox is a web control Interface running on Embedded Board, written by python.<br>
+With PiBox，you can do something like that:
 ![image](http://blog.iotwrt.com/wp-content/uploads/2015/01/jiegou.png)
 ## Usage 
 See these steps for a  build guide(cd Pibox).<br>
