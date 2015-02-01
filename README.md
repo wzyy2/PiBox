@@ -30,7 +30,7 @@ uninstall and reinstall：
     delete the folder and do these steps again.
 
 ## Feature
-* native yeelink(connect your hardwares to web).
+* native iot platform(connect your hardwares to web, like yeelink).
 * File Browser.
 * Web ssh.
 * host status monitor.
