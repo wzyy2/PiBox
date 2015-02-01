@@ -34,18 +34,19 @@
         <h1>
 <a id="pibox" class="anchor" href="#pibox" aria-hidden="true"><span class="octicon octicon-link"></span></a>PiBox</h1>
 
-<p>PiBox is a web control Interface.<br>
-<a href="http://wzyy2.github.io/PiBox">http://wzyy2.github.io/PiBox</a></p>
+<p>PiBox is a web control Interface running on Embedded Board, written in python and django.<br>
+With PiBox，you can do something like that:
+<img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/jiegou.png" alt="image"></p>
 
-<h1>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>See these steps for a  build guide(cd Pibox).<br>
-Get source from.....<br>
 First install the dependencies:</p>
 
-<pre><code>sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev python-pil
+<pre><code>sudo apt-get install python-pip python-dev build-essential  libjsoncpp-dev libjpeg-dev zlib1g-dev
 sudo apt-get install python-setuptools
+sudo pip install pillow
 sudo pip install Django==1.6.6
 sudo apt-get install scons
 </code></pre>
@@ -76,12 +77,12 @@ sudo sh ./stop.sh
 <a id="feature" class="anchor" href="#feature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature</h2>
 
 <ul>
+<li>native iot platform(connect your hardwares to web, like yeelink).</li>
 <li>File Browser.</li>
 <li>Web ssh.</li>
-<li>yyaw and aria2 control(need aria2 installed).</li>
 <li>host status monitor.</li>
 <li>webcam snapshot.</li>
-<li>GPIO control（uncomplete，and only for raspberry pi).</li>
+<li>GPIO control.</li>
 <li><a href="https://github.com/wzyy2/PiBox/wiki/Feature">more here</a></li>
 </ul>
 
@@ -91,21 +92,9 @@ sudo sh ./stop.sh
 <p>PiBox is free software;you can redistribute it and/or modify it under terms of the GNU General Public License version 2 as published by the Free Software Foundation.</p>
 
 <h2>
-<a id="介绍" class="anchor" href="#%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>介绍</h2>
-
-<p>写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).</p>
-
-<h1>
-<a id="details" class="anchor" href="#details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Details</h1>
-
-<p>PiBox由两部分组成,分别是c++程序和django的web界面,两者之间通过socket通信,之所以这样做也是为了确保功能的灵活性,c++能实现更多的功能.<br>
-如果要扩展应用,可以参考examples-app的写一个程序放到APP文件夹,见example-app的readme.</p>
-
-<h2>
 <a id="ps" class="anchor" href="#ps" aria-hidden="true"><span class="octicon octicon-link"></span></a>PS</h2>
 
-<p>如果你有什么问题的话,欢迎通过qq和email联系我~地址在我个人主页可以找到~（好希望自己的代码能有人玩嘛 T T）
-提供人肉支持.</p>
+<p>If you want more background on how it works,create an issue or email me:-).</p>
 
 <h2>
 <a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
@@ -117,13 +106,23 @@ sudo sh ./stop.sh
 <h2>
 <a id="image" class="anchor" href="#image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Image</h2>
 
-<p><img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/index.jpg" alt="image">
-<img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/status.jpg" alt="image"></p>
+<p><img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/index2.jpg" alt="image">
+<img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/house.jpg" alt="image">
+<img src="http://blog.iotwrt.com/wp-content/uploads/2015/01/filebrowser.png" alt="image"></p>
+
+<h1>
+<a id="chinese" class="anchor" href="#chinese" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chinese</h1>
 
 <h2>
-<a id="phone" class="anchor" href="#phone" aria-hidden="true"><span class="octicon octicon-link"></span></a>Phone</h2>
+<a id="介绍" class="anchor" href="#%E4%BB%8B%E7%BB%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>介绍</h2>
 
-<p><img src="http://www.iotwrt.com/jpg/pibox4.png" alt="image"></p>
+<p>写这个PiBox的初衷是现在智能硬件的概念很火,打着家庭网关称号的路由器层出不穷,什么智能家居拉,带摄像头拉,控制家电拉,做小车阿,作者也手痒,于是就着手开始做这么一个web base的嵌入式交互应用(好文绉绉..).</p>
+
+<h2>
+<a id="app" class="anchor" href="#app" aria-hidden="true"><span class="octicon octicon-link"></span></a>App</h2>
+
+<p>如果要扩展应用,可以参考optional-app的写一个程序放到APP文件夹.
+如果要使用已有的app，请参考optional-app的readme.</p>
       </section>
     </div>
 
