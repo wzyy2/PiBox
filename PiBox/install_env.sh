@@ -8,4 +8,4 @@ cp -rf ./etc/* /etc
 ln -s ${dir2}/App  PiHome
 
 mkdir /home/shares
-chmod 0777 /home/shares
+chmod 0666 /home/shares
