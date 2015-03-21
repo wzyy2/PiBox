@@ -51,7 +51,7 @@ If you want more background on how it works,create an issue or email me:-).
 
 ## Image 
 ![image](http://www.iotwrt.com/jpg/pb2.jpg)
-![image](http://www.iotwrt.com/jpg/pb3/jpg)
+![image](http://www.iotwrt.com/jpg/pb3.jpg)
 
 # Chinese #
 ## 介绍 
